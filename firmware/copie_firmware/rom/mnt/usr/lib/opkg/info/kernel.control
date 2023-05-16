@@ -1,0 +1,13 @@
+Package: kernel
+Version: 3.10.14-1-a74cf375559f80d758a3e54a15723d6b
+Depends: libc
+Provides: 
+Source: package/kernel
+Section: sys
+Status: unknown hold not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 338
+Description:  Virtual kernel package

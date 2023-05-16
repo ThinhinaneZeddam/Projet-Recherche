@@ -1,0 +1,2 @@
+DRIVER=jz-i2c
+MODALIAS=platform:jz-i2c

@@ -1,0 +1,6 @@
+/bin/cloud-service
+/etc/config/msg_push
+/etc/config/msg_push_plan
+/etc/init.d/cloud_service
+/etc/config/ffs
+/etc/cloud_service/ipc_service.cer

@@ -1,0 +1,2 @@
+ffs_dss_pubkey.ffs_info=ffs
+ffs_dss_pubkey.ffs_info.dss_pubkey=-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE++2MMSe9kWF6mJPkgsGcrqTCk8gb\nvTccKPGZDL5pZcmfW+2EzRjfXhx6clwg3Wl4ClFe8+37fLNgxPYodqGQgA==\n-----END PUBLIC KEY-----\n

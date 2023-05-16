@@ -1,0 +1,10 @@
+#!/bin/sh
+uci set cloud_status.check_fw_ver.owner=1;
+uci commit cloud_status;
+ubus call cloudclient check_fw_version '{"user_conf_path":"cloud_config","version_refresh":1}'
+url=`uci get cloud_config.upgrade_info.download_url 2>/dev/null`
+is_ok=0
+if [ -n "$url" ]; then
+    is_ok=1
+fi
+echo $is_ok

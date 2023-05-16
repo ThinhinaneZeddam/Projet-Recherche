@@ -1,0 +1,416 @@
+start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  889.740893] ..done
+[  890.151631] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  890.568471] ..done
+[  890.973804] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  891.403433] ..done
+[  891.803781] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  892.208907] ..done
+[  892.632678] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[RTSP main] user password changed
+[  893.035910] ..done
+[  893.458618] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  893.874814] ..done
+	 [dsd] socket_accept_loop(124): Failed to accept.
+{
+	"err_code": 0
+}
+	 [dsd] ubus_call(112): failed to lookup ubus object: msglog.
+[  894.471519] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[41;37m[ERROR][0m[rtspd]dns.c:251(search_dns_cache) : rtsp-dcipc.tplinknbu.com's dns cache is empty.
+[41;37m[ERROR][0m[rtspd]domain_cache.c:460(domain_cache_init_conn_req) : failed when resolving hostname(rtsp-dcipc.tplinknbu.com).
+[41;37m[ERROR][0m[relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(aps1-relay-dcipc.i.tplinknbu.com).
+[41;37m[ERROR][0m[rtspd]dns.c:360(do_resolve_hostname) : getaddrinfo failed: -2; Name or service not known.
+[41;37m[ERROR][0m[relayd]dns.c:309(do_resolve_hostname) : getaddrinfo failed: -2; Name or service not known.
+[  894.884883] ..done
+getCurMsgConnSrc:0
+Command failed: Not found
+[wifiEntry:914] Try to connect WiFi
+[Debug] [setLedEvent:429] setLedEvent = 3
+[Debug] [main:577] gLastLedEvent = 11, gCurrLedEvent = 3
+[2022-07-25 10:02:21][40;31m[ERROR][0m[cloud-sdk]cloud_ip_list.c:61:cloud_ip_list_parse-- get addr info error, host:n-deventry-dcipc.tplinkcloud.com, serv:443, Name or service not known
+[2022-07-25 10:02:21][40;31m[ERROR][0m[cloud-sdk]cloud_session.c:1384:cloud_session_connect_sef-- fail to parse the SEF domain:n-deventry-dcipc.tplinkcloud.com:443
+[2022-07-25 10:02:21][40;31m[ERROR][0m[cloud-sdk]cloud_session.c:366:cloud_session_active_long_time-- fail to connect the SEF, result:-1
+[41;37m[ERROR][0m[rtspd]dns.c:251(search_dns_cache) : rtsp-dcipc.tplinknbu.com's dns cache is empty.
+[41;37m[ERROR][0m[rtspd]domain_cache.c:460(domain_cache_init_conn_req) : failed when resolving hostname(rtsp-dcipc.tplinknbu.com).
+[41;37m[ERROR][0m[relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(aps1-relay-dcipc.i.tplinknbu.com).
+[41;37m[ERROR][0m[rtspd]dns.c:360(do_resolve_hostname) : getaddrinfo failed: -2; Name or service not known.
+[41;37m[ERROR][0m[relayd]dns.c:309(do_resolve_hostname) : getaddrinfo failed: -2; Name or service not known.
+[40;31m[ERROR][0m[cloud-service] resolve_server_name(144): error: failed to getaddrinfo: error[-2], msg[Name or service not known]
+
+[40;31m[ERROR][0m[cloud-service] tcp_connect_server(387): error: cannot resolve n-device-api.tplinkcloud.com:443.
+
+[40;31m[ERROR][0m[cloud-service] ssl_connect_server(499): error: failed to tcp connect to server.
+
+[40;31m[ERROR][0m[cloud-service] http_process_validate(996): error: failed to connect server name: n-device-api.tplinkcloud.com -- server port: 443
+
+[40;31m[ERROR][0m[cloud-service] http_process(1167): dev_token_is_valid invalid.
+
+---WLAN---renew ip
+[  901.492492] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  901.931149] .[wifiEntry:962] WiFi is connected
+.done
+---WLAN---send event connected_cloudnotok
+[Debug] [setLedEvent:429] setLedEvent = 5
+[Debug] [main:577] gLastLedEvent = 3, gCurrLedEvent = 5
+[  903.696600] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  904.112817] ..done
+[wifiEntry:1085] WiFi status is done
+[Debug] [setLedEvent:429] setLedEvent = 4
+[Debug] [main:577] gLastLedEvent = 5, gCurrLedEvent = 4
+Command failed: Not found
+getCurMsgConnSrc:0
+[  905.526000] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  905.965335] .[40;31m[ERROR][0m[cloud-service] validate_token_thread(240): http_process_validate: waiting 9 seconds and trying 1 times.
+
+.done
+[  906.384276] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[41;37m[ERROR][0m[rtspd]dns.c:360(do_resolve_hostname) : getaddrinfo failed: -2; Name or service not known.
+[  906.803327] ..done
+---WLAN---send event connected_cloudnotok
+[Debug] [setLedEvent:429] setLedEvent = 5
+[Debug] [main:577] gLastLedEvent = 4, gCurrLedEvent = 5
+[2022-07-25 10:02:31][40;31m[ERROR][0m[cloud-client]Function is:recv_response_of_hello_cloud, Line is:384.1 times connectedToCloud:defaultSvr or cachedSvr helloCloud response
+
+[2022-07-25 10:02:31][40;31m[ERROR][0m[cloud-client]Function is:checkDeviceBindStatus, Line is:1507.device need rebind to cloud.
+
+[2022-07-25 10:02:32][40;31m[ERROR][0m[cloud-client]Function is:userBindCloudResultHandle, Line is:860.++++++++++user_bind callback errCode: 0++++++++++
+
+[  909.691602] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+Command failed: Not found
+[main:554] Success to stop onboarding
+---WLAN---get_cloud_status=1
+---WLAN---send event connected_cloudok
+[Debug] [setLedEvent:429] setLedEvent = 6
+[Debug] [main:577] gLastLedEvent = 5, gCurrLedEvent = 6
+[  910.130538] ..done
+[40;31m[ERROR][0m[cloud-service] alarm_service_refresh_state(994): service init is not ok
+
+{
+	"serviceInit": 0,
+	"serviceLevel": 0,
+	"is_service_Ok": 0,
+	"error_code": 0
+}
+[  910.591094] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[40;31m[ERROR][0m[cloud-service] http_process(1167): dev_token_is_valid invalid.
+
+[  911.014604] ..done
+[40;32m[INFO][0m[cloud-service] dev_token_dump(32): 	token: Bc599a74883c14b4b9d5e7946b9c51e3
+[40;32m[INFO][0m[cloud-service] dev_token_dump(33): 	server_url: https://euw1-device-tapo-care.i.tplinknbu.com
+[40;32m[INFO][0m[cloud-service] dev_token_dump(34): 	server_port: 443
+[40;32m[INFO][0m[cloud-service] dev_token_dump(35): 	path: /
+[40;32m[INFO][0m[cloud-service] dev_token_dump(36): 	timestamp: 912
+[40;32m[INFO][0m[cloud-service] dev_token_dump(37): 	duration: 86400
+[40;32m[INFO][0m[cloud-service] dev_token_dump(38): 	valid: 1
+
+{
+	"err_code": 0
+}
+---WLAN---send event connected_cloudok
+[Debug] [setLedEvent:429] setLedEvent = 6
+[Debug] [main:577] gLastLedEvent = 6, gCurrLedEvent = 6
+[Debug] [main:617] The event is the same, don't do everything
+[40;32m[INFO][0m[cloud-service] dev_token_dump(32): 	token: B6e1d44f953824b629070869f989d38e
+[40;32m[INFO][0m[cloud-service] dev_token_dump(33): 	server_url: https://n-euw1-device-api.tplinkcloud.com
+[40;32m[INFO][0m[cloud-service] dev_token_dump(34): 	server_port: 443
+[40;32m[INFO][0m[cloud-service] dev_token_dump(35): 	path: /
+[40;32m[INFO][0m[cloud-service] dev_token_dump(36): 	timestamp: 917
+[40;32m[INFO][0m[cloud-service] dev_token_dump(37): 	duration: 86400
+[40;32m[INFO][0m[cloud-service] dev_token_dump(38): 	valid: 1
+
+{
+	"err_code": 0
+}
+[40;32m[INFO][0m[cloud-service] getDstLocalTime(446): dst_local_start:3.5.0/02:00:00, dst_local_end:10.5.0/03:00:00.
+
+[  922.092665] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  922.517730] ..done
+[40;31m[ERROR][0m[cet][ubus_stop_record]-1153: Call ubus_stop_record, maybe occur sync time.
+
+[record_stop]-3798: Record stop time is: 1658739766
+	 [storage] detection_index_new(1744). mkdir /tmp/mnt/harddisk_1/snapshot/ failed
+
+	 [storage] g_index_total_get(1720). detection_index_new error:No such file or directory
+
+	 [storage] detection_handle_end(974). arg NULL
+
+[40;31m[ERROR][0m[cet][ubus_restart_record]-1170: Call ubus_restart_record, maybe occur sync time.
+
+ifconfig: eth0: error fetching interface information: Device not found
+[  988.351045] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  988.761238] ..done
+[2023-03-03 10:52:42][40;31m[ERROR][0m[cloud-sdk]cloud_client_handle.c:1179:cloud_client_handle_refresh_helloCloud-- cloud-brd request cloud-sdk to refresh helloCloud string
+
+killall: logrecordd: no process killed
+[2023-03-03 10:52:42][40;31m[ERROR][0m[cloud-sdk]cloud_register.c:447:register_handle_dispatch-- cloud-sdk handle cloud-brd's resfresh helloCloud string request 1 times
+	 [dsd] ds_handle_method_set(2589): Data unchanged.
+[  990.732271] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[  991.140829] ..done
+[2023-03-03 10:52:44][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+	 [dsd] ds_handle_method_set(2589): Data unchanged.
+[2023-03-03 10:53:23][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[2023-03-03 10:53:26][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[2023-03-03 10:53:28][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[2023-03-03 10:53:45][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[40;32m[INFO][0m[cet][http_connection_new]-3625: New http connection fd: 31, point: 0xaf0300
+[40;32m[INFO][0m[cet][http_header_add_encrypt]-888: Key-Exchange: cipher="AES_128_CBC" username="admin" padding="PKCS7_16" algorithm="MD5" nonce="74ee3ce2175941de4ec510adc082afda000004240a443561"
+[40;32m[INFO][0m[cet][http_stream_video_h264_mixed_cb]-696: digest auth success remote:2
+[40;32m[INFO][0m[cet][http_stream_video_h264_mixed_cb]-839: http connection(fd 31) set tcp snd buf size to 327680.
+
+[40;32m[INFO][0m[cet][generate_new_session_id]-174: Create new session (id: 1) in new http connection (fd: 31, point: 0xaf0300)
+[40;32m[INFO][0m[cet][telemetry_update_connection_info]-96: playmode: 1, duration: 21.000000, remote_type: 2, is_upnp: 0, audio_play_type: 0
+[2023-03-03 10:54:16][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+ifconfig: eth0: error fetching interface information: Device not found
+[2023-03-03 10:54:17][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[2023-03-03 10:54:20][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[ 1091.470378] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[ 1091.872103] ..done
+
+root@C200:/# 
+root@C200:/# 
+root@C200:/# 
+root@C200:/# ls
+[1;34mbin[0m      [1;34mdata[0m     [1;34metc[0m      [1;34mmnt[0m      [1;34mproc[0m     [1;34mroot[0m     [1;34msp_rom[0m   [1;34mtmp[0m      [1;36mvar[0m
+[1;34mconfig[0m   [1;34mdev[0m      [1;34mlib[0m      [1;34moverlay[0m  [1;34mrom[0m      [1;34msbin[0m     [1;34msys[0m      [1;34musr[0m      [1;34mwww[0m
+root@C200:/# cd [J[J[Jcd [J[J[Jps
+  PID USER       VSZ STAT COMMAND
+    1 root      1880 S    init
+    2 root         0 SW   [kthreadd]
+    3 root         0 SW   [ksoftirqd/0]
+    5 root         0 SW<  [kworker/0:0H]
+    6 root         0 SW   [kworker/u2:0]
+    7 root         0 SW   [rcu_preempt]
+    8 root         0 SW   [rcu_bh]
+    9 root         0 SW   [rcu_sched]
+   10 root         0 SW   [watchdog/0]
+   11 root         0 SW<  [khelper]
+   12 root         0 SW   [kdevtmpfs]
+   13 root         0 SW<  [writeback]
+   14 root         0 SW<  [bioset]
+   15 root         0 SW<  [kblockd]
+   16 root         0 SW   [khubd]
+   18 root         0 SW<  [cfg80211]
+   19 root         0 SW   [kworker/0:2]
+   20 root         0 SW   [kswapd0]
+   21 root         0 SW   [fsnotify_mark]
+   22 root         0 SW<  [crypto]
+   36 root         0 SW   [kworker/u2:1]
+   37 root         0 SW<  [deferwq]
+   38 root         0 SW<  [kworker/0:1H]
+  240 root      1876 S    /bin/ash --login
+  271 root      1096 S    /sbin/hotplug2 --override --persistent --set-rules-f
+  309 root      1092 S    /sbin/ubusd
+  334 root     20480 S    tp_manage
+  390 root         0 DW   [reset_thread]
+  452 root      9760 S    /usr/bin/ledd
+  499 root     37400 S    /usr/sbin/wlan-manager
+  542 root      1884 S    udhcpc -p /var/run/udhcpc_C200_F44EA9.pid -s /lib/ne
+  687 root         0 SW   [RTW_CMD_THREAD]
+  724 root      1656 S    wpa_supplicant -B -Dwext -iwlan0 -P/tmp/supplicant_p
+  864 root     53420 S    /usr/bin/dsd
+  878 root      4628 S    /bin/cloud-brd -c /var/etc/cloud_brd_conf
+  969 root     46200 S    /bin/cloud-client
+  981 root     61744 S    /bin/cloud-service
+  983 root      1868 S    /usr/sbin/telnetd -b 127.0.0.1 -l /bin/login.sh
+ 1037 root      4068 S    /usr/sbin/uhttpd -f -h /www -T 180 -A 0 -n 8 -R -r C
+ 1056 root     44992 S    /usr/bin/rtspd
+ 1058 root     45092 S    /usr/bin/relayd
+ 1060 root     10588 S    /bin/storage_manager
+ 1069 root     44260 S    /usr/bin/p2pd
+ 1082 root         0 SW   [irq/37-isp-m0]
+ 1083 root         0 SW   [irq/38-isp-w02]
+ 1120 root      4496 S    /bin/telemetry
+ 1128 root     29644 S    /bin/nvid
+ 1130 root     18344 S    /bin/wtd
+ 1156 root      434m S    /bin/cet
+ 1160 root         0 DW   [isp_fw_process]
+ 3555 root         0 SW   [kworker/0:1]
+ 4253 root      1884 S    /usr/sbin/ntpd -n -p time.nist.gov -p 128.138.140.44
+ 5923 root         0 SW   [kworker/0:0]
+ 5989 root      1872 R    ps
+root@C200:/# ps -a
+ps: invalid option -- a
+BusyBox v1.19.4 (2022-07-25 16:33:45 CST) multi-call binary.
+
+Usage: ps 
+
+Show list of processes
+
+	w	Wide output
+
+root@C200:/# ps 
+  PID USER       VSZ STAT COMMAND
+    1 root      1880 S    init
+    2 root         0 SW   [kthreadd]
+    3 root         0 SW   [ksoftirqd/0]
+    5 root         0 SW<  [kworker/0:0H]
+    6 root         0 SW   [kworker/u2:0]
+    7 root         0 SW   [rcu_preempt]
+    8 root         0 SW   [rcu_bh]
+    9 root         0 SW   [rcu_sched]
+   10 root         0 SW   [watchdog/0]
+   11 root         0 SW<  [khelper]
+   12 root         0 SW   [kdevtmpfs]
+   13 root         0 SW<  [writeback]
+   14 root         0 SW<  [bioset]
+   15 root         0 SW<  [kblockd]
+   16 root         0 SW   [khubd]
+   18 root         0 SW<  [cfg80211]
+   19 root         0 SW   [kworker/0:2]
+   20 root         0 SW   [kswapd0]
+   21 root         0 SW   [fsnotify_mark]
+   22 root         0 SW<  [crypto]
+   36 root         0 SW   [kworker/u2:1]
+   37 root         0 SW<  [deferwq]
+   38 root         0 SW<  [kworker/0:1H]
+  240 root      1876 S    /bin/ash --login
+  271 root      1096 S    /sbin/hotplug2 --override --persistent --set-rules-f
+  309 root      1092 S    /sbin/ubusd
+  334 root     20480 S    tp_manage
+  390 root         0 DW   [reset_thread]
+  452 root      9760 S    /usr/bin/ledd
+  499 root     37400 S    /usr/sbin/wlan-manager
+  542 root      1884 S    udhcpc -p /var/run/udhcpc_C200_F44EA9.pid -s /lib/ne
+  687 root         0 SW   [RTW_CMD_THREAD]
+  724 root      1656 S    wpa_supplicant -B -Dwext -iwlan0 -P/tmp/supplicant_p
+  864 root     53420 S    /usr/bin/dsd
+  878 root      4628 S    /bin/cloud-brd -c /var/etc/cloud_brd_conf
+  969 root     46200 S    /bin/cloud-client
+  981 root     61744 S    /bin/cloud-service
+  983 root      1868 S    /usr/sbin/telnetd -b 127.0.0.1 -l /bin/login.sh
+ 1037 root      4068 S    /usr/sbin/uhttpd -f -h /www -T 180 -A 0 -n 8 -R -r C
+ 1056 root     44992 S    /usr/bin/rtspd
+ 1058 root     45092 S    /usr/bin/relayd
+ 1060 root     10588 S    /bin/storage_manager
+ 1069 root     44260 S    /usr/bin/p2pd
+ 1082 root         0 SW   [irq/37-isp-m0]
+ 1083 root         0 SW   [irq/38-isp-w02]
+ 1120 root      4496 S    /bin/telemetry
+ 1128 root     29644 S    /bin/nvid
+ 1130 root     18344 S    /bin/wtd
+ 1156 root      434m S    /bin/cet
+ 1160 root         0 DW   [isp_fw_process]
+ 3555 root         0 SW   [kworker/0:1]
+ 4253 root      1884 S    /usr/sbin/ntpd -n -p time.nist.gov -p 128.138.140.44
+ 5923 root         0 SW   [kworker/0:0]
+ 6014 root      1872 R    ps
+root@C200:/# ifconfig: eth0: error fetching interface information: Device not found
+[2023-03-03 10:54:44][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[2023-03-03 10:54:47][40;31m[ERROR][0m[cloud-client]Function is:cloudFwDomainNameResolve, Line is:306.Start to resolve firmware-server domain name info.
+
+[40;32m[INFO][0m[cet][http_header_add_encrypt]-888: Key-Exchange: cipher="AES_128_CBC" username="admin" padding="PKCS7_16" algorithm="MD5" nonce="7e96d61df368051b7f00d060ae3539810000045a39ed1e07"
+[40;32m[INFO][0m[cet][http_header_add_encrypt]-888: Key-Exchange: cipher="AES_128_CBC" username="admin" padding="PKCS7_16" algorithm="MD5" nonce="3048ed1d211030f0cb93901282a7ebb900000464280fa99d"
+[40;32m[INFO][0m[cet][http_stream_video_h264_mixed_cb]-696: digest auth success remote:2
+[40;32m[INFO][0m[cet][http_stream_video_h264_mixed_cb]-839: http connection(fd 31) set tcp snd buf size to 327680.
+
+[40;32m[INFO][0m[cet][generate_new_session_id]-174: Create new session (id: 2) in new http connection (fd: 31, point: 0xaf0300)
+[ 1132.441928] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[ 1132.857411] .[40;32m[INFO][0m[cet][http_connection_new]-3625: New http connection fd: 33, point: 0xaef508
+.done
+[41;37m[ERROR][0m[relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-00f36507a733fee22.dcipc.i.tplinknbu.com).
+[41;37m[ERROR][0m[relayd]session.c:373(session_free_except_clips) : free all session.
+[41;37m[ERROR][0m[relayd]session.c:4641(do_cmd_start_relay) : start initiating session.
+[41;37m[ERROR][0m[relayd]session.c:4685(do_cmd_start_relay) : cookie is not valid.
+[40;32m[INFO][0m[cet][http_header_add_encrypt]-888: Key-Exchange: cipher="AES_128_CBC" username="admin" padding="PKCS7_16" algorithm="MD5" nonce="3048ed1d211030f0cb93901282a7ebb900000464280fa99d"
+[41;37m[ERROR][0m[relayd]session.c:4945(req_is_relay_prepared) : cookie is still not available.
+[40;32m[INFO][0m[cet][generate_new_session_id]-174: Create new session (id: 3) in new http connection (fd: 33, point: 0xaef508)
+[41;37m[ERROR][0m[relayd]session.c:4945(req_is_relay_prepared) : cookie is still not available.
+[41;37m[ERROR][0m[relayd]session.c:4957(req_is_relay_prepared) : connection to relay server is NULL.
+ready to send audio to ao
+tp audio init, AudioDevId is 0, sampleRate is 8000, vol is 67
+[audio_ao_init 433]exec function pass
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_[ 1136.020904] codec_set_device: set device: speaker...
+play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+[audio_ao_init 434]exec function pass
+[audio_ao_init 435]exec function pass
+[audio_ao_init 437]exec function pass
+[audio_ao_init 439]exec function pass
+set audio_aec is 1
+[40;31m[ERROR][0m[cet][enable_audio_aec]-366: IMP_AI_EnableAec failed,count is 5
+
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+[41;37m[ERROR][0m[relayd]session.c:725(relayserver_write_cb_stream) : local connection is not ready.
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+aec version: v2.1.201201 in webrtc_profile.ini and v2.1.201201 in aec lib.
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+set ao volume 100(db)
+[40;31m[ERROR][0m[cet][calculate_volume_2_dbvalue]-278: The audio before transform volume percent is 100 
+
+[40;31m[ERROR][0m[cet][calculate_volume_2_dbvalue]-322: The audio transform volume percent is 67 
+
+[41;37m[ERROR][0m[traversal_common]httplib.c:163(http_get_header_value) : cannot find header key: Set-Cookie.
+[41;37m[ERROR][0m[relayd]cookie.c:766(cookie_get_from_http_headers) : no cookie in resp of cookies req.
+[41;37m[ERROR][0m[relayd]session.c:1019(relayserver_parse_http_headers) : no cookie in http headers.
+[41;37m[ERROR][0m[relayd]session.c:948(relayserver_read_http_body) : connection with local connection is not ready. wait.
+[40;32m[INFO][0m[cet][http_connection_new]-3625: New http connection fd: 42, point: 0xb1c320
+[41;37m[ERROR][0m[traversal_common]connection.c:229(conn_event_cb) : connecting with [52.210.196.93:443] failed/closed
+[41;37m[ERROR][0m[relayd]session.c:1364(relayserver_event_cb_stream) : connection with relayserver is broken. events: 16(0x10).
+[40;33m[WARN][0m[cet][http_connection_state_machine]-3414: Closed by peer. 
+[40;32m[INFO][0m[cet][http_connection_free]-3798: close http_connection fd: 42, method: POST, uri: /stream
+
+Close the audio play thread
+IMP_AO_QueryChnStat: TotalNum 20, FreeNum 16, BusyNum 4
+[41;37m[ERROR][0m[p2pd]udp_punch.c:570(udt_event_cb) : udt io-error, errcode 0
+[41;37m[ERROR][0m[p2pd]session.c:1077(p2p_error_cb) : p2p session failed, streamd
+IMP_AO_QueryChnStat: TotalNum 20, FreeNum 20, BusyNum 0
+set audio_aec is 0
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+[audio_ao_deInit 396]exec function pass
+[audio_ao_deInit 397]exec function pass[ 1146.821734] codec_codec_ctl: set CODEC_TURN_OFF...
+
+[audio_ao_deInit 398]exec function pass
+output audio device close...
+[40;32m[INFO][0m[cet][telemetry_update_connection_info]-96: playmode: 6, duration: 14.000000, remote_type: 0, is_upnp: 0, audio_play_type: 1
+[40;33m[WARN][0m[cet][http_connection_state_machine]-3414: Closed by peer. 
+[40;32m[INFO][0m[cet][http_connection_free]-3798: close http_connection fd: 33, method: POST, uri: (null)
+
+[41;37m[ERROR][0m[relayd]session.c:4641(do_cmd_start_relay) : start initiating session.
+[40;32m[INFO][0m[cet][http_connection_new]-3625: New http connection fd: 33, point: 0xb12588
+[41;37m[ERROR][0m[relayd]session.c:725(relayserver_write_cb_stream) : local connection is not ready.
+[40;32m[INFO][0m[cet][http_header_add_encrypt]-888: Key-Exchange: cipher="AES_128_CBC" username="admin" padding="PKCS7_16" algorithm="MD5" nonce="3048ed1d211030f0cb93901282a7ebb900000464280fa99d"
+[40;32m[INFO][0m[cet][generate_new_session_id]-174: Create new session (id: 4) in new http connection (fd: 33, point: 0xb12588)
+[41;37m[ERROR][0m[traversal_common]httplib.c:163(http_get_header_value) : cannot find header key: Set-Cookie.
+[41;37m[ERROR][0m[relayd]cookie.c:766(cookie_get_from_http_headers) : no cookie in resp of cookies req.
+[41;37m[ERROR][0m[relayd]session.c:1019(relayserver_parse_http_headers) : no cookie in http headers.
+[41;37m[ERROR][0m[relayd]session.c:948(relayserver_read_http_body) : connection with local connection is not ready. wait.
+[40;32m[INFO][0m[cet][http_connection_new]-3625: New http connection fd: 38, point: 0xb1e3d0
+[41;37m[ERROR][0m[traversal_common]connection.c:229(conn_event_cb) : connecting with [52.210.196.93:443] failed/closed
+[41;37m[ERROR][0m[relayd]session.c:1364(relayserver_event_cb_stream) : connection with relayserver is broken. events: 16(0x10).
+[40;33m[WARN][0m[cet][http_connection_state_machine]-3414: Closed by peer. 
+[40;32m[INFO][0m[cet][http_connection_free]-3798: close http_connection fd: 38, method: POST, uri: /stream
+
+ready to send audio to ao
+tp audio init, AudioDevId is 0, sampleRate is 8000, vol is 67
+[audio_ao_init 433]exec function pass
+[40;31m[ERROR][0m[cet][multi_mixed_stream_audio_play_get_stream]-1142: esbuffer(4 frms) will drop frame!
+
+[ 1159.101341] codec_set_device: set device: speaker...
+[audio_ao_init 434]exec function pass
+[audio_ao_init 435]exec function pass
+[audio_ao_init 437]exec function pass
+[audio_ao_init 439]exec function pass
+set ao volume 100(db)
+[40;31m[ERROR][0m[cet][calculate_volume_2_dbvalue]-278: The audio before transform volume percent is 100 
+
+[40;31m[ERROR][0m[cet][calculate_volume_2_dbvalue]-322: The audio transform volume percent is 67 

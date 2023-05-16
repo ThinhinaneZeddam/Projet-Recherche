@@ -1,0 +1,25 @@
+run script from memory..0x80600000
+
+
+-sf probe
+
+-sf read 0x80700000 0x80200 0x175000
+
+-bootm 0x80700000
+
+---> md 0x80700000 0x4f2C6
+
+
+
+## Booting kernel from Legacy Image at 80700000 ...
+   Image Name:   Linux-3.10.14__isvp_swan_1.0__
+   Image Type:   MIPS Linux Kernel Image (lzma compressed)
+   Data Size:    1297173 Bytes = 1.2 MiB
+   Load Address: 80010000
+   Entry Point:  8031b470
+   Verifying Checksum ... OK
+   Uncompressing Kernel Image ... OK
+
+
+
+0x000000080000-0x000001000000 : "firmware"

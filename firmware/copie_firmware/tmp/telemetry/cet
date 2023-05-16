@@ -1,0 +1,45 @@
+
+config cet 'local_view'
+	option count '-1'
+	option duration '-1'
+
+config cet 'relay_view'
+	option count '-1'
+	option duration '-1'
+
+config cet 'p2p_view'
+	option count '-1'
+	option duration '-1'
+
+config cet 'upnp_view'
+	option count '-1'
+	option duration '-1'
+
+config cet 'local_playback'
+	option count '-1'
+	option duration '-1'
+
+config cet 'relay_playback'
+	option count '-1'
+	option duration '-1'
+
+config cet 'p2p_playback'
+	option count '-1'
+	option duration '-1'
+
+config cet 'upnp_playback'
+	option count '-1'
+	option duration '-1'
+
+config cet 'half_duplex_speaker'
+	option count '-1'
+	option duration '-1'
+
+config cet 'full_duplex_speaker'
+	option count '-1'
+	option duration '-1'
+
+config cet 'rtsp'
+	option count '-1'
+	option duration '-1'
+

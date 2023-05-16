@@ -1,0 +1,147 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+usage() {
+	local basename=$1
+	echo "usage: $basename <opt> <disk>"
+	echo
+	echo "options:"
+	echo "  mount          mount target disk"
+	echo "  umount         unmount target disk"
+	echo
+	echo "disk:"
+	echo "  uci section name of section 'disk', e.g."
+	printf "      config disk \033[1m'disk_1'\033[0m\n"
+	echo "             option type 'cifs'"
+	echo "             option addr '192.168.1.106'"
+	echo "             option path 'share'"
+}
+
+mount_sdcard() {
+	local dev_path=$1;shift;
+	local mnt_dir=$1;shift;
+	local timeout_ms=$1;shift;
+
+	# check if device file is ready, with maximum timeout given by input param in ms.
+	# if timeout_ms is absent, device file is required ready or will return error.
+	if [ ! -z $timeout_ms ]; then
+		local intv_ms=100;
+		local intv_float_sec=0.1;
+		local intv_int_sec=1;
+		local timeout_sec
+		local ms_sleep_test
+
+		local retry_times=$(expr $timeout_ms / $intv_ms)
+		local retry_intv=$intv_float_sec
+
+		# CONFIG_BUSYBOX_CONFIG_FEATURE_FLOAT_SLEEP provide more accuracy(currently 0.1s);
+		# but sleep defaultly do not support float sleep, which can be enabled by buildroot
+		# CONFIG_BUSYBOX_CONFIG_FEATURE_FLOAT_SLEEP=y. If it's unsupported, sleep at least 1s.
+		sleep 0.1
+		if [ -z $? ]; then
+			timeout_sec=$(expr $timeout_ms / 1000)
+			retry_times=$(expr $timeout_sec / $intv_int_sec)
+			retry_intv=$intv_int_sec
+		fi
+
+		# echo "retry $retry_times times with interval $retry_intv"
+		for i in $(seq $retry_times); do
+			if [ -b $dev_path ]; then
+				break;
+			else
+				sleep $retry_intv
+			fi
+		done
+	fi
+
+	# dev_path is null or not a block device(or not exist)
+	if [ -z $dev_path ] || [ ! -b $dev_path ]; then
+		echo "Invalid sdcard device $dev_path, please check configuration."
+		exit 255;
+	fi
+
+	if [ ! -d $mnt_dir ]; then
+		mkdir -p $mnt_dir
+	fi
+
+	mount $dev_path $mnt_dir
+}
+
+basename=$0
+
+opt=$1;shift;
+disk=$1;shift;
+timeout=$1;shift;
+
+dbg_opt=n
+
+config_load "harddisk_manage"
+
+config_get type $disk type
+config_get addr $disk host
+config_get mnt $disk mnt
+config_get path $disk path
+config_get username $disk username
+config_get passwd $disk password
+
+if [ $dbg_opt = y ]; then
+	echo "  type:$type"
+	echo "  addr:$addr"
+	echo "  mnt:$mnt"
+	echo "  path:$path"
+	echo "  username:$username"
+	echo "  passwd:$passwd"
+fi
+
+case $opt in
+mount)
+	disk_dir=`mount | grep -w $mnt | awk '{print $1}'`
+	disk_path=$path
+
+	if [ "$type" = "cifs" ]
+	then
+		if [ "${path:0:1}" != "/" ]; then
+			path="/"$path
+		fi
+		disk_path="//"$addr$path
+	fi
+
+	if [ "$type" = "nfs" ]
+	then
+		disk_path=$addr":"$path
+	fi
+
+	# the disk has been mounted with the same mnt_path
+	if [ "$disk_dir"x = "$disk_path"x ]
+	then
+		echo "disk has been mounted on the same path"
+		exit 0
+	fi
+
+	case $type in
+	cifs)
+		mount_nas cifs $addr $path $mnt $username $passwd
+		exit $?
+	;;
+	nfs)
+		mount_nas nfs $addr $path $mnt
+		exit $?
+	;;
+	sdcard)
+		mount_sdcard $path $mnt $timeout
+		exit $?
+	;;
+	*)
+		echo "Unknown fs type:'$type'"
+		exit -1
+	esac
+;;
+umount)
+	umount $mnt
+	exit $?
+;;
+esac
+
+usage $basename
+exit 255

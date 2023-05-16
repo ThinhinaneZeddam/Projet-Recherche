@@ -1,0 +1,5 @@
+
+config on_off 'bcd'
+
+config notif_list 'bcd_notif_list'
+

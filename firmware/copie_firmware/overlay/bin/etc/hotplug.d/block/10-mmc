@@ -1,0 +1,57 @@
+#!/bin/sh
+# Copyright (C) 2009 OpenWrt.org
+
+[ "$DEVNAME" != "mmcblk0" ] && return 0
+
+rts3903_file=/sys/kernel/debug/mmc0/rts3903-sdhc/cmd_timeout
+rts3901_file=/sys/kernel/debug/mmc0/sd-platform/cmd_timeout
+
+case "$ACTION" in
+	add)
+		echo "disk on"
+		if [ -f $rts3903_file ]; then
+			echo "5000" > $rts3903_file
+		fi
+		if [ -f $rts3901_file ]; then
+			echo "5000" > $rts3901_file
+		fi
+		mmc_test -f /dev/mmcblk0
+		res="$?"
+		if [ $res -eq 1 ]; then
+			ubus send sys_event '{"sys_state":"sd_insert"}'
+		elif [ $res -eq 2 ]; then
+			ubus send sys_event '{"sys_state":"sd_insert"}'
+			#sleep 1
+			#uci set tp_manage.factory_mode.enabled=1
+			#uci commit tp_manage
+			#ubus send sys_event '{"sys_state":"error"}'
+		fi
+		ubus call storage_manager disk_event "{\"id\":1,\"event\":\"on\"}"
+		ubus call CET cet_storage_add
+		eval factory_mode=$(uci get tp_manage.factory_mode.enabled)
+		if [ $factory_mode -eq 1 ]; then
+			ubus call CET dn_switch_white_lamp_control "{\"status\":1}"
+		fi
+		;;
+	remove)
+		echo "disk off"
+		if [ -f $rts3903_file ]; then
+			echo "300" > $rts3903_file
+		fi
+		if [ -f $rts3901_file ]; then
+			echo "300" > $rts3901_file
+		fi
+
+		# stop logrecord to release file in SD card
+		[ -f /tmp/diagnose_mode ] && /etc/init.d/logrecord stop
+
+		ubus call CET cet_storage_remove
+		ubus call storage_manager disk_event "{\"id\":1,\"event\":\"off\"}"
+		ubus call storage_manager retry_rescan_sd "{\"id\":1}"
+		eval factory_mode=$(uci get tp_manage.factory_mode.enabled)
+		if [ $factory_mode -eq 1 ]; then
+			ubus call CET dn_switch_white_lamp_control "{\"status\":0}"
+		fi
+		;;
+esac
+

@@ -1,0 +1,24 @@
+#!/bin/sh /etc/rc.common
+
+START=09
+
+start() {
+	if [ -e /tmp/.update_firmware ]; then
+		uc_convert -t 7
+		for list_names in "msg_alarm.chn1_msg_alarm_info.alarm_mode"
+		do
+			for list in $(uci get -c /tmp/fac_uc_conf/ $list_names)
+			do
+				count=$(uci show $list_names | grep -wo $list | wc -l)
+				if [ "$count" -eq "1" ]; then
+					uci del_list msg_alarm.chn1_msg_alarm_info.alarm_mode=$list
+				elif [ "$count" -gt "1" ]; then
+					uci del_list msg_alarm.chn1_msg_alarm_info.alarm_mode=$list
+					uci add_list msg_alarm.chn1_msg_alarm_info.alarm_mode=$list
+				fi
+			done
+		done
+		uci commit
+		rm -rf /tmp/fac_uc_conf/
+	fi
+}

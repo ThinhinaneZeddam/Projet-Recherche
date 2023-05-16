@@ -1,0 +1,43 @@
+#!/bin/sh
+
+. /lib/functions.sh
+. /usr/bin/tp_event.sh
+
+config_load unusual_detection
+local network_broken_enabled
+config_get network_broken_enabled network_broken enabled
+
+if [ "$network_broken_enabled" == "on" ]
+then
+    local event_time=$(date +%s)
+
+    local result=`ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_NETWORK_BROKEN', "time": '$event_time', "status": '$TP_EVENT_MODE_START'}'`
+    while [ -z "$result" ]
+    do
+        # ubus call failed
+        if [ -e /tmp/network_broken ]
+        then
+            result=`ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_NETWORK_BROKEN', "time": '$event_time', "status": '$TP_EVENT_MODE_START'}'`
+        else
+            exit
+        fi
+    done
+
+    local i
+    while [ -e /tmp/network_broken ]
+    do
+        let i=i+1
+        if [ "$TP_EVENT_PROCESSING_TIMEOUT" -le "$i" ]
+        then
+            # send heartbeat
+            ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_NETWORK_BROKEN', "time": 0, "status": '$TP_EVENT_MODE_PROCESSING'}'
+            let i=0
+        fi
+        sleep 1
+    done
+
+    ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_NETWORK_BROKEN', "time": 0, "status": '$TP_EVENT_MODE_END'}'
+fi
+
+
+

@@ -1,0 +1,13 @@
+Package: wtd
+Version: 1
+Depends: libc, libjson, libubox, libubus, libuci, libsyslog, libm, librt, public, libuci
+Provides: 
+Source: tp_package/u_packages/wtd
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 44257
+Description:  wtd package....

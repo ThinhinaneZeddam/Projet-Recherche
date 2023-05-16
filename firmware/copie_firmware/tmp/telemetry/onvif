@@ -1,0 +1,4 @@
+
+config info 'command'
+	option count '-1'
+

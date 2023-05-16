@@ -1,0 +1,6 @@
+
+config info 'clips'
+	option count '-1'
+	option failed_count '-1'
+	option duration '-1'
+

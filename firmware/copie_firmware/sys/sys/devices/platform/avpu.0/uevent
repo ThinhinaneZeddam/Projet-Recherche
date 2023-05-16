@@ -1,0 +1,2 @@
+DRIVER=avpu
+MODALIAS=platform:avpu

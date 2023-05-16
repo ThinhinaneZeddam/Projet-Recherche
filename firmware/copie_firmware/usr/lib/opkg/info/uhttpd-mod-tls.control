@@ -1,0 +1,13 @@
+Package: uhttpd-mod-tls
+Version: 2012-10-30
+Depends: libc, uhttpd, libopenssl
+Provides: 
+Source: tp_package/u_packages/uhttpd
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 6776
+Description:  The TLS plugin adds HTTPS support to uHTTPd.

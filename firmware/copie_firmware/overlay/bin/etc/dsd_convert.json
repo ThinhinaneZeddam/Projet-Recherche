@@ -1,0 +1,192 @@
+{
+    "getSdCardStatus":              {"method":"get"},
+    "formatSdCard":                 {"method":"do"},
+    "getSdCardFormatStatus":        {"method":"do"},
+
+    "getTimezone":                  {"method":"get"},
+    "setTimezone":                  {"method":"set"},
+
+    "getDeviceInfo":                {"method":"get"},
+    "setFFSInfo":	                {"method":"do"},
+    "getWiFiBoardVersion":          {"method":"do"},
+
+    "getDeviceAlias":               {"method":"get"},
+    "setDeviceAlias":               {"method":"set"},
+
+    "getLedStatus":                 {"method":"get"},
+    "setLedStatus":                 {"method":"set"},
+
+    "getClockStatus":               {"method":"get"},
+
+    "getConnectionType":            {"method":"do"},
+
+    "getUserID":                    {"method":"do"},
+
+    "getDeviceIpAddress":           {"method":"get"},
+
+    "getReboot":                    {"method":"get"},
+    "setReboot":                    {"method":"set"},
+    "rebootDevice":                 {"method":"do"},
+    "reset":                        {"method":"do"},
+    "softReset":                    {"method":"do"},
+    "resetConfigOnly":              {"method":"do"},
+    "checkResetWiFi":               {"method":"do"},
+
+    "getLastAlarmInfo":             {"method":"get"},
+    "getAlertConfig":               {"method":"get"},
+    "setAlertConfig":               {"method":"set"},
+    "getAlertPlan":                 {"method":"get"},
+    "setAlertPlan":                 {"method":"set"},
+
+    "getCloudConfig":               {"method":"get"},
+    "unbindCloud":                  {"method":"do"},
+    "bindToCloud":                  {"method":"do"},
+    "getBindStatus":                {"method":"get"},
+    "logout":                       {"method":"do"},
+
+    "checkFirmwareVersionByCloud":  {"method":"do"},
+    "getFirmwareUpdateStatus":      {"method":"get"},
+    "startFirmwareUpgrade":         {"method":"do"},
+    "getFirmwareAutoUpgradeConfig": {"method":"get"},
+    "setFirmwareAutoUpgradeConfig": {"method":"set"},
+
+    "getDetectionConfig":           {"method":"get"},
+    "setDetectionConfig":           {"method":"set"},
+    "getDetectionRegion":           {"method":"get"},
+    "addDetectionRegion":           {"method":"do"},
+
+    "changeAdminPassword":          {"method":"do"},
+    "getThirdAccount":              {"method":"get"},
+    "changeThirdAccount":           {"method":"do"},
+    "verifyThirdAccount":           {"method":"do"},
+    "getP2PSharePassword":          {"method":"do"},
+    "getAESEncryptKey":             {"method":"do"},
+
+    "motorMove":                    {"method":"do"},
+    "addMotorPostion":              {"method":"do"},
+    "motorMoveToPreset":            {"method":"do"},
+    "relativeMove":                 {"method":"do"},
+    "singalMove":                   {"method":"do"},
+    "stopMove":                     {"method":"do"},
+    "manualCalibrate":              {"method":"do"},
+    "cruiseMove":                   {"method":"do"},
+    "cruiseStop":                   {"method":"do"},
+
+    "getPresetConfig":              {"method":"get"},
+    "deletePreset":                 {"method":"do"},
+
+    "getMediaEncrypt":              {"method":"get"},
+    "setMediaEncrypt":              {"method":"set"},
+    "getVideoQualities":            {"method":"get"},
+    "getServerPort":                {"method":"get"},
+    "setResolution":                {"method":"do"},
+    "getVideoCapability":           {"method":"get"},
+
+    "getScaleList":                 {"method":"get"},
+    "searchVideoOfDay":             {"method":"do"},
+    "searchDateWithVideo":          {"method":"do"},
+    "searchVideoBriefWithUTC":      {"method":"do"},
+    "searchVideoWithUTC":           {"method":"do"},
+    "searchDetectionList":          {"method":"do"},
+    "checkDetectEventState":          {"method":"do"},
+    "getDstRule":                   {"method":"get"},
+
+    "getLensMaskConfig":            {"method":"get"},
+    "setLensMaskConfig":            {"method":"set"},
+
+    "getLightFrequencyInfo":        {"method":"get"},
+    "setLightFrequencyInfo":        {"method":"set"},
+
+    "getDayNightModeConfig":        {"method":"get"},
+    "setDayNightModeConfig":        {"method":"set"},
+
+    "getOsd":                       {"method":"get"},
+    "setOsd":                       {"method":"set"},
+
+    "getRecordPlan":                {"method":"get"},
+    "setRecordPlan":                {"method":"set"},
+    "getCircularRecordingConfig":   {"method":"get"},
+    "setCircularRecordingConfig":   {"method":"set"},
+
+    "getRotationStatus":            {"method":"get"},
+    "setRotationStatus":            {"method":"set"},
+
+    "getAudioConfig":               {"method":"get"},
+    "setMicrophoneVolume":          {"method":"set"},
+    "setSpeakerVolume":             {"method":"set"},
+    "setRecordAudio":               {"method":"set"},
+
+    "getAppComponentList":          {"method":"get"},
+
+    "getDiagnoseMode":              {"method":"get"},
+    "setDiagnoseMode":              {"method":"set"},
+    "checkDiagnoseStatus":          {"method":"do"},
+
+    "getLdc":                       {"method":"get"},
+    "setLdc":                       {"method":"set"},
+
+    "getPersonDetectionConfig":     {"method":"get"},
+    "setPersonDetectionConfig":     {"method":"set"},
+
+    "getCoverConfig":               {"method":"get"},
+    "setCoverConfig":               {"method":"set"},
+    "getCoverRegion":               {"method":"get"},
+    "addCoverRegion":               {"method":"do"},
+
+    "getMsgPushConfig":             {"method":"get"},
+    "setMsgPushConfig":             {"method":"set"},
+    "getMsgPushPlan":               {"method":"get"},
+    "setMsgPushPlan":               {"method":"set"},
+
+    "getTapoCareVersion":           {"method":"get"},
+    "getTapoCareServiceList":       {"method":"get"},
+
+    "getLinecrossingDetectionConfig":   {"method":"get"},
+    "setLinecrossingDetectionConfig":   {"method":"set"},
+    "getLinecrossingDetectionRegion":   {"method":"get"},
+    "addLinecrossingDetectionRegion":   {"method":"do"},
+    "setLinecrossingDetectionSchedule": {"method":"set"},
+
+    "getIntrusionDetectionConfig":      {"method":"get"},
+    "setIntrusionDetectionConfig":      {"method":"set"},
+    "getIntrusionDetectionRegion":      {"method":"get"},
+    "addIntrusionDetectionRegion":      {"method":"do"},
+    "setIntrusionDetectionSchedule":    {"method":"set"},
+
+    "getTamperDetectionConfig":     {"method":"get"},
+    "setTamperDetectionConfig":     {"method":"set"},
+
+    "getNightVisionCapability":     {"method":"get"},
+    "getWhitelampConfig":           {"method":"get"},
+    "setWhitelampConfig":           {"method":"set"},
+    "getNightVisionModeConfig":     {"method":"get"},
+    "setNightVisionModeConfig":     {"method":"set"},
+    "getForceWhitelampState":       {"method":"get"},
+    "setForceWhitelampState":       {"method":"set"},
+
+    "getTelemetryConfig":           {"method":"get"},
+    "setTelemetryConfig":           {"method":"set"},
+
+    "getBCDConfig":                 {"method":"get"},
+    "setBCDConfig":                 {"method":"set"},
+
+    "getTargetTrackConfig":         {"method":"get"},
+    "setTargetTrackConfig":         {"method":"set"},
+
+    "getUpnpInfo":                  {"method":"get"},
+    "setUpnpInfo":                  {"method":"set"},
+    "getUpnpStatus":                {"method":"get"},
+    "getPubIP":                     {"method":"get"},
+    "getUpnpCommStatus":            {"method":"get"},
+    "setUpnpCommStatus":            {"method":"set"},
+    "getUpnpPsk":                   {"method":"do"},
+
+    "irLedLock":                    {"method":"do"},
+    "irCutTest":                    {"method":"do"},
+    "speakerTest":                  {"method":"do"},
+    "ptzTest":                      {"method":"do"},
+
+    "getGPIOStatus":                {"method":"do"},
+
+    "NULL":"NULL"
+}

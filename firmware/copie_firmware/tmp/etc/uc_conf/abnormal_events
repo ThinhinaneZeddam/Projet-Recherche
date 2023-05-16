@@ -1,0 +1,11 @@
+
+config on_off 'login_err'
+	option enabled 'on'
+	option max_num_err '10'
+
+config notif_list 'login_err_notif_list'
+	option app_enabled 'off'
+	option client_enabled 'off'
+
+config on_off 'sd_missing'
+

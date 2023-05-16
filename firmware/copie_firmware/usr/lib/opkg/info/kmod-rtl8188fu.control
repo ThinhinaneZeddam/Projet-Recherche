@@ -1,0 +1,13 @@
+Package: kmod-rtl8188fu
+Version: 3.10.14+v5.3.0.1_28034.20180525
+Depends: kernel (=3.10.14-1-a74cf375559f80d758a3e54a15723d6b)
+Provides: 
+Source: tp_package/wlan-driver/rtl/rtl8188fu
+Section: ko util
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 1443643
+Description:  Realtek rtl8188fu/rtl8188ftv wifi driver.

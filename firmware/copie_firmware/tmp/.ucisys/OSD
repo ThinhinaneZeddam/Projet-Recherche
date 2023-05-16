@@ -1,0 +1,10 @@
+OSD.font=font_info
+OSD.date=date_info
+OSD.week=date_info
+OSD.logo=date_info
+OSD.label_info_1=label_info
+OSD.label_info_2=label_info
+OSD.label_info_3=label_info
+OSD.zoom=zoom
+OSD.azimuth=azimuth
+OSD.preset=preset

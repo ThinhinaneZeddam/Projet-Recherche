@@ -1,0 +1,14 @@
+Package: tp_manage
+Version: 1
+Depends: libc, libuci, libpthread, libubus, ubus, ubusd, jshn, libsecurity, libopenssl, libdecrypter, libiniparser
+Provides: 
+Source: tp_package/sys_packages/tp_manage
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 69594
+Description:  The sever side program for TDP Protocol and MACTool, also provide interface to read
+ MAC, PIN, Device ID and etc.

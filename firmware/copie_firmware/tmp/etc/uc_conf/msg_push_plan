@@ -1,0 +1,5 @@
+
+config plan 'chn1_msg_push_plan'
+	option enabled 'off'
+	option push_plan_1 '0900-1700,127'
+

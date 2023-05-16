@@ -1,0 +1,2 @@
+DRIVER=leds-gpio
+MODALIAS=platform:leds-gpio

@@ -1,0 +1,15 @@
+
+config info 'info'
+	option device_model 'C200'
+	option hw_version '3.0'
+	option fw_description 'C200 3.0'
+	option product_id '00c20000'
+	option device_name 'C200 3.0'
+	option device_info 'C200 3.0 IPC'
+	option dev_id '802171676A08CEFE60FA27D83B3E062E2074D5EC'
+	option hw_id 'A66C7B9DA2F10B7E7CF20AF04814C2D4'
+	option fw_cur_id 'CD3094C3003F0E0D975BBE98C5EABC01'
+	option mac '9C-A2-F4-F4-4E-A9'
+	option cur_isp_version '2'
+	option sw_version '1.1.22 Build 220725 Rel.60466n(4555)'
+

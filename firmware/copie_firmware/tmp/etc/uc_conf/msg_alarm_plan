@@ -1,0 +1,23 @@
+
+config plan 'chn1_msg_alarm_plan'
+	option enabled 'off'
+	option alarm_plan_1 '0000-0000,127'
+
+config plan 'arming_schedule_sound'
+	option monday '["0000-2400"]'
+	option tuesday '["0000-2400"]'
+	option wednesday '["0000-2400"]'
+	option thursday '["0000-2400"]'
+	option friday '["0000-2400"]'
+	option saturday '["0000-2400"]'
+	option sunday '["0000-2400"]'
+
+config plan 'arming_schedule_light'
+	option monday '["0000-2400"]'
+	option tuesday '["0000-2400"]'
+	option wednesday '["0000-2400"]'
+	option thursday '["0000-2400"]'
+	option friday '["0000-2400"]'
+	option saturday '["0000-2400"]'
+	option sunday '["0000-2400"]'
+

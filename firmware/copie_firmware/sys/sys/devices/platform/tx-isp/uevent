@@ -1,0 +1,2 @@
+DRIVER=tx-isp
+MODALIAS=platform:tx-isp

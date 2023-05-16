@@ -1,0 +1,7 @@
+
+config info 'motion_detection'
+	option count '1'
+
+config info 'activity_zone'
+	option count '1'
+

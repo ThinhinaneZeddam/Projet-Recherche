@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "tp-link >>> check wireless connect status...." > /dev/console
+
+pingcount=2
+timeout=2
+pingcmd="ping -c $pingcount -W $timeout"
+aringcmd="arping -c $pingcount -w $timeout -I br-wan"
+
+ROUTE=`route -n|awk '$1=="0.0.0.0"{print $2}'`
+echo "tp-link >>> get route: ($ROUTE); tring to ping route..." > /dev/console
+
+$pingcmd $ROUTE > /dev/console && {
+	echo "tp-link >>> ping route is ok" > /dev/console
+	routeOK=1
+	routeARP=1
+	DNS1=`awk '$1=="nameserver"{print $2}' /etc/resolv.conf | head -1`
+	
+	echo "tp-link >>> tring to ping DNS:($DNS1)" > /dev/console
+	$pingcmd $DNS1 >/dev/console && { dns1OK=1; dns1ARP=1; } || {
+		dns1OK=0
+		$aringcmd $DNS1 >/dev/console && dns1ARP=1 || dns1ARP=0
+	}
+} || {
+	echo "tp-link >>> ping route is not ok" > /dev/console
+	routeOK=0
+	echo "tp-link >>> trying to arping route..." > /dev/console
+	$aringcmd $ROUTE > /dev/console && routeARP=1 || routeARP=0
+	dns1OK=0
+	dns1ARP=0
+}
+
+echo "tp-link >>> trying to ping www.bing.com to check connect status...." > /dev/console
+$pingcmd "www.bing.com" > /dev/console
+echo "tplink >>> check ping stat result(routeOK:$routeOK; routeARP:$routeARP; dns1OK:$dns1OK; dns1ARP:$dns1ARP)" > /dev/console
+echo "tplink >>> check wireless connect status end." > /dev/console

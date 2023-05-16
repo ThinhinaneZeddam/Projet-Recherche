@@ -1,0 +1,15 @@
+Package: uhttpd
+Version: 2012-10-30
+Depends: libc, libjson, libubox, libuci, libpthread, dsd, libblobmsg-json, libubus, public, libdecrypter, libsyslog, libopenssl
+Provides: 
+Source: tp_package/u_packages/uhttpd
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 100338
+Description:  uHTTPd is a tiny single threaded HTTP server with TLS, CGI and Lua
+ support. It is intended as a drop-in replacement for the Busybox
+ HTTP daemon.

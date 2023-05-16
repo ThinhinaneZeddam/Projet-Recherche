@@ -1,0 +1,5 @@
+wlan.basic=wlan
+wlan.ap0=wlan
+wlan.sta0=wlan
+wlan.default_ap=wlan
+wlan.default_ap.ap=ap0

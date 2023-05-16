@@ -1,0 +1,13 @@
+Package: recover-manager
+Version: 1.0
+Depends: libc
+Provides: 
+Source: tp_package/u_packages/recover-manager
+Section: TP-LINK
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: Zhangxinqian <zhangxinqian@tp-link.net>
+Architecture: ingenic
+Installed-Size: 16864
+Description:  Caches manager

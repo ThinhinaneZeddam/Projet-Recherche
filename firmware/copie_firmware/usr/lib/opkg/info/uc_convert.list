@@ -1,0 +1,3 @@
+/usr/lib/libuc_convert.so
+/bin/uc_convert
+/lib/preinit/99_10_read_uc_data

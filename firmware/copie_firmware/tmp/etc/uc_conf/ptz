@@ -1,0 +1,49 @@
+
+config ptz 'capability'
+
+config ptz 'basic_config'
+	option speed_pan_default '0.350000'
+	option speed_tilt_default '0.350000'
+	option timeout_default '180000'
+	option proportional_pan_enabled '1'
+	option reverse_mode 'off'
+	option eflip_mode 'off'
+
+config ptz 'scan_config'
+	option speed '0.7000'
+
+config ptz 'park_config'
+	option enabled '0'
+	option park_time '5'
+	option action_mode 'auto_scan'
+	option action_id '1'
+
+config ptz 'limit_config'
+	option enabled '0'
+	option key_position_pan_enabled '0'
+	option key_position_pan_left '-1'
+	option key_position_pan_right '1'
+	option key_position_tilt_enabled '0'
+	option key_position_tilt_down '-1'
+	option key_position_tilt_up '1'
+	option scan_position_pan_enabled '0'
+	option scan_position_pan_left '-1'
+	option scan_position_pan_right '1'
+	option scan_position_tilt_enabled '0'
+	option scan_position_tilt_down '-1'
+	option scan_position_tilt_up '1'
+
+config ptz 'poweroff_save_config'
+	option enabled '1'
+	option save_time '10'
+
+config ptz 'manual_control_config'
+	option speed_mode 'self_adaptive'
+	option speed_level 'normal'
+
+config ptz 'poweroff_save'
+
+config home 'home'
+	option position_pan '-1.000'
+	option position_tilt '1.000'
+

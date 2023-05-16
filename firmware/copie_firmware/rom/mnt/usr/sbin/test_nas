@@ -1,0 +1,67 @@
+#!/bin/sh
+
+usage() {
+	local basename=$1
+	echo "usage: $basename <type> <addr> <path> [<username> [<password>]]"
+	echo
+	echo "type:"
+	echo "  cifs          CIFS/SMB NAS type"
+	echo "  nfs           NFS NAS type"
+	echo
+	echo "cifs require username, and a password unless the account is not encrypted."
+	echo
+}
+
+basename=$0
+
+type=$1;shift;
+addr=$1;shift;
+path=$1;shift;
+username=$1;shift;
+passwd=$1;shift;
+
+# /proc/uptime: 82465.05 66590.09
+# get the first one(uptime second count since startup) as a random seed to ensure dir name
+# is never duplicated with others
+mnt=/mnt/test/disk_test_$(cat /proc/uptime | cut -d . -f 1)
+
+# for debug display
+dbg_opt=n
+if [ $dbg_opt = y ]; then
+	echo "  type:$type"
+	echo "  addr:$addr"
+	echo "  mnt:$mnt"
+	echo "  path:$path"
+	echo "  username:$username"
+	echo "  passwd:$passwd"
+fi
+
+# check basic input; account is left for mount_nas to check
+[ -z $type ] && usage $basename && exit 255
+[ -z $addr ] && usage $basename && exit 255
+[ -z $path ] && usage $basename && exit 255
+
+# create mounting temp dir
+[ ! -d $mnt ] && mkdir -p $mnt
+
+case $type in
+cifs)
+	[ "${path:0:1}" != "/" ] && path="/"$path
+	mount_nas cifs $addr $path $mnt $username $passwd
+;;
+nfs)
+	mount_nas nfs $addr $path $mnt
+;;
+*)
+	echo "Unknown NAS fs type:'$type'"
+	rmdir $mnt
+	usage $basename
+	exit 255
+;;
+esac
+
+# umount now and clean up temp mounting directory
+result=$?
+[ $result = 0 ] && umount -f $mnt
+rmdir $mnt
+exit $result

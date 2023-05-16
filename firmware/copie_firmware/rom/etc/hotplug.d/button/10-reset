@@ -1,0 +1,204 @@
+#!/bin/sh
+
+. /usr/share/libubox/jshn.sh
+
+if [ "$BUTTON" = "reset" -a -f /tmp/gpio_test_mode ]; then
+	touch /tmp/reset_button_pressed
+fi
+
+if [ -f /tmp/.in_factory_reset ]; then
+	return 0
+fi
+
+if [ "$ACTION" = "stop_ffs" -a "$BUTTON" = "reset" ]; then
+	[ "`uci get tp_manage.factory_mode.enabled`" = "1" ] && {
+		echo -ne "\nBUTTON RESET IS PRESSED\n" > /dev/console
+		ubus send sys_event '{"sys_state": "update_fail"}'
+		return 0
+	}
+	echo "" > /dev/console
+	echo "WILL STOP FFS ONBOARDING" > /dev/console
+	rm -f /usr/bin/ffs
+	pgrep ffs >/dev/null && {
+		killall ffs
+		ubus send sys_event '{"sys_state":"ffs_onboarding_stop"}'
+	} || {
+		return 0
+	}
+    uci set wlan.ap0.on_boot=on
+    uci set wlan.sta0.on_boot=on
+    uci set wlan.sta0.connect_onboot=off
+    uci delete wlan.sta0.ssid
+    uci delete wlan.sta0.bssid
+    uci delete wlan.sta0.key
+    uci commit wlan
+    ubus call wlan_manager wlan_ap_restart
+    ubus call wlan_manager wlan_ap_restart '{"reload_driver":0}'
+    ubus call wlan_manager wlan_sta_restart '{"reload_driver":0}'
+    pgrep onboarding >/dev/null || {
+    	/usr/bin/onboarding > /dev/console 2>&1 &
+    }
+	pgrep cloud-service >/dev/null || {
+		/etc/init.d/cloud_service start
+	}
+	pgrep cloud-brd >/dev/null || {
+		/etc/init.d/cloud_sdk start
+	}
+	pgrep cloud-client >/dev/null || {
+		/etc/init.d/cloud_client start
+	}
+	pgrep relayd >/dev/null || {
+		/etc/init.d/relayd start
+	}
+	pgrep rtspd >/dev/null || {
+		/etc/init.d/rtspd start
+	}
+	pgrep ntpd >/dev/null || {
+		/etc/init.d/sysntpd start
+	}
+fi
+
+if [ "$ACTION" = "led_reset_wifi" -a "$BUTTON" = "reset" ]; then
+	[ "`uci get tp_manage.factory_mode.enabled`" = "1" ] && {
+		touch /tmp/.in_factory_reset
+		echo "" > /dev/console
+		echo "RESET TO FACTORY SETTING EVENT DETECTED" > /dev/console
+		/bin/resetWaitUnbind.sh
+		return 0
+	}
+	echo "" > /dev/console
+	echo "LED RESET WIFI EVENT DETECTED" > /dev/console
+
+	ubus send sys_event '{"sys_state":"reset_wifi"}'
+fi
+
+if [ "$ACTION" = "reset_wifi" -a "$BUTTON" = "reset" ]; then
+	echo "" > /dev/console
+	echo "RESET WIFI EVENT DETECTED" > /dev/console
+
+	/bin/resetWifiOnly.sh
+fi
+
+if [ "$ACTION" = "restore" -a "$BUTTON" = "reset" ]; then
+	echo "" > /dev/console
+	echo "RESET TO FACTORY SETTING EVENT DETECTED" > /dev/console
+
+	# 发送LED灯恢复出厂设置事件。该ubus调用在slprestore还会再次调用，提前发送
+	# 是为了及时给用户反馈，避免解绑不成功时，令用户长时间按reset键
+	ubus send sys_event '{"sys_state":"factory"}'
+
+	/bin/resetWaitUnbind.sh
+fi
+
+RETRY_LIMIT=3
+
+get_ap_status()
+{
+	local status=$(ifconfig wlan1 | grep "RUNNING")
+
+	if [ -z "$status" ]; then
+		 eval $1="off"
+	else
+		 eval $1="on"
+	fi
+}
+
+wait_for_ap_ready()
+{
+	cnt=1
+	while [ $cnt -le $RETRY_LIMIT ]; do
+		get_ap_status status
+
+		if [ "$status" = "on" ]; then
+			return 0
+		else
+			sleep 1
+			cnt=`expr $cnt + 1`
+		fi
+	done
+
+	return 1
+}
+
+switch_to_softap()
+{
+	launched="`pgrep onboarding`"
+
+	if [ -n "$launched" ]; then
+		echo "Switch onboarding mode" > /dev/console
+
+		json_load "$(ubus call onboarding switchAPMode)"
+		json_get_var result result
+
+		if [ "$result" = "0" ]; then
+			wait_for_ap_ready
+			lsmod | grep nf_conntrack_ipv4 || insmod nf_conntrack_ipv4.ko
+			track-reload firewall
+			ubus call system_state_audio audio_play '{"id":4}'
+		fi
+	fi
+}
+
+switch_to_hostap()
+{
+	launched="`pgrep onboarding`"
+
+	if [ -n "$launched" ]; then
+		echo "Switch onboarding mode" > /dev/console
+
+		json_load "$(ubus call onboarding switchAPMode)"
+		json_get_var result result
+
+		if [ "$result" = "0" ]; then
+			wait_for_ap_ready
+			ubus send wlan_event '{"wlan_state":"configure_exit"}'
+			ubus call system_state_audio audio_play '{"id":4}'
+		fi
+	else
+		echo "Switch hostap mode" > /dev/console
+		local eth_status=$(ifconfig eth0 | grep "RUNNING")
+
+		if [ "$eth_status" = "" ]; then
+			killall cloud-brd
+			killall cloud-client
+		fi
+
+		json_load "$(ubus call wlan_manager wlan_switch_concurrent_mode '{"mode":0}')"
+		json_get_var result error_code
+
+		if [ "$result" = "0" ]; then
+			wait_for_ap_ready
+			ubus call system_state_audio audio_play '{"id":4}'
+		fi
+
+		if [ "$eth_status" = "" ]; then
+			/etc/init.d/cloud_sdk start
+			/etc/init.d/cloud_client start
+		fi
+	fi
+
+	ubus call wlan_manager wlan_commit_config
+}
+
+if [ "$ACTION" = "mode_switch" -a "$BUTTON" = "reset" ]; then
+	return 0
+	echo "ACTION: $ACTION, WIFIMODE: $WIFIMODE" > /dev/console
+	get_ap_status ap_status
+
+	if [ "$ap_status" = "off" ]; then
+		launched="`pgrep onboarding`"
+
+		case "$WIFIMODE" in
+			"softap")
+				switch_to_softap
+				;;
+			"hostap")
+				switch_to_hostap
+				;;
+			*)
+				echo "10-reset: invalid WIFIMODE: $WIFIMODE" > /dev/console
+				return 1
+				;;
+		esac
+	fi
+fi

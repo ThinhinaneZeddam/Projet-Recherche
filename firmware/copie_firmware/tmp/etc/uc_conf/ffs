@@ -1,0 +1,5 @@
+
+config true_false 'ffs_bind'
+	option ffs '0'
+	option ffs_binding '0'
+

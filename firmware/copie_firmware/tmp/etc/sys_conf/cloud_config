@@ -1,0 +1,83 @@
+
+config router_post 'bind'
+	option bindCode ''
+
+config router_post 'login'
+
+config router_post 'register'
+
+config router_post 'reset_account_pwd'
+
+config router_post 'modify_account_pwd'
+
+config router_post 'get_reg_verify_code'
+
+config router_post 'get_reset_pwd_verify_code'
+
+config router_post 'check_reg_verify_code'
+
+config router_post 'check_reset_pwd_verify_code'
+
+config router_post 'get_plugins'
+
+config router_post 'get_can_update_plugins'
+
+config router_post 'get_not_installed_plugins'
+
+config router_post 'check_plugin_update'
+
+config cloud_push 'new_firmware'
+
+config cloud_push 'device_legality'
+
+config cloud_reply 'device_status'
+
+config cloud_reply 'upgrade_info'
+
+config cloud_device 'info'
+
+config cloud_device 'bind_tip'
+
+config cloud_device 'brand_mac'
+	option check_value '0'
+
+config data_collect 'static'
+	option switch '1'
+	option report_time '0'
+
+config data_collect 'conf_app'
+	option switch '1'
+	option report_time '0'
+
+config data_collect 'conf_web'
+	option switch '1'
+	option report_time '0'
+
+config data_collect 'conn_dev'
+	option switch '1'
+	option report_time '0'
+
+config data_collect 'surr_dev'
+	option switch '1'
+	option report_time '0'
+
+config data_collect 'extra_bind'
+
+config data_collect 'upgrade_status'
+
+config tums_config 'tums_info'
+	option enable 'off'
+	option server ''
+	option port ''
+	option mfrs_id ''
+	option comment ''
+
+config tums_firmware_info 'tums_firmware'
+	option type ''
+	option version ''
+	option release_date ''
+	option download_url ''
+	option release_log ''
+	option release_log_url ''
+	option location ''
+

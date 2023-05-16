@@ -1,0 +1,3 @@
+video_message.video_message=on_off
+video_message.video_message.enabled=off
+video_message.video_message.duration=15

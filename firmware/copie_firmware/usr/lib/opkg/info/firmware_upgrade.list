@@ -1,0 +1,3 @@
+/usr/sbin/make_sure_prog_exit.sh
+/usr/sbin/makeRoomForUpgrade.sh
+/sbin/slpupgrade

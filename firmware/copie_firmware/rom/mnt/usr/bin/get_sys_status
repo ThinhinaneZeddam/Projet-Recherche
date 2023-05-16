@@ -1,0 +1,4 @@
+#!/bin/sh
+linked=`ubus call cloudclient get_link_status | grep "link_status" | sed -e 's/.*link_status": \(.*\),.*/\1/g'`
+[ "$linked" -eq "2" ] && linked=1 || linked=0
+echo $linked

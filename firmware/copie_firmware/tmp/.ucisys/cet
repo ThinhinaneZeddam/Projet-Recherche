@@ -1,0 +1,7 @@
+cet.vhttpd=server
+cet.rtsp=server
+cet.URL=URL
+cet.URL.profile_1=stream1
+cet.URL.profile_2=stream2
+cet.URL.profile_3=stream3
+cet.media_encrypt=on_off

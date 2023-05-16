@@ -1,0 +1,6 @@
+
+config on_off 'common'
+	option enabled 'on'
+	option time '03:00'
+	option random_range '120'
+

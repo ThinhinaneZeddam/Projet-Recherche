@@ -1,0 +1,31 @@
+#!/bin/sh /etc/rc.common
+
+START=13
+
+start() {
+	if [ ! -d "/tmp/sdcard" ]; then
+		mkdir /tmp/sdcard/
+	fi
+
+	if [ -b /dev/mmcblk0p1 ]; then
+		mount -t vfat /dev/mmcblk0p1 /tmp/sdcard/
+	else
+		exit 0
+	fi
+
+	echo "check firmware upgrade"
+
+	if [ -e /tmp/sdcard/factory_up_boot.bin ]
+	then
+		echo "start firmware upgrade ..."
+		slpupgrade -n "/tmp/sdcard/factory_up_boot.bin"
+
+		while true
+		do
+			sleep 10
+		done
+	else
+		umount /tmp/sdcard
+	fi
+}
+

@@ -1,0 +1,11 @@
+
+config dhcpd 'udhcpd'
+	option enable '1'
+	option pool_start '192.168.191.100'
+	option pool_end '192.168.191.199'
+	option lease_time '7200'
+	option gateway '192.168.191.1'
+	option pri_dns '192.168.191.1'
+	option snd_dns '0.0.0.0'
+	option auto '0'
+

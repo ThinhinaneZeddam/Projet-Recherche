@@ -1,0 +1,22 @@
+
+config uhttpd 'main'
+	option home '/www'
+	option rfc1918_filter '1'
+	option max_requests '8'
+	option cert '/tmp/uhttpd.crt'
+	option key '/tmp/uhttpd.key'
+	option cgi_prefix '/cgi-bin'
+	option lua_prefix '/luci'
+	option lua_handler '/usr/lib/lua/luci/sgi/uhttpd.lua'
+	option script_timeout '180'
+	option network_timeout '180'
+	option tcp_keepalive '0'
+
+config cert 'px5g'
+	option days '3600'
+	option bits '1024'
+	option country 'CN'
+	option state 'China'
+	option location 'China'
+	option commonname 'TP-Link'
+

@@ -1,0 +1,13 @@
+Package: ptz
+Version: 1
+Depends: libc, libpthread, public, libubox, libubus, librt, libuci, libjson, libblobmsg-json, libsyslog, lm, libiniparser
+Provides: 
+Source: tp_package/u_packages/ptz
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 237798
+Description:  ptz package....

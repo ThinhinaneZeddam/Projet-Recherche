@@ -1,0 +1,14 @@
+
+config profile 'profile_1'
+
+config profile 'profile_2'
+
+config vsconf 'vsconf'
+
+config asconf 'asconf'
+
+config discovery_mode 'dis_mode'
+	option mode '0'
+
+config scopes 'custom_scopes'
+

@@ -1,0 +1,6 @@
+DISTRIB_ID="OpenWrt"
+DISTRIB_RELEASE="Attitude Adjustment"
+DISTRIB_REVISION="0f471d2d_220725_164627"
+DISTRIB_CODENAME="attitude_adjustment"
+DISTRIB_TARGET="ingenic/generic"
+DISTRIB_DESCRIPTION="OpenWrt Attitude Adjustment 12.09-rc1"

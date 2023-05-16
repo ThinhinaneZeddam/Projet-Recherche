@@ -1,0 +1,14 @@
+
+config on_off 'tamper_det'
+	option enabled 'off'
+	option sensitivity 'medium'
+	option digital_sensitivity '50'
+
+config region_info 'region'
+
+config notif_list 'tamper_notif_list'
+	option app_enabled 'off'
+	option client_enabled 'off'
+	option msg_push_enabled 'on'
+	option sound_alarm_enabled 'off'
+

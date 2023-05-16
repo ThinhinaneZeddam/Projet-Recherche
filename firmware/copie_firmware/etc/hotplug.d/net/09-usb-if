@@ -1,0 +1,20 @@
+
+[ "$ACTION" = add ] && {
+	[ "$DEVPATH" != "${DEVPATH#*usb}" ] && {
+		if [ "$INTERFACE" = "eth0" ]; then
+			MAC_br=$(ifconfig br-wan | awk '$1=="br-wan"{print $5}')
+			ifconfig eth0 hw ether $MAC_br
+			ifconfig $INTERFACE up
+			brctl addif br-wan $INTERFACE
+			MAC_eth=$(ifconfig eth0| awk '$1=="eth0"{print $5}')
+			if [ "$MAC_br" != "$MAC_eth" ]; then
+				echo "======eth0 MAC is wrong : $MAC_eth, now set to $MAC_br" >/dev/console
+				ifconfig $INTERFACE down
+				ifconfig eth0 hw ether $MAC_br
+				ifconfig $INTERFACE up
+			fi
+			arping -b -I br-wan -w 1 -c 3 $(ifconfig br-wan | awk -F: '$1~"inet addr"{print $2}'|awk '{print $1}') &
+		fi
+	}
+}
+

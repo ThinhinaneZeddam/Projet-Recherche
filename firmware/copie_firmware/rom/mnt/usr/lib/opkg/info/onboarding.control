@@ -1,0 +1,13 @@
+Package: onboarding
+Version: 1.0-1
+Depends: libc, libpthread, libubox, libubus, libuci, librt, public, libjson, libblobmsg-json, libdecrypter, libopenssl, libsyslog, realtek_mpp
+Provides: 
+Source: tp_package/u_packages/onboarding
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 33976
+Description:  onboarding package....

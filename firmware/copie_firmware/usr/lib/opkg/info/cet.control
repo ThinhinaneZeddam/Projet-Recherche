@@ -1,0 +1,13 @@
+Package: cet
+Version: 1
+Depends: libc, libpthread, libuci, libjson, libblobmsg-json, libubox, libdecrypter, libopenssl, libubus, libmsglog, libevent, uclibcxx, public, libm, librt, libhirtc, hirtc, libmediautil, dsd, zlib, alsa-lib, storage_manager, t31_api, libiniparser, libiconv-full, event_center, smart_detection, ptz
+Provides: 
+Source: tp_package/u_packages/cet
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 884754
+Description:  cet package....

@@ -1,0 +1,6 @@
+
+config relay_server 'server'
+	option host 'aps1-relay-dcipc.i.tplinknbu.com'
+	option port '443'
+	option use_https '1'
+

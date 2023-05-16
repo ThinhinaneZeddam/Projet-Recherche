@@ -1,0 +1,28 @@
+
+config wlan 'basic'
+	option factory_flag 'on'
+
+config wlan 'ap0'
+	option on_boot 'on'
+	option broadcast_ssid 'on'
+	option region 'CN'
+	option band '2g'
+	option channel '0'
+	option hwmode 'bgn'
+	option channel_width 'ht20'
+	option security 'none'
+	option encryption 'ccmp'
+	option wps 'off'
+	option auto_disable_time '0'
+	option isolation 'off'
+	option acl 'none'
+	list acl_mac ''
+	option ssid 'Tapo_Cam_4EA9'
+
+config wlan 'sta0'
+	option on_boot 'on'
+	option connect_onboot 'off'
+	option network_id '0'
+
+config wlan 'default_ap'
+

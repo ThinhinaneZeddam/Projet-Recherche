@@ -1,0 +1,36 @@
+Package: iptables
+Version: 1.4.10-4
+Depends: libc, kmod-ipt-core, libip4tc, libxtables
+Provides: 
+Source: tp_package/u_packages/iptables
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 273739
+Description:  IPv4 firewall administration tool.
+ 
+ Matches:
+ - icmp
+ - tcp
+ - udp
+ - comment
+ - limit
+ - mac
+ - multiport
+ - multiurl
+ 
+ Targets:
+ - ACCEPT
+ - DROP
+ - REJECT
+ - LOG
+ - TCPMSS
+ - packet_capture
+ 
+ Tables:
+ - filter
+ - mangle
+ 

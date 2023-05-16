@@ -1,0 +1,64 @@
+
+config network
+	option init 'network'
+	list affects 'dhcpd'
+	list affects 'radvd'
+	list affects 'ddns'
+	list affects 'firewall'
+
+config wireless
+	option init 'wlan'
+	list affects 'wlanwarn'
+
+config firewall
+	option init 'firewall'
+	list affects 'upnpd'
+	list affects 'packet_capture'
+
+config olsr
+	option init 'olsrd'
+
+config dhcpd
+	option init 'udhcpd'
+
+config dropbear
+	option init 'dropbear'
+
+config httpd
+	option init 'httpd'
+
+config fstab
+	option init 'fstab'
+
+config system
+	option init 'led'
+	list affects 'luci_statistics'
+
+config upnpd
+	option init 'miniupnpd'
+
+config ntpclient
+	option init 'ntpclient'
+
+config samba
+	option init 'samba'
+
+config tinyproxy
+	option init 'tinyproxy'
+
+config uhttpd
+	option init 'uhttpd'
+
+config ddns
+	option init 'ddns'
+
+config guest_network
+	option init 'guest_network'
+	list affects 'firewall'
+
+config wlanwarn
+	option init 'wlanwarn'
+
+config packet_capture
+	option init 'packet_capture'
+

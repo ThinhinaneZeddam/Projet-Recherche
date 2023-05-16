@@ -1,0 +1,13 @@
+Package: ubus
+Version: 2013-01-13
+Depends: libc, libubus, libblobmsg-json, ubusd
+Provides: 
+Source: tp_package/sys_packages/ubus
+Section: luci2
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 9287
+Description:  OpenWrt RPC client utility

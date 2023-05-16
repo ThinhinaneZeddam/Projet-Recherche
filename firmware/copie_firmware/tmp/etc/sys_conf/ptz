@@ -1,0 +1,56 @@
+
+config ptz 'capability'
+	list position_pan_range '-1.000000'
+	list position_pan_range '1.000000'
+	list position_tilt_range '-1.000000'
+	list position_tilt_range '1.000000'
+	option speed_pan_max '1.00000'
+	option speed_tilt_max '1.000000'
+	option absolute_move_supported '1'
+	option relative_move_supported '1'
+	option continuous_move_supported '1'
+	option preset_supported '1'
+	option preset_number_max '8'
+	option tour_supported '0'
+	list eflip_mode 'off'
+	list eflip_mode 'on'
+	list reverse_mode 'off'
+	list reverse_mode 'on'
+	list reverse_mode 'auto'
+	option scan_supported '0'
+	option park_supported '0'
+	option plan_supported '0'
+	option poweroff_save_supported '1'
+	list poweroff_save_time_range '10'
+	list poweroff_save_time_range '600'
+	option home_position_mode 'none'
+	option pattern_supported '0'
+	option limit_supported '0'
+	list manual_control_mode 'compatible'
+	list manual_control_mode 'pedestrian'
+	list manual_control_mode 'motor_vehicle'
+	list manual_control_mode 'non_motor_vehicle'
+	list manual_control_mode 'self_adaptive'
+	list manual_control_level 'low'
+	list manual_control_level 'normal'
+	list manual_control_level 'high'
+	option calibrate_supported '1'
+
+config ptz 'basic_config'
+	option elevation_min '0'
+	option elevation_max '90'
+
+config ptz 'scan_config'
+
+config ptz 'park_config'
+
+config ptz 'limit_config'
+
+config ptz 'poweroff_save_config'
+
+config ptz 'manual_control_config'
+
+config ptz 'poweroff_save'
+
+config home 'home'
+

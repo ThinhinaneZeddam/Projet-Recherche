@@ -1,0 +1,14 @@
+#!/bin/sh
+# Copyright (C) 2006 OpenWrt.org
+# Copyright (C) 2010 Vertical Communications
+
+preinit_echo() {
+    echo $1
+}
+
+pi_indicate_preinit() {
+    echo "- preinit -"
+}
+
+boot_hook_add preinit_main pi_indicate_preinit
+

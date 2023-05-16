@@ -1,0 +1,4 @@
+
+config cover_info 'cover'
+	option enabled 'off'
+

@@ -1,0 +1,8 @@
+smart_msg_push_capability.capability=capability
+|smart_msg_push_capability.capability.support=md
+|smart_msg_push_capability.capability.support=od
+|smart_msg_push_capability.capability.support=id
+|smart_msg_push_capability.capability.support=cd
+|smart_msg_push_capability.capability.support=login_error
+|smart_msg_push_capability.capability.support=hd_lack
+|smart_msg_push_capability.capability.support=hd_error

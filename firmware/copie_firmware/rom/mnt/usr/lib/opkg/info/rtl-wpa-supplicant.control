@@ -1,0 +1,13 @@
+Package: rtl-wpa-supplicant
+Version: 0.8_rtw_r7475-1
+Depends: libc, libnl-tiny
+Provides: 
+Source: tp_package/u_packages/hostapd/rtl-hostapd
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Architecture: ingenic
+Installed-Size: 506844
+Description:  WPA Supplicant

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "======================INSMOD jz drivers====================="
+cd /lib/modules/3.10.14/
+
+echo "======================INSMOD audio.ko====================="
+insmod audio.ko spk_gpio=-1
+
+echo "======================INSMOD tx-isp-t31.ko====================="
+insmod tx-isp-t31.ko isp_clk=125000000
+
+echo "======================INSMOD sensor_sc2336_t31.ko====================="
+insmod sensor_sc2336_t31.ko reset_gpio=16
+
+echo "======================INSMOD avpu.ko====================="
+insmod avpu.ko
+
+#echo "======================INSMOD audio.ko====================="
+#insmod audio.ko spk_gpio=-1
+
+echo "======================INSMOD done====================="

@@ -1,0 +1,99 @@
+#!/bin/sh
+
+mkdir -p /tmp/telemetry
+
+cat >/tmp/telemetry/cloud_brd <<EOF
+
+config cloud_brd 'statistics'
+
+config cloud_brd 'telemetry'
+
+EOF
+
+cat >/tmp/telemetry/cet <<EOF
+
+config cet 'local_view'
+
+config cet 'relay_view'
+
+config cet 'p2p_view'
+
+config cet 'upnp_view'
+
+config cet 'local_playback'
+
+config cet 'relay_playback'
+
+config cet 'p2p_playback'
+
+config cet 'upnp_playback'
+
+config cet 'half_duplex_speaker'
+
+config cet 'full_duplex_speaker'
+
+config cet 'rtsp'
+
+EOF
+
+cat >/tmp/telemetry/record <<EOF
+
+config info 'sd_info'
+
+config info 'record_info'
+
+config telemetry 'record_status'
+
+EOF
+
+cat >/tmp/telemetry/cloud_service <<EOF
+
+config info 'cloud_service'
+
+EOF
+
+cat >/tmp/telemetry/detection <<EOF
+
+config info 'motion_detection'
+
+config info 'activity_zone'
+
+EOF
+
+cat >/tmp/telemetry/wireless <<EOF
+
+config wireless 'info'
+
+EOF
+
+cat >/tmp/telemetry/sysinfo <<EOF
+
+config sysinfo 'main'
+
+config sysinfo 'cpuinfo'
+
+config sysinfo 'meminfo'
+
+config sysinfo 'network'
+
+config sysinfo 'other'
+
+EOF
+
+cat >/tmp/telemetry/msg_alarm <<EOF
+
+config info 'chn1_msg_alarm_info'
+
+EOF
+
+cat >/tmp/telemetry/onvif <<EOF
+
+config info 'command'
+
+EOF
+
+cat >/tmp/telemetry/cloud_storage <<EOF
+
+config info 'clips'
+
+EOF

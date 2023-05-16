@@ -1,0 +1,132 @@
+#!/bin/sh /etc/rc.common
+
+START=20
+
+SERVICE_DAEMONIZE=1
+RADIO_PASS="radio:P;"
+RADIO_FAIL="radio:F;"
+TESTINFO_RADIO=
+MAC=
+
+factory_mode_enable_wifi() {
+    local factory_mode="`uci get tp_manage.factory_mode.enabled`"
+
+    if [ "1" == "$factory_mode" ]; then
+        uci set wlan.ap0.on_boot=on
+        uci set wlan.sta0.on_boot=on
+    fi
+}
+
+start() {
+    factory_mode_enable_wifi
+    echo -n "Starting wlan-manager: "
+    service_start /usr/sbin/wlan-manager
+    echo "wlan-manager started."
+    until ls /sys/bus/usb/devices | grep -q 1-1
+    do
+        c=$((c+1))
+        echo "find usb device failed"
+        sleep 1
+        [ $c -gt 10 ] && { touch /tmp/.usb_device_not_found; return 0; }
+    done
+	touch /tmp/.usb_device_found
+    echo "find usb device ok"
+    grep -q Ingenic /proc/cpuinfo && 
+    {
+		vidpid=$(cat /sys/bus/usb/devices/1-1/idVendor 2>/dev/null)$(cat /sys/bus/usb/devices/1-1/idProduct 2>/dev/null)
+		[ "$vidpid" = "0bda8152" -o "$vidpid" = "23570601" ] || 
+		{
+			wait_for_driver_to_be_ready
+		}
+    } || 
+    {
+		wait_for_driver_to_be_ready
+    }
+    /lib/network/is_cal.script
+    [ -e /var/run/wifi_rtl_cal_rewrited ] && reboot
+    wait_T10_ready
+    sleep 6
+}
+
+stop() {
+    echo -n "Stopping wlan-manager: "
+    service_stop /usr/sbin/wlan-manager
+    echo "wlan-manager stopped."
+}
+
+restart() {
+    stop
+    start
+}
+
+wait_T10_ready() {
+	. /usr/share/libubox/jshn.sh
+	local MACSTR=
+	 grep -q Ingenic /proc/cpuinfo && return 0
+	MACSTR="$(ubus call tpServer getInfo '{"infoMask":1}')"
+	json_init
+	json_load "$MACSTR"
+	json_get_var MAC mac
+	echo $MAC > /dev/console
+	if [ "A8-57-4E-FD-93-5E" == "$MAC" ]; then
+		echo "==== read_testinfo_radio_from_tp_manage ===="
+		read_testinfo_radio_from_tp_manage
+		echo "TESTINFO_RADIO=$TESTINFO_RADIO"
+		echo "RADIO_PASS=$RADIO_PASS"
+		echo "RADIO_FAIL=$RADIO_FAIL"
+
+
+		if [ -z $TESTINFO_RADIO ] || [ $RADIO_FAIL == $TESTINFO_RADIO ]; then
+			wait_for_driver_to_be_ready
+			killall -9 onboarding
+			ifconfig wlan0 up
+			iwpriv wlan0 mp_start
+		fi
+
+		while [ -z $TESTINFO_RADIO ] || [ $RADIO_FAIL == $TESTINFO_RADIO ]; do
+			echo "====TESTINFO_RADIO was ($TESTINFO_RADIO) , Please DO radio calibration ====" > /tmp/tp_manage-testinfo_radio_check
+			sleep 5s
+			read_testinfo_radio_from_tp_manage
+		done
+
+		if [ -n $TESTINFO_RADIO ] && [ $RADIO_PASS == $TESTINFO_RADIO ]; then
+			echo "======================INFO==================================================="
+			echo "====TESTINFO_RADIO was ($TESTINFO_RADIO), Radio calibration has been done===="
+			echo "====TESTINFO_RADIO was ($TESTINFO_RADIO), Radio calibration has been done====" > /tmp/tp_manage-testinfo_radio_check
+			echo "============================================================================="
+		fi
+	fi
+}
+
+wait_for_driver_to_be_ready() {
+	ifconfig wlan0 > /dev/null 2>&1
+	rc=$?
+
+	while [ $rc -ne 0 ]; do
+		echo "wlan-manager: driver is not ready, wait..." > /dev/console
+		sleep 1s
+		ifconfig wlan0 > /dev/null 2>&1
+		rc=$?
+	done
+}
+
+read_testinfo_radio_from_tp_manage() {
+	. /usr/share/libubox/jshn.sh
+	local TESTINFO_RADIOSTR=
+	local READTIME=0
+
+	TESTINFO_RADIOSTR=$(ubus call tpServer getInfo '{"infoMask":1024, "sep":":"}')
+	while [ -z "$TESTINFO_RADIOSTR" -a "$READTIME" -le "4" ]; do
+		sleep 1s
+		TESTINFO_RADIOSTR=$(ubus call tpServer getInfo '{"infoMask":1024, "sep":":"}')
+		READTIME=$(expr $READTIME + 1)
+	done
+
+	json_init
+	json_load "$TESTINFO_RADIOSTR"
+	json_get_var TESTINFO_RADIO test_info
+
+	if [ -n $TESTINFO_RADIO ]; then
+		TESTINFO_RADIO=${TESTINFO_RADIO:0:8}
+	fi
+}

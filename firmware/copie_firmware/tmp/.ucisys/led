@@ -1,0 +1,3 @@
+led.config=led
+led.model=led
+led.model.startup=on

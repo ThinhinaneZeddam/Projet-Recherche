@@ -1,0 +1,8 @@
+
+config config 'cloud'
+	option sefDomain 'n-deventry-dcipc.tplinkcloud.com'
+	option defaultSvr 'n-devs-dcipc.tplinkcloud.com'
+	option validateSvr 'n-device-api.tplinkcloud.com'
+
+config config 'default'
+

@@ -1,0 +1,5 @@
+
+config capability 'traditional_enhance'
+
+config capability 'face_enhance'
+

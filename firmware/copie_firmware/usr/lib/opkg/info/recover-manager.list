@@ -1,0 +1,8 @@
+/etc/init.d/recover-manager
+/usr/bin/get_sys_status
+/etc/init.d/auto_upgrade
+/usr/bin/cloud_upgrade
+/etc/config/auto_upgrade
+/usr/bin/auto_upgrade
+/usr/bin/get_new_fwinfo
+/usr/bin/recover-manager

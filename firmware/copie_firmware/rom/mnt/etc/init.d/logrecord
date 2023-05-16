@@ -1,0 +1,30 @@
+#!/bin/sh /etc/rc.common
+
+START=96
+
+start() {
+	local diagnose_mode
+	
+	config_load system
+	config_get_bool diagnose_mode sys diagnose_mode
+
+	if [ $diagnose_mode -ne 0 ]; then
+		touch /tmp/diagnose_mode
+
+		# check SD card
+		sd_result=$(mount | grep "mmcblk0")
+		if [[ "$sd_result"X == ""X ]]; then
+			# no SD card
+			echo "Not found SD card, so will not start logrecord."
+			return
+		else
+			rootpasswd=$(awk -F: '$1=="root"{print $2}' /etc/passwd)
+			[ -n "${rootpasswd#[\!x]}" ] && login_opt="" || login_opt="-l off"
+			logrecordd -f /tmp/mnt/harddisk_1/diagnose_log $login_opt
+		fi
+	fi
+}
+
+stop() {
+	killall logrecordd
+}

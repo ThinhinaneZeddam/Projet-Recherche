@@ -1,0 +1,150 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2014-2014 www.tp-link.com
+
+START=17
+
+DEV_NAME=
+HW_VER=
+ISP_VER=
+DEV_ID=
+HW_ID=
+FW_CUR_ID=
+MAC=
+QRCODE=
+SW_VER=
+REGION_CODE=
+
+start() {
+    read_factory_info_from_td_manage
+
+    if [ -z $DEV_NAME ]; then
+        echo "======================Warning============================"
+        echo "== DEV_NAME was not written to flash yet! Use default. =="
+        echo "========================================================="
+        DEV_NAME="Default-devName"
+    fi
+
+    if [ -z $HW_VER ]; then
+        echo "======================Warning============================"
+        echo "== HW_VER was not written to flash yet! Use default.   =="
+        echo "========================================================="
+        HW_VER="Default-hwVer"
+    fi
+
+    if [ -z $ISP_VER ]; then
+        echo "======================Warning============================"
+        echo "== ISP was not written to flash yet! Use default.      =="
+        echo "========================================================="
+        ISP_VER="Default-ispVer"
+    fi
+
+    if [ -z $MAC ]; then
+        echo "======================Warning============================"
+        echo "== MAC ADDRESS was not written to flash yet!           =="
+        echo "========================================================="
+    else
+        # mac address is xx-xx-xx-xx-xx-xx
+        MAC_ADDR_SUFFIX=`echo $MAC|awk -F- '{print $4$5$6}'`
+    fi
+    local DEVICE_NAME="${DEV_NAME} ${HW_VER}"
+    local DEVICE_INFO="${DEV_NAME} ${HW_VER} IPC"
+    local DEVICE_MODEL="${DEV_NAME}"
+    local CURRENT_DEV_NAME="$(uci get device_info.info.device_name)"
+    local CURRENT_DEV_INFO="$(uci get device_info.info.device_info)"
+    local CURRENT_DEV_MODEL="$(uci get device_info.info.device_model)"
+    if [ "${CURRENT_DEV_NAME}" != "${DEVICE_NAME}" ] || [ "${CURRENT_DEV_INFO}" != "${DEVICE_INFO}" ] || [ "${CURRENT_DEV_MODEL}" != "${DEVICE_MODEL}" ]; then
+        echo "set device info from flash"
+
+        local HW_VERSION="$HW_VER"
+
+        #DEVICE_INFO
+        uci set device_info.info.device_model="$DEVICE_MODEL"
+        uci set device_info.info.hw_version="$HW_VER"
+        uci set protocol.dhcp.hostname="${DEV_NAME}_${MAC_ADDR_SUFFIX}"
+        uci set device_info.info.device_name="$DEVICE_NAME"
+        uci set device_info.info.device_info="$DEVICE_INFO"
+        uci set device_info.info.fw_description="${DEV_NAME} ${HW_VER}"
+        uci set system.sys.alias="${DEV_NAME} ${HW_VER}"
+
+        uci commit protocol
+        uci commit system
+    fi
+
+    uci set device_info.info.dev_id="$DEV_ID"
+    uci set device_info.info.hw_id="$HW_ID"
+    uci set device_info.info.fw_cur_id="$FW_CUR_ID"
+    uci set device_info.info.mac="$MAC"
+    uci set device_info.info.qrcode="$QRCODE"
+
+    local CURRENT_ISP_VER="$(uci get device_info.info.cur_isp_version)"
+    if [ "$ISP_VER" != "$CURRENT_ISP_VER" ]; then
+        uci set device_info.info.cur_isp_version="$ISP_VER"
+    fi
+
+    local DEVICE_SW_VER="$(uci get device_info.info.sw_version)"
+    if [ "${DEVICE_SW_VER}" != "${SW_VER}${REGION_CODE}" ]; then
+        uci set device_info.info.sw_version="${SW_VER}${REGION_CODE}"
+    fi
+
+    uci commit device_info
+}
+
+read_factory_info_from_td_manage() {
+    . /usr/share/libubox/jshn.sh
+    local FACTORY_INFO_STR=
+
+    TPSERVERSTART=$(ubus call tpServer start)
+    FACTORY_INFO_STR=$(ubus call tpServer getInfo '{"infoMask":65535}')
+
+    json_init
+    json_load "$FACTORY_INFO_STR"
+    json_get_var DEV_NAME dev_name
+    json_get_var HW_VER hw_ver
+    json_get_var DEV_ID dev_id
+    json_get_var HW_ID hw_id
+    json_get_var FW_CUR_ID fw_cur_id
+    json_get_var MAC mac
+    json_get_var QRCODE qrcode
+    json_get_var ISP_VER isp_ver
+    json_get_var SW_VER sw_ver
+    json_get_var REGION region
+    REGION_CODE="($(get_region_code))"
+}
+
+get_region_code() {
+    case "$REGION" in
+        "UN")
+            echo 0000
+            ;;
+        "US")
+            echo 5553
+            ;;
+        "EU")
+            echo 4555
+            ;;
+        "KR")
+            echo 4B52
+            ;;
+        "BR")
+            echo 4252
+            ;;
+        "JP")
+            echo 4A50
+            ;;
+        "CA")
+            echo 4341
+            ;;
+        "AU")
+            echo 4155
+            ;;
+        "RU")
+            echo 5255
+            ;;
+        "TW")
+            echo 5457
+            ;;
+        *)
+            echo FFFF
+            ;;
+    esac
+}

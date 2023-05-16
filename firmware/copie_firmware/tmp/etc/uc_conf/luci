@@ -1,0 +1,13 @@
+
+config core 'main'
+
+config extern 'flash_keep'
+
+config internal 'languages'
+
+config internal 'sauth'
+
+config internal 'ccache'
+
+config internal 'themes'
+

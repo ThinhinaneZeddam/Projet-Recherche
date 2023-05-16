@@ -1,0 +1,12 @@
+/etc/cloud-client/2048_newroot.cer
+/etc/config/cfg_app_record
+/etc/netlink.d/host_data_collect/notify_cloud
+/etc/hotplug.d/iface/70-cloud
+/bin/cloud-client
+/etc/cloud-sdk/config.cfg
+/etc/config/cfg_web_record
+/etc/config/cloud_config
+/etc/init.d/cloud_client
+/etc/config/cloud_status
+/etc/cloud-sdk/tp.crt
+/etc/cloud-sdk/ca.cer

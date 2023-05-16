@@ -1,0 +1,61 @@
+#!/bin/sh /etc/rc.common
+
+START=73
+RESUME=73
+
+CET_BIN="/bin/cet"
+
+core_dump_file="/data/core_dump_debug"
+
+start(){
+	if [ -f "$core_dump_file" ]; then
+		service_start /usr/sbin/telnetd
+		ulimit -c unlimited
+		REL_VERSION=$(uci get device_info.info.sw_version | awk '{print $3$4}')
+		sysctl -w kernel.core_pattern=/tmp/mnt/harddisk_1/core-%e-%t-$REL_VERSION
+		#echo "/mnt/harddisk_1/core-%e%t" > /proc/sys/kernel/core_pattern
+	fi
+	
+	if [ ! -f /etc/sensor ]; then
+		ln -s /tmp /etc/sensor
+	fi	
+	
+	if [ -f /tmp/webrtc_profile.ini ]; then
+		ln -s /tmp/webrtc_profile.ini /etc/webrtc_profile.ini
+	fi	
+	
+	if [ ! -f /tmp/loadSensor ]; then
+		#generate sensor info to /tmp/sensor_state
+		/config/detect_i2c_install_sensor.sh
+
+		sensor_state=$(sed -n '1p' /tmp/sensor_state)
+		# echo "sensor_state=${sensor_state}"
+		if [ "$sensor_state" = "1" ]
+		then
+			ko_name=$(sed -n '2p' /tmp/sensor_state)
+			chmod +x /data/cfg/loadSensor
+			/data/cfg/loadSensor $ko_name
+			$CET_BIN 2>&1 1>/dev/console &
+		fi
+	else
+		chmod +x /tmp/loadSensor
+		/tmp/loadSensor
+		sleep 1
+		$CET_BIN 2>&1 1>/dev/console &
+		rm /tmp/loadSensor
+	fi
+}
+
+#stop cet program
+stop()
+{
+	service_stop $CET_BIN
+}
+
+terminate(){
+	service_stop $CET_BIN
+}
+
+resume(){
+	$CET_BIN 2>&1 1>/dev/console &
+}

@@ -1,0 +1,19 @@
+
+config interface 'wan'
+	option type 'bridge'
+
+config proto 'dhcp'
+	option proto 'dhcp'
+	option auto '1'
+	option wan_type 'dhcp'
+
+config proto 'static'
+	option type 'bridge'
+	option proto 'static'
+	option auto '1'
+	option wan_type 'static'
+	option fac_ipaddr '192.168.0.10'
+
+config proto 'pppoe'
+	option keepalive '3,10'
+

@@ -1,0 +1,19 @@
+
+config capability 'font_info'
+	list display 'ntnb'
+	list display 'tnb'
+	list display 'ntb'
+	list display 'tb'
+	list size 'auto'
+	list color_type 'auto'
+	list color_type 'user_defined'
+	list color 'black'
+	list color 'white'
+	option max_size '64*64'
+
+config capability 'label_info'
+	option num '3'
+
+config capability 'res_info'
+	option max_res_w '2304'
+

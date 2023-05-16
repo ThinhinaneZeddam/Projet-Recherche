@@ -1,0 +1,17 @@
+
+config root 'root'
+	option username 'admin'
+	option passwd 'zMiVw8Kw0oxKXL0'
+	option ciphertext 'dl5GoIRk+FMC/JgP5yLjA+r8PynYYSai8DSmdv1Xw7iALNEKxkE5UusQw6BMC4+FlcWv0bCPuw8DSlSk/vkmcTZ/BF/ZY1ENNJqo+uJtiGi2f1zJFjleYhPlDx4YXa3qp7oSNF8EU1BU4mOY9nEtUakFl4oVPsvlLGM3qE/zI2k='
+	option sharepwd ''
+	option comment ''
+
+config third_account 'third_account'
+	option username '---'
+	option passwd '---'
+	option ciphertext 'dl5GoIRk+FMC/JgP5yLjA+r8PynYYSai8DSmdv1Xw7iALNEKxkE5UusQw6BMC4+FlcWv0bCPuw8DSlSk/vkmcTZ/BF/ZY1ENNJqo+uJtiGi2f1zJFjleYhPlDx4YXa3qp7oSNF8EU1BU4mOY9nEtUakFl4oVPsvlLGM3qE/zI2k='
+	option comment ''
+
+config authentication 'authentication'
+	option basic_enabled '0'
+

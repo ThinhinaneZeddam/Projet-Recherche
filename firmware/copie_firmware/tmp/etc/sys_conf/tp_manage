@@ -1,0 +1,5 @@
+
+config tp_manage 'factory_mode'
+
+config tp_manage 'bind_info'
+

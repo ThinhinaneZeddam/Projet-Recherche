@@ -1,0 +1,11 @@
+image.switch=switch_type
+image.switch.night_vision_mode=inf_night_vision
+image.switch.wtl_intensity_level=5
+image.common=para
+image.common.inf_delay=10
+image.shedday=para
+image.shedday.light_freq_mode=auto
+image.shednight=para
+image.shednight.light_freq_mode=auto
+image.autoday=para
+image.autonight=para

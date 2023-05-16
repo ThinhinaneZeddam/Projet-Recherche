@@ -1,0 +1,13 @@
+Package: ubusd
+Version: 2013-01-13
+Depends: libc, libubox
+Provides: 
+Source: tp_package/sys_packages/ubus
+Section: luci2
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 19099
+Description:  OpenWrt RPC daemon

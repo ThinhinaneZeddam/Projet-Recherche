@@ -1,0 +1,21 @@
+
+config system 'sys'
+	option hostname 'C200'
+
+config setting 'basic'
+
+config timing 'ntp'
+	list def_server 'time.nist.gov'
+	list def_server '128.138.140.44'
+	list def_server '192.36.144.22'
+	list def_server 'time-a.nist.gov'
+	list def_server 'time-b.nist.gov'
+	list def_server 'time.windows.com'
+	list def_server 'time-nw.nist.gov'
+	list def_server 'au.pool.ntp.org'
+	list def_server 'nz.pool.ntp.org'
+
+config debug 'debug'
+
+config dst 'dst'
+

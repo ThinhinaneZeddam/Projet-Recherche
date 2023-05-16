@@ -1,0 +1,58 @@
+#!/bin/sh /etc/rc.common
+
+START=12
+
+reset_gpio=""
+
+start() {
+	local factory_mode
+	config_load tp_manage
+	config_get factory_mode factory_mode enabled
+	if [ "$factory_mode" = "1" ]; then
+		touch /tmp/gpio_test_mode
+	fi
+
+	CFG_FILE="/tmp/buildroot_cfg.ini"
+	try_cnt=0
+	while [ ! -f $CFG_FILE ]; do
+		echo "ispfile is not ready, wait..."
+		sleep 1
+		let try_cnt++
+		if [ $try_cnt == 3 ]
+		then
+		    echo "reset config is not ready, use default!!!"
+		    CFG_FILE="/data/cfg/buildroot_cfg.ini"
+			break
+		fi
+	done
+
+	if [ -f $CFG_FILE ]; then
+		while read line
+		do
+			if (!(echo "$line" | grep -n '^;' > /dev/null) && (echo "$line" | grep -n '=' > /dev/null)); then
+			    name=${line%=*}
+			    value=${line#*=}
+			    if [ $name == "CONFIG_RESET_GPIO" ]; then
+			    	reset_gpio=$value
+			    	echo "reset_gpio = $reset_gpio"
+			    	break
+			    fi
+		    fi
+		done < $CFG_FILE
+
+		osrelease=`cat /proc/sys/kernel/osrelease |awk -F '_' '{print $1}'`
+		echo "===insmod /lib/modules/$osrelease/k_hi_reset.ko==="
+		insmod /lib/modules/$osrelease/k_hi_reset.ko \
+		RESET_GPIO_CONFIG=$reset_gpio \
+		1>/dev/null 2>&1
+	else
+		echo "====================Warning===================="
+		echo "== RESET_GPIO was not written to flash yet!  =="
+		echo "==============================================="
+	fi
+}
+
+stop() {
+	osrelease=`cat /proc/sys/kernel/osrelease |awk -F '_' '{print $1}'`
+	rmmod /lib/modules/$osrelease/k_hi_reset.ko
+}

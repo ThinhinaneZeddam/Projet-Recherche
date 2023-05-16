@@ -1,0 +1,19 @@
+
+config server 'main'
+	option enabled 'off'
+	option address '224.0.1.0'
+	option port '10000'
+	option random 'on'
+
+config server 'minor'
+	option enabled 'off'
+	option address '224.0.1.0'
+	option port '10002'
+	option random 'on'
+
+config server 'third'
+	option enabled 'off'
+	option address '224.0.1.0'
+	option port '10004'
+	option random 'on'
+

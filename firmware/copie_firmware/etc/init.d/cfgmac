@@ -1,0 +1,99 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2014-2014 www.tp-link.com
+
+START=16
+
+FAC_MACADDR=
+
+start() {
+	read_mac_from_td_manage
+	if [ -z $FAC_MACADDR ]; then
+		echo "======================Warning==========================="
+		echo "==== MAC was not written to flash yet! Use default. ===="
+		echo "========================================================"
+		FAC_MACADDR="A8:57:4E:FD:93:5E"
+	fi
+	
+	local WAN_MAC="$FAC_MACADDR"
+	local WAN_DEV=$(uci get network.wan.ifname)
+
+	if [[ "bridge" == "`uci -q get network.wan.type`" ]]; then
+		write_mac_to_iface "$WAN_DEV" "$WAN_MAC"
+	fi
+
+	local p_diff=0
+	local p_macaddr=$(uci get protocol.wan.macaddr)
+	if [ "$p_macaddr" != "$WAN_MAC" ]; then
+		echo "config protocol macaddr diff"
+		uci set protocol.wan.macaddr="$WAN_MAC"
+		p_diff=1
+	fi
+
+	local p_fac_macadd=$(uci get protocol.wan.fac_macaddr)
+	if [ "$p_fac_macadd" != "$WAN_MAC" ]; then
+		echo "config protocol fac_macaddr diff"
+		uci set protocol.wan.fac_macaddr="$WAN_MAC"
+		p_diff=1
+	fi 
+
+	local n_diff=0
+	local n_macaddr=$(uci get network.wan.macaddr)
+	if [ "$n_macaddr" != "$WAN_MAC" ]; then 
+		echo "config network macaddr diff"
+		uci set network.wan.macaddr="$WAN_MAC"
+		n_diff=1
+	fi
+
+	local n_fac_macaddr=$(uci get network.wan.fac_macaddr)
+	if [ "$n_fac_macaddr" != "$WAN_MAC" ]; then
+		echo "config network fac_macaddr diff"
+		uci set network.wan.fac_macaddr="$WAN_MAC"
+		n_diff=1
+	fi 
+
+	if [ $p_diff == 1 ]; then 
+		echo "config protocol has changed. Commit it"
+		uci commit protocol
+	fi 
+	
+	if [ $n_diff == 1 ]; then 
+		echo "config network has changed. Commit it"
+		uci commit network 
+	fi 
+}
+	
+	
+read_mac_from_td_manage() {
+	. /usr/share/libubox/jshn.sh
+	local MACADDRSTR=
+	local READTIME=0
+
+	MACADDRSTR=$(ubus call tpServer getInfo '{"infoMask":1, "sep":":"}')
+	TPSERVERSTART=$(ubus call tpServer start)
+	while [ -z "$MACADDRSTR" -a "$READTIME" -le "4" ]; do
+		sleep 1s
+		MACADDRSTR=$(ubus call tpServer getInfo '{"infoMask":1, "sep":":"}')
+		READTIME=$(expr $READTIME + 1)
+	done
+
+	json_init
+	json_load "$MACADDRSTR"
+	json_get_var FAC_MACADDR mac
+}
+
+write_mac_to_iface() {
+	local ifname=$1
+	local cfgstr=
+
+	# invalid device, return
+	ifconfig "$ifname" > /dev/null 2>&1 || return 1
+
+	# if MAC has been configured, return
+	cfgstr=$(ifconfig "$ifname" | grep "HWaddr" | grep "$2")
+	[ -n "$cfgstr" ] && return
+
+	ifconfig "$ifname" down
+	ifconfig "$ifname" hw ether "$2"
+
+	return 0
+}

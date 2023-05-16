@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+#Han Renjie <hanrenjie@tp-link.com.cn>
+
+START=62
+RESUME=62
+
+RTSPD_BIN="/usr/bin/rtspd"
+
+start(){
+	$RTSPD_BIN &
+}
+
+terminate(){
+	service_stop $RTSPD_BIN
+}
+
+resume(){
+	start
+}

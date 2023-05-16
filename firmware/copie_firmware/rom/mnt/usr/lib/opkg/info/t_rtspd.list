@@ -1,0 +1,4 @@
+/etc/config/rtspd_config
+/usr/bin/rtspd
+/usr/lib/libcommon.so
+/etc/init.d/rtspd

@@ -1,0 +1,7 @@
+
+config capability 'main'
+
+config capability 'minor'
+
+config capability 'mjpeg'
+

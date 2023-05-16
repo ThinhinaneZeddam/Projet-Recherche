@@ -1,0 +1,5 @@
+
+config info 'tapo_care_state'
+
+config app_component_list 'service_list'
+

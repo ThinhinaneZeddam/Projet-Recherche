@@ -1,0 +1,6 @@
+
+config uhttpd 'main'
+	option listen_https '443'
+
+config cert 'px5g'
+

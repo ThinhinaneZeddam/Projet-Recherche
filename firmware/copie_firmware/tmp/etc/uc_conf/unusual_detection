@@ -1,0 +1,15 @@
+
+config on_off 'login_error'
+	option enabled 'on'
+	option max_num_err '10'
+	option msg_push_enabled 'on'
+	option light_alarm_enabled 'off'
+
+config on_off 'hd_lack'
+	option enabled 'on'
+	option msg_push_enabled 'on'
+
+config on_off 'hd_error'
+	option enabled 'on'
+	option msg_push_enabled 'on'
+

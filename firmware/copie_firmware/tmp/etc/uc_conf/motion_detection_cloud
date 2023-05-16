@@ -1,0 +1,17 @@
+
+config on_off 'motion_det'
+	option enabled 'on'
+	option digital_sensitivity '50'
+
+config notif_list 'motion_notif_list'
+	option app_enabled 'off'
+	option client_enabled 'off'
+	option record_enabled 'on'
+	option msg_push_enabled 'off'
+
+config region_info 'region_info_1'
+	option height '10000'
+	option width '10000'
+	option x_coor '0'
+	option y_coor '0'
+

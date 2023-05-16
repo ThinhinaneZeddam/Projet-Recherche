@@ -1,0 +1,16 @@
+#!/bin/sh /etc/rc.common
+
+START=93
+STOP=93
+RESUME=93
+
+start()
+{
+	/bin/telemetry > /dev/console 2>&1 &
+}
+
+stop()
+{
+	service_stop /bin/telemetry
+}
+

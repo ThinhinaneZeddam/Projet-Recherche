@@ -1,0 +1,74 @@
+
+config router_post 'bind'
+
+config router_post 'login'
+
+config router_post 'register'
+
+config router_post 'reset_account_pwd'
+
+config router_post 'modify_account_pwd'
+
+config router_post 'get_reg_verify_code'
+
+config router_post 'get_reset_pwd_verify_code'
+
+config router_post 'check_reg_verify_code'
+
+config router_post 'check_reset_pwd_verify_code'
+
+config router_post 'get_plugins'
+
+config router_post 'get_can_update_plugins'
+
+config router_post 'get_not_installed_plugins'
+
+config router_post 'check_plugin_update'
+
+config cloud_push 'new_firmware'
+	option fw_new_notify '0'
+	option fw_update_type '1'
+	option not_show '0'
+
+config cloud_push 'device_legality'
+	option illegal '0'
+	option illegal_type '0'
+	option reconnect_time '0'
+
+config cloud_reply 'device_status'
+	option bind_status '0'
+	option login_status '0'
+	option account_status '0'
+
+config cloud_reply 'upgrade_info'
+
+config cloud_device 'info'
+	option alias 'C200 3.0'
+
+config cloud_device 'bind_tip'
+	option not_show '0'
+
+config cloud_device 'brand_mac'
+	option renew_time '0'
+
+config data_collect 'static'
+
+config data_collect 'conf_app'
+
+config data_collect 'conf_web'
+
+config data_collect 'conn_dev'
+
+config data_collect 'surr_dev'
+
+config data_collect 'extra_bind'
+	option need_bind '0'
+
+config data_collect 'upgrade_status'
+	option state '0'
+	option lastUpgradingSuccess '0'
+
+config tums_config 'tums_info'
+
+config tums_firmware_info 'tums_firmware'
+

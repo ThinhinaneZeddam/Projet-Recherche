@@ -1,0 +1,19 @@
+
+config capability 'device_speaker'
+
+config capability 'device_microphone'
+
+config capability 'app_speaker'
+	list sampling_rate '8'
+	list sampling_rate '16'
+	option channels '2'
+	list decode_type 'G711'
+	list decode_type 'AAC'
+
+config capability 'app_microphone'
+	list sampling_rate '8'
+	list sampling_rate '16'
+	option channels '2'
+	list encode_type 'G711'
+	list encode_type 'AAC'
+

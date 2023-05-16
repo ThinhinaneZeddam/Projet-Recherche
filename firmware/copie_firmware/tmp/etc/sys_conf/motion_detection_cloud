@@ -1,0 +1,7 @@
+
+config on_off 'motion_det'
+
+config notif_list 'motion_notif_list'
+
+config region_info 'region_info_1'
+

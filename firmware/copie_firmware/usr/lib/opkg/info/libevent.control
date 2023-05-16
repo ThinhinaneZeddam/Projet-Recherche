@@ -1,0 +1,13 @@
+Package: libevent
+Version: 1
+Depends: libc, libpthread, libopenssl
+Provides: 
+Source: tp_package/lib/libevent
+Section: libs
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 294197
+Description:  event is a library used for cet.

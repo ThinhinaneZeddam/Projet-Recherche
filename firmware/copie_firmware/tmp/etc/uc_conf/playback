@@ -1,0 +1,19 @@
+
+config scale_capability 'scale_0'
+
+config scale_capability 'scale_1'
+
+config scale_capability 'scale_2'
+
+config scale_capability 'scale_3'
+
+config scale_capability 'scale_4'
+
+config scale_capability 'scale_5'
+
+config scale_capability 'scale_6'
+
+config scale_capability 'scale_7'
+
+config scale_capability 'scale_8'
+

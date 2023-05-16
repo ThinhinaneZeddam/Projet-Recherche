@@ -1,0 +1,12 @@
+
+config server 'vhttpd'
+	option port '8800'
+
+config server 'rtsp'
+	option port '554'
+
+config URL 'URL'
+
+config on_off 'media_encrypt'
+	option enabled 'off'
+

@@ -1,0 +1,13 @@
+Package: cloud-sdk
+Version: 1
+Depends: libc, libopenssl, libpthread, libuci, libubus, ubus, ubusd, jshn, libjson, libblobmsg-json, libcurl, librt, libsyslog, dsd, libdecrypter, libsecurity, cloud-brd
+Provides: 
+Source: tp_package/cloud-sdk
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 458434
+Description:  This util will be used to connected our cloud server.

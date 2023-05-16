@@ -1,0 +1,4 @@
+people_detection.detection=on_off
+people_detection.notify_list=notify_list
+people_detection.arming_schedule=plan
+people_detection.region_info_1=region_info

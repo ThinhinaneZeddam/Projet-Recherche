@@ -1,0 +1,7 @@
+tamper_detection.tamper_det=on_off
+tamper_detection.region=region_info
+tamper_detection.region.height=10000
+tamper_detection.region.width=10000
+tamper_detection.region.x_coor=0
+tamper_detection.region.y_coor=0
+tamper_detection.tamper_notif_list=notif_list

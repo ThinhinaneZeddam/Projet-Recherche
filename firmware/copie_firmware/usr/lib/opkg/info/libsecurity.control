@@ -1,0 +1,13 @@
+Package: libsecurity
+Version: 1
+Depends: libc
+Provides: 
+Source: tp_package/lib/libsecurity
+Section: libs
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 74482
+Description:  C library for DES && MD5 && RSA

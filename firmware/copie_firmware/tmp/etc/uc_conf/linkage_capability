@@ -1,0 +1,11 @@
+
+config capability 'capability'
+	option sound_alarm_capability '000000000000100000000000001111'
+	option light_alarm_capability '000000000010100000000000001101'
+	option record_capability '000000000000100000000000001101'
+	option capture_capability '000000000000000000000000000000'
+	option ftp_capability '000000000000000000000000000000'
+	option msg_push_capability '000000001010100000000000001111'
+	option email_capability '000000000000000000000000000000'
+	option alarm_out_capability '000000000000000000000000000000'
+

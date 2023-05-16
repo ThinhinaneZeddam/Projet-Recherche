@@ -1,0 +1,29 @@
+#!/bin/sh
+#add by QingBo <qingbo@tp-link.net>
+
+[ "$INTERFACE" != "wan" ] && return 0
+
+case "$ACTION" in
+    ifup)
+        local wan_ifname=`uci get network.wan.ifname`
+        local wan_type=`uci get network.wan.type`
+        local onvif_ready=`netstat -anup | grep "3702[^0-9]"`
+        local onvif_pid=""
+
+        if [ -n "$onvif_ready" ]; then
+            onvif_pid=`pgrep ${onvif_ready#*/}`
+        fi
+
+        if [ "${wan_type}" = "bridge" ]; then
+            route add -net 224.0.0.0 netmask 240.0.0.0 dev br-wan > /dev/null
+        else
+            route add -net 224.0.0.0 netmask 240.0.0.0 dev $wan_ifname > /dev/null
+        fi
+
+        if [ -n "${onvif_pid}" -a -n "${onvif_ready}" ]; then
+                kill -SIGUSR1 ${onvif_pid}
+        fi
+    ;;
+    ifdown)
+    ;;
+esac

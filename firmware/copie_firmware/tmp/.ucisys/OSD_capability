@@ -1,0 +1,15 @@
+OSD_capability.font_info=capability
+|OSD_capability.font_info.display=ntnb
+|OSD_capability.font_info.display=tnb
+|OSD_capability.font_info.display=ntb
+|OSD_capability.font_info.display=tb
+|OSD_capability.font_info.size=auto
+|OSD_capability.font_info.color_type=auto
+|OSD_capability.font_info.color_type=user_defined
+|OSD_capability.font_info.color=black
+|OSD_capability.font_info.color=white
+OSD_capability.font_info.max_size=64*64
+OSD_capability.label_info=capability
+OSD_capability.label_info.num=3
+OSD_capability.res_info=capability
+OSD_capability.res_info.max_res_w=2304

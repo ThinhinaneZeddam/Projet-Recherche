@@ -1,0 +1,4 @@
+/lib/modules/3.10.14/gpio_leds.ko
+/etc/config/led
+/usr/bin/ledd
+/etc/init.d/ledd

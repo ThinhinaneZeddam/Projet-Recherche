@@ -1,0 +1,7 @@
+
+config dhcpd 'udhcpd'
+	option interface 'wlan1'
+	option lease_file '/tmp/dhcp.leases'
+	option pid_file '/var/run/udhcpd.pid'
+	option subnet '255.255.255.0'
+

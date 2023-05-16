@@ -1,0 +1,53 @@
+#!/bin/sh
+
+. /lib/functions.sh
+. /usr/bin/tp_event.sh
+
+
+config_load unusual_detection
+local ip_conflict_enabled
+config_get ip_conflict_enabled ip_conflict enabled
+
+if [ "on" == "$ip_conflict_enabled" ]
+then
+    local ipaddr=`uci get protocol.static.ipaddr`
+    local conflict=`arping -I eth0 -c 1 -D $ipaddr | sed -n '/Received 1 replies/p'`
+
+    if [ -n "$conflict" ]
+    then
+        local i=0
+        local event_time=$(date +%s)
+
+        local result=`ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_IP_CONFLICT', "time": '$event_time', "status": '$TP_EVENT_MODE_START'}'`
+        while [ -z "$result" ]
+        do
+            # ubus call failed
+            ipaddr=`uci get protocol.static.ipaddr`
+            conflict=`arping -I eth0 -c 1 -D $ipaddr | sed -n '/Received 1 replies/p'`
+            if [ -n "$conflict" ]
+            then
+                result=`ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_IP_CONFLICT', "time": 0, "status": '$TP_EVENT_MODE_START'}'`
+            else
+                exit
+            fi
+        done
+
+        while [ -n "$conflict" ]
+        do
+            ipaddr=`uci get protocol.static.ipaddr`
+            conflict=`arping -I eth0 -c 1 -D $ipaddr | sed -n '/Received 1 replies/p'`
+
+            let i=i+1
+            if [ "$TP_EVENT_PROCESSING_TIMEOUT" -le "$i" ]
+            then
+                # send hearbeat
+                ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_IP_CONFLICT', "time": 0, "status": '$TP_EVENT_MODE_PROCESSING'}'
+                let i=0
+            fi
+            sleep 1
+        done
+
+        ubus call CET alarm_event '{"type": '$TP_EVENT_TYPE_IP_CONFLICT', "time": 0, "status": '$TP_EVENT_MODE_END'}'
+    fi
+fi
+

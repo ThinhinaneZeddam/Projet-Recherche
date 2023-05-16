@@ -1,0 +1,6 @@
+
+config capability 'traditional_enhance'
+	option people_enhance_ver '7'
+
+config capability 'face_enhance'
+

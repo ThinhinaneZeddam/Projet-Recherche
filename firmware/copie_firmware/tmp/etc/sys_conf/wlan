@@ -1,0 +1,10 @@
+
+config wlan 'basic'
+
+config wlan 'ap0'
+
+config wlan 'sta0'
+
+config wlan 'default_ap'
+	option ap 'ap0'
+

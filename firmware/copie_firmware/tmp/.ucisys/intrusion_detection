@@ -1,0 +1,3 @@
+intrusion_detection.detection=on_off
+intrusion_detection.notify_list=notify_list
+intrusion_detection.arming_schedule=plan

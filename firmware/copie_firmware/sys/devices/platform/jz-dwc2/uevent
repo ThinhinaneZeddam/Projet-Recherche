@@ -1,0 +1,2 @@
+DRIVER=jz-dwc2
+MODALIAS=platform:jz-dwc2

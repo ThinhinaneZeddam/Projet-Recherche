@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2019 Han Renjie
+
+START=11
+
+TP_MANAGE_BIN="/bin/tp_manage"
+
+start() {
+	tp_manage 2>&1 1>/dev/console &
+	c=0
+	while [ ! -e /tmp/.tp_manage_factory_mode_check_ok ]
+	do
+		sleep 1
+		c=$((c+1))
+		[ $c -gt 5 ] && break
+	done
+}
+
+stop() {
+	service_stop $TP_MANAGE_BIN
+}
+

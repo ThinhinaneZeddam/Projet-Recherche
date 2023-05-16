@@ -1,0 +1,2 @@
+DRIVER=jz-sfc
+MODALIAS=platform:jz-sfc

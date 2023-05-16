@@ -1,0 +1,13 @@
+Package: kmod-k_hi_reset
+Version: 3.10.14+1.0
+Depends: kernel (=3.10.14-1-a74cf375559f80d758a3e54a15723d6b), libiniparser
+Provides: 
+Source: tp_package/k_packages/k_hi_reset
+Section: ko util
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 13501
+Description:  gpio reset driver

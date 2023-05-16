@@ -1,0 +1,2 @@
+relayd_config.server=relay_server
+relayd_config.server.is_tums_talk=0

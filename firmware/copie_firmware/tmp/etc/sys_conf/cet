@@ -1,0 +1,12 @@
+
+config server 'vhttpd'
+
+config server 'rtsp'
+
+config URL 'URL'
+	option profile_1 'stream1'
+	option profile_2 'stream2'
+	option profile_3 'stream3'
+
+config on_off 'media_encrypt'
+

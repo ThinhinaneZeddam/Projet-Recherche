@@ -1,0 +1,8 @@
+
+config on_off 'login_err'
+
+config notif_list 'login_err_notif_list'
+
+config on_off 'sd_missing'
+	option msg_push_enabled 'on'
+

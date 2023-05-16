@@ -1,0 +1,5 @@
+dhcpd.udhcpd=dhcpd
+dhcpd.udhcpd.interface=wlan1
+dhcpd.udhcpd.lease_file=/tmp/dhcp.leases
+dhcpd.udhcpd.pid_file=/var/run/udhcpd.pid
+dhcpd.udhcpd.subnet=255.255.255.0

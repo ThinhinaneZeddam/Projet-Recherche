@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+
+START=85
+
+start()
+{
+    . /usr/lib/libmsglog.sh
+
+    local network_status=`ifconfig eth0 | grep "BROADCAST" | grep "RUNNING"`
+    if [ -z "$network_status" ]
+    then
+        msglog1 $LOG_PRIO_WARNING "NETWORK" "网线断开"
+
+        touch /tmp/network_broken
+        /usr/bin/event_networkstatus &
+    else
+        local proto=`uci get network.wan.proto`
+        local ipaddr=`uci get protocol.static.ipaddr`
+
+        if [ $proto == "static" ]
+        then
+            local conflict=`arping -I eth0 -c 1 -D $ipaddr | sed -n '/Received 1 replies/p'`
+            if [ -n "$conflict" ]
+            then
+                msglog1 $LOG_PRIO_WARNING "NETWORK" "IP冲突，冲突IP：$ipaddr"
+                /usr/bin/event_checkipconflict &
+            fi
+
+        fi
+    fi
+}
+

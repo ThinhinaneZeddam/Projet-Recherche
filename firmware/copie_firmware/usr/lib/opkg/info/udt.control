@@ -1,0 +1,13 @@
+Package: udt
+Version: 4.0
+Depends: libc, uclibcxx
+Provides: 
+Source: tp_package/u_packages/udt
+Section: opt
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 312544
+Description:  UDP-based Data Transfer Library --Version 4

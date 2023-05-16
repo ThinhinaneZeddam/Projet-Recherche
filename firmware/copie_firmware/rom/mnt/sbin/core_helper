@@ -1,0 +1,2 @@
+#!/bin/sh
+exec gzip - > /tmp/mnt/harddisk_1/core-$1-$2.$3.tar.gz

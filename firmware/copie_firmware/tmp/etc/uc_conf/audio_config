@@ -1,0 +1,15 @@
+
+config audio_config 'speaker'
+	option volume '100'
+
+config audio_config 'microphone'
+	option sampling_rate '8'
+	option channels '1'
+	option encode_type 'G711alaw'
+	option volume '100'
+	option mute 'off'
+	option noise_cancelling 'on'
+
+config audio_config 'record_audio'
+	option enabled 'on'
+

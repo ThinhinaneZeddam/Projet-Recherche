@@ -1,0 +1,3 @@
+audio_config.speaker=audio_config
+audio_config.microphone=audio_config
+audio_config.record_audio=audio_config

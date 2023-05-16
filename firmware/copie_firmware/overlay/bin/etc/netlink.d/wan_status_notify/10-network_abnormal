@@ -1,0 +1,34 @@
+#!/bin/sh
+
+input_json="$1"
+status=
+waninterface=
+
+. /usr/share/libubox/jshn.sh
+
+json_load "$input_json"
+json_get_vars status
+
+if [ "up" == $status ]; then
+    #network is not broken
+    if [ -e /tmp/network_broken ]
+    then
+        rm /tmp/network_broken
+    fi
+
+    #if use static ip, check ip conflict
+    local proto=`uci get network.wan.proto`
+
+    if [ "$proto" == "static" ]
+    then
+        /usr/bin/event_checkipconflict &
+    fi
+else
+    #network is broken
+    if [ ! -e /tmp/network_broken ]
+    then
+        touch /tmp/network_broken
+    fi
+
+    /usr/bin/event_networkstatus &
+fi

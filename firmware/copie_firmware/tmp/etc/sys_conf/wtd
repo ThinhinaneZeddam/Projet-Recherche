@@ -1,0 +1,4 @@
+
+config wtd 'config'
+	option init_delay '0'
+

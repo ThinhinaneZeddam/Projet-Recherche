@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+
+START=30
+
+start() {
+	/usr/bin/dsd &
+}
+
+stop() {
+	kill -9 `pgrep /usr/bin/dsd`
+}

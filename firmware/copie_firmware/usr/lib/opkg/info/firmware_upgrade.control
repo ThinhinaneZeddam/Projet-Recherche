@@ -1,0 +1,13 @@
+Package: firmware_upgrade
+Version: 1
+Depends: libc, libuci, libsecurity
+Provides: 
+Source: tp_package/sys_packages/firmware_upgrade
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 30618
+Description:  This util will be used to upgrade our firmware from web interface.

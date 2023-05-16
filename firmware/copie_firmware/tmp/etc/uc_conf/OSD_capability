@@ -1,0 +1,7 @@
+
+config capability 'font_info'
+
+config capability 'label_info'
+
+config capability 'res_info'
+

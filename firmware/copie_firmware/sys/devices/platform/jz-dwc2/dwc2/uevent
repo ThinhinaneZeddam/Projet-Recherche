@@ -1,0 +1,2 @@
+DRIVER=dwc2
+MODALIAS=platform:dwc2

@@ -1,0 +1,6 @@
+
+config configuration 'tour_config'
+	option recurring_times_default '10'
+	option recurring_duration_default '36000'
+	option stay_time_default '15000'
+

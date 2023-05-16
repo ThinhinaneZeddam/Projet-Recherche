@@ -1,0 +1,13 @@
+Package: cloud-brd
+Version: 1
+Depends: libc, libubox, libuci, libopenssl, libubus, libjson, libblobmsg-json
+Provides: 
+Source: tp_package/cloud-brd
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 238731
+Description:  cloud_brd daemon and libcloud-api.a lib

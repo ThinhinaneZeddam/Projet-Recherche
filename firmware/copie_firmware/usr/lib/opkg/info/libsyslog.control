@@ -1,0 +1,13 @@
+Package: libsyslog
+Version: 1
+Depends: libc, libpthread, libnl-tiny, libubus, ubus, ubusd, jshn, syslog
+Provides: 
+Source: tp_package/lib/libsyslog
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 4417
+Description:  implement interfaces for c/shell/lua programs to add system logs

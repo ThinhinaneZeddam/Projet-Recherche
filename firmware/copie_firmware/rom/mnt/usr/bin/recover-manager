@@ -1,0 +1,399 @@
+#!/bin/sh
+MINIOS_VERSION="20210122"
+
+LOCAL_TFTP_SERVER=192.168.0.12
+INTERNET_CHECK_ADDR=bing.com
+reset_pushed=0
+UPFILE=luka_up.bin
+
+led_on()
+{
+	echo none > /sys/class/leds/led-$1/trigger
+	echo 1 > /sys/class/leds/led-$1/brightness
+}
+
+led_off()
+{
+	echo none > /sys/class/leds/led-$1/trigger
+	echo 0 > /sys/class/leds/led-$1/brightness
+}
+
+led_flash()
+{
+	delay_on=$2
+	delay_off=$((delay_on*4))
+	echo timer > /sys/class/leds/led-$1/trigger
+	echo $delay_on > /sys/class/leds/led-$1/delay_on
+	echo $delay_off > /sys/class/leds/led-$1/delay_off
+}
+
+led_sync_flash()
+{
+	echo sync-timer > /sys/class/leds/led-$1/trigger
+	echo $2 > /sys/class/leds/led-$1/order
+	echo $3 > /sys/class/leds/led-$1/mode
+}
+
+led_wait_for_network_connect()
+{
+	led_flash red 400
+	led_off green
+}
+
+led_wait_for_download_firmware()
+{
+	led_off red
+	led_flash green 1000
+}
+
+led_wait_for_update_firmware()
+{
+	led_off red
+	led_flash green 200
+}
+
+led_change_to_ap_mode()
+{
+	led_sync_flash red -1 +++---
+	#led_sync_flash green -1 ---+++
+	led_on green
+}
+
+change_to_softap()
+{
+	[ $reset_pushed = 0 ] && {
+		echo "MiniOS will not enter softAP mode for non-factory-recover-mode but try again later" >/dev/console
+		local c=60
+		while [ $c -gt 0 ]
+		do
+			sleep 1
+			echo -ne "\rwill try again after $c second   " >/dev/console
+			c=$((c-1))
+		done
+		echo >/dev/console
+		minios_main
+		return
+	}
+	onboarding.sh ap none
+	sleep 10
+	netconf fallbackip_add br-lan
+	led_change_to_ap_mode
+	echo "change_to_softap OK" >/dev/console
+	while :
+	do
+		sleep 1
+		ps | grep slpupgrade | grep -v grep && {
+			led_wait_for_update_firmware
+			break
+		}
+	done
+	while :;do sleep 1;done
+}
+
+ensure_sta_mode()
+{
+	if [ "`uci get wlan.sta0.connect_onboot`" = "off" ];then
+		_sta_ssid=`uci get wlan.sta0.ssid 2>/dev/null`
+		_sta_psk_key=`uci get wlan.sta0.key 2>/dev/null`
+		if [ -z "$_sta_ssid" ];then
+			_sta_ssid=KASA
+			_sta_psk_key=12345678
+		fi
+		onboarding.sh sta $_sta_ssid $_sta_psk_key
+	fi
+}
+
+wait_for_ipaddr_got()
+{
+	local count=0
+	echo >/dev/console
+	while [ $(uci get dhcpc.udhcpc.ip_requested) = 0 -a $count -lt $1 ]
+	do
+		echo -ne "\rwait for camera getting IP $count" >/dev/console
+		count=$((count+1))
+		sleep 1
+	done
+	echo >/dev/console
+}
+
+check_valid_ipaddr()
+{
+	local a b c d
+	eval `echo $1|awk -F. '{print "a="$1" b="$2" c="$3" d="$4}'`
+	for n in $a $b $c $d
+	do
+		[ "$n" -ge 0 -a "$n" -le 255 ] 2>/dev/null || return 1
+	done
+	return 0
+}
+
+check_network_connect()
+{
+	local count=0
+	local retry=5
+	local cmd="ping -c 1 -W 2 $1"
+	local dnscheck=0
+	check_valid_ipaddr $1 || {
+		echo "just check ip from ping printlines" >/dev/console
+		retry=2
+		cmd="ping -c 1 -W 2 $1 2>/dev/null | sed -ne 's/^Pinging.*\[\([0-9.]*\)\].*/\1/gp'"
+		dnscheck=1
+	}
+	while [ $count -lt $retry ]
+	do
+		[ $# -lt 1 ] && break
+		echo "checking $1 ... for ${count}st time" >/dev/console
+		# >/dev/null 2>&1 
+		if [ $dnscheck = 1 ]; then
+			__ipaddr=$(eval $cmd)
+			check_valid_ipaddr $__ipaddr && { echo "OK" >/dev/console; return 0; }
+		else
+			$cmd >/dev/console && { echo "OK" >/dev/console; return 0; }
+		fi
+		sleep 1
+		count=$((count+1))
+	done
+	echo "FAIL" >/dev/console
+	return 1
+}
+
+check_mem_before_download()
+{
+	[ -e "/tmp/embedded_ddr" ] && {
+		lsmod | grep -q hi_osal && which upgrade_prepare && upgrade_prepare
+	}
+}
+
+print_download_progress()
+{
+	( while : ; do sleep 3 ; ps | grep -v grep | grep $1 >/dev/null && { ls -lh /tmp/$UPFILE >/dev/console 2>/dev/null; :; } || break ; done ) &
+}
+
+reset_recover_update()
+{
+	echo "to get up.bin from tftp server" >/dev/console
+	check_network_connect $LOCAL_TFTP_SERVER || change_to_softap
+	led_wait_for_download_firmware
+	cd /tmp
+	echo "CMD: tftp -g -r up.bin -l $UPFILE $LOCAL_TFTP_SERVER" >/dev/console
+	local count=0
+	echo "16777216" > /tmp/$UPFILE.info
+	rm -f $UPFILE
+	check_mem_before_download
+	while [ $count -lt 5 -a ! -e $UPFILE ]
+	do
+		print_download_progress tftp
+		tftp -g -r up.bin -l $UPFILE $LOCAL_TFTP_SERVER
+		up_check_ok=0
+		slpupgrade -c $UPFILE && up_check_ok=1
+		[ $up_check_ok = 0 ] && rm -f $UPFILE
+		count=$((count+1))
+		[ $up_check_ok = 0 ] && { echo "tftp download fail for ${count}st time, do it later" >/dev/console; sleep 6; }
+	done
+	sleep 1
+	if [ -e $UPFILE ];then
+		led_wait_for_update_firmware
+		up_bin_good=1
+		slpupgrade -c $UPFILE && slpupgrade $UPFILE >/dev/console || ( echo "check up.bin fail" >/dev/console && up_bin_good=0 )
+		[ $up_bin_good = 0 ] && rm -f /tmp/$UPFILE.info && change_to_softap
+	else
+		change_to_softap
+	fi
+}
+
+cloud_get_new_fwinfo()
+{
+	local c=$1
+	while [ `get_new_fwinfo` = 0 ]
+	do
+		sleep 1
+		c=$((c-1))
+		[ $c -le 0 ] && break
+	done
+}
+
+cloud_recover_update()
+{
+	echo "to get up.bin from cloud server" >/dev/console
+	local count=5
+	[ "$(uci get wlan.sta0.connect_onboot)" = "on" ] && count=5 || count=0
+	local connect_network=fail
+	local NsefDomain=$(uci get cloud_sdk.cloud.NsefDomain)
+	local NdefaultSvr=$(uci get cloud_sdk.cloud.NdefaultSvr)
+	local sefDomain=$(uci get cloud_sdk.cloud.sefDomain)
+	local defaultSvr=$(uci get cloud_sdk.cloud.defaultSvr)
+	local ipcservSvr=$(uci get cloud_sdk.cloud.validateSvr)
+	while [ $connect_network = fail -a $count -gt 0 ]
+	do
+		check_network_connect $INTERNET_CHECK_ADDR && { connect_network=ok;break; }
+		check_network_connect $NsefDomain && { connect_network=ok;break; }
+		check_network_connect $NdefaultSvr && { connect_network=ok;break; }
+		check_network_connect $sefDomain && { connect_network=ok;break; }
+		check_network_connect $defaultSvr && { connect_network=ok;break; }
+		check_network_connect $ipcservSvr && { connect_network=ok;break; }
+		count=$((count-1))
+		sleep 1
+	done
+	local status=`get_sys_status link_status`
+	[ $connect_network = fail -a "$status" != "1" ] && change_to_softap
+	led_wait_for_download_firmware
+	count=0
+	while [ "$status" != "1" -a $count -lt 12 ]
+	do
+		echo "waiting for cloud to connect..." >/dev/console
+		sleep 5
+		status=`get_sys_status link_status`
+		count=$((count+1))
+		lsmod | grep -q cfgdev && [ $count -eq 2 ] && /etc/init.d/ucloud restart
+	done
+	[ "$status" != "1" ] && change_to_softap
+	cd /tmp
+	echo "CMD: get_new_fwinfo" >/dev/console
+	cloud_get_new_fwinfo 2
+	local url=`uci get cloud_config.upgrade_info.download_url 2>/dev/null`
+	local a b c
+	if [ -z "$url" ];then
+		eval `uci get device_info.info.sw_version | sed -e 's/\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)\(.*\)/a=\1 b=\2 c=\3 d="\4"/g'`
+		while [ -z "$url" -a $c -gt 0 ]
+		do
+			c=$((c-1))
+			uci set device_info.info.sw_version="$a.$b.$c$d";uci commit device_info
+			echo "look valid firmware for $a.$b.$c" >/dev/console
+			cloud_get_new_fwinfo 2
+			url=`uci get cloud_config.upgrade_info.download_url 2>/dev/null`
+		done
+		if [ -z "$url" -a $b -gt 0 ];then
+			b=$((b-1))
+			c=12
+			while [ -z "$url" -a $c -gt 0 ]
+			do
+				c=$((c-1))
+				uci set device_info.info.sw_version="$a.$b.$c$d";uci commit device_info
+				echo "look valid firmware for $a.$b.$c" >/dev/console
+				cloud_get_new_fwinfo 2
+				url=`uci get cloud_config.upgrade_info.download_url 2>/dev/null`
+			done
+		fi
+		if [ -z "$url" -a $a -gt 0 ];then
+			a=$((a-1))
+			b=12
+			c=0
+			while [ -z "$url" -a $b -gt 0 ]
+			do
+				b=$((b-1))
+				uci set device_info.info.sw_version="$a.$b.$c$d";uci commit device_info
+				echo "look valid firmware for $a.$b.$c" >/dev/console
+				cloud_get_new_fwinfo 2
+				url=`uci get cloud_config.upgrade_info.download_url 2>/dev/null`
+			done
+		fi
+	fi
+	if [ -n "$url" ];then
+		echo "CMD: cloud_upgrade $url $UPFILE" >/dev/console
+		count=0
+		rm -f $UPFILE
+		check_mem_before_download
+		while [ $count -lt 5 -a ! -e $UPFILE ]
+		do
+			print_download_progress cloud_upgrade
+			cloud_upgrade $url $UPFILE
+			up_check_ok=0
+			slpupgrade -c $UPFILE && up_check_ok=1
+			[ $up_check_ok = 0 ] && rm -f $UPFILE
+			count=$((count+1))
+			[ $up_check_ok = 0 ] && { echo "cloud download fail or firmware invalid for ${count}st time, do it later" >/dev/console; sleep 10; }
+		done
+	fi
+	[ $up_check_ok = 1 ] && echo "download firmware OK, start to upgrade" >/dev/console
+	if [ -e $UPFILE ];then
+		led_wait_for_update_firmware
+		up_bin_good=1
+		slpupgrade -c $UPFILE && slpupgrade $UPFILE >/dev/console || ( echo "check up.bin fail" >/dev/console && up_bin_good=0 )
+		[ $up_bin_good = 0 ] && change_to_softap
+	else
+		change_to_softap
+	fi
+}
+
+wait_and_update()
+{
+	if [ ! -z $2 ];then
+		local current_ssid
+		local count=0
+		while [ $count -lt 6 ]
+		do
+			echo "wait for wifi to connect $2" >/dev/console
+			sleep 5
+			ifname=wlan0
+			current_ssid=`iwconfig $ifname | grep "ESSID" | sed -e 's/.*ESSID:"\([^"]*\)".*/\1/g'`
+			if [ "$current_ssid" = "$2" ];then
+				killall -USR1 udhcpc
+				ps | grep -v grep | grep udhcpc || netconf dhcpc_setup br-lan
+				wait_for_ipaddr_got 15
+				$1
+				break
+			fi
+			count=$((count+1))
+		done
+	else
+		echo "no ssid found for wifi to wait connecting" >/dev/console
+	fi
+	change_to_softap
+}
+
+reset_recover()
+{
+	echo "reset pressed recovery" >/dev/console
+	local default_ap="TP-LINK_RECOVER_AP"
+	if check_network_connect $LOCAL_TFTP_SERVER ; then
+		echo "tftpserver $LOCAL_TFTP_SERVER already connected" >/dev/console
+		reset_recover_update
+	else
+		echo "tftpserver $LOCAL_TFTP_SERVER not connected yet, connect wifi to $default_ap" >/dev/console
+	fi
+	onboarding.sh sta $default_ap 12345678
+	wait_and_update reset_recover_update $default_ap
+}
+
+cloud_recover()
+{
+	echo "auto cloud recovery" >/dev/console
+	if check_network_connect $INTERNET_CHECK_ADDR || check_network_connect $defaultSvr; then
+		echo "internet already connected" >/dev/console
+		cloud_recover_update
+	else
+		echo "internet not connected yet, wait wifi connected" >/dev/console
+	fi
+	local sta_enable="`uci get wlan.sta0.connect_onboot`"
+	local sta_ssid
+	if [ "$sta_enable" = "on" ];then
+		sta_ssid="`uci get wlan.sta0.ssid 2>/dev/null`"
+	fi
+	wait_and_update cloud_recover_update $sta_ssid
+}
+
+minios_main()
+{
+	local param
+	param=`cat /proc/cmdline | grep "spdev="`
+	if [ ! -z "$param" ];then
+		/etc/init.d/recover-manager stop
+		exit 0
+	fi
+	echo "MiniOS Version is $MINIOS_VERSION" >/dev/console
+	ensure_sta_mode
+	sleep 10
+	wait_for_ipaddr_got 10
+	param=`cat /proc/cmdline | grep "reset="`
+	led_wait_for_network_connect
+	if [ ! -z "$param" ];then
+		reset_pushed=1
+		reset_recover
+	else
+		reset_pushed=0
+		cloud_recover
+	fi
+}
+
+minios_main
+

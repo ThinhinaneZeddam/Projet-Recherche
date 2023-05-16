@@ -1,0 +1,7 @@
+
+config cloud_brd 'statistics'
+
+config cloud_brd 'telemetry'
+	option reconnect_times '-1'
+	option server_connected_times '-1'
+

@@ -1,0 +1,19 @@
+
+config storage 'harddisk'
+	option loop 'on'
+
+config partition 'video'
+	option ratio '100'
+	option data_file_size '256M'
+
+config partition 'picture'
+	option ratio '0'
+
+config partition 'crossline'
+
+config partition 'msg_push'
+
+config partition 'passenger_flow'
+
+config manage 'harddisk_1'
+

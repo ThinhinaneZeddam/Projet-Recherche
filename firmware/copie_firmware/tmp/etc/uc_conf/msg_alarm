@@ -1,0 +1,10 @@
+
+config info 'chn1_msg_alarm_info'
+	option enabled 'off'
+	option alarm_type '0'
+	option light_type '1'
+	list alarm_mode 'sound'
+	list alarm_mode 'light'
+	option sound_alarm_enabled 'off'
+	option light_alarm_enabled 'off'
+

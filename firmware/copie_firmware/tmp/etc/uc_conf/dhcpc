@@ -1,0 +1,6 @@
+
+config dhcpc 'udhcpc'
+	option enable '1'
+	option retry '0'
+	option ip_requested '0'
+

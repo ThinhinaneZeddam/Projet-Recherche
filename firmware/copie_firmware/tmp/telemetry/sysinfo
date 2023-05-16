@@ -1,0 +1,20 @@
+
+config sysinfo 'main'
+	option duration_sinceboot '1658738843000'
+	option uptime '4909'
+
+config sysinfo 'cpuinfo'
+	option cpu_usage_max '25.64'
+	option high_cpu_prog 'hotplug2(64.3%)'
+	option cpu_usage_cur '21.93'
+	option cpu_usage_avg '23.00'
+
+config sysinfo 'meminfo'
+	option free '5172'
+
+config sysinfo 'network'
+	option connection_type '2'
+
+config sysinfo 'other'
+	option abnormal_restart_prog 'hotplug2(1c),cet(52t)'
+

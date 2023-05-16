@@ -1,0 +1,2 @@
+DRIVER=jz-ipu
+MODALIAS=platform:jz-ipu

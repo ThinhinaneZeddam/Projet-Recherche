@@ -1,0 +1,3 @@
+/etc/hotplug.d/button/10-reset
+/etc/init.d/gpio_reset
+/lib/modules/3.10.14/k_hi_reset.ko

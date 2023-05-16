@@ -1,0 +1,4 @@
+abnormal_events.login_err=on_off
+abnormal_events.login_err_notif_list=notif_list
+abnormal_events.sd_missing=on_off
+abnormal_events.sd_missing.msg_push_enabled=on

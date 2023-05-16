@@ -1,0 +1,114 @@
+#!/bin/sh
+
+res=0
+
+usage() {
+	echo
+	echo "usage: $basename <dev> <dir>"
+	echo
+	echo "dev:"
+	echo "  Device name, such as sda/sdb/mmcblk0"
+	echo
+	echo "dir:"
+	echo "  The directory to mount your device on. May be,"
+	echo "      /mnt/disk_1 for SD card"
+}
+
+basename=$0
+
+if [ -z $1 ] || [ -z $2 ]
+then
+	echo "part_sd_card need two parameter"
+	usage
+	exit 1
+fi
+
+dev_name=$1
+mount_dir=$2
+
+dev_path="/dev/"${dev_name}
+#dev_partition=${dev_name}"p"
+
+#file_dir="/var/run/storage/"
+
+#get_partition_file="get_partition"
+#do_partition_file="do_partition"
+
+#get_partition_path=${file_dir}${get_partition_file}
+#do_partition_path=${file_dir}${do_partition_file}
+
+#touch ${file_dir}
+#if [ $? -ne 0 ]
+#then
+#	mkdir ${file_dir}
+#	res=$?
+#	if [ $res -ne 0 ]
+#	then
+#		exit $res
+#	fi
+#fi
+
+#echo p > ${get_partition_path}
+#res=$?
+#if [ $res -ne 0 ]
+#then
+#	exit $res
+#fi
+
+#partition_info=`fdisk $dev_path < $get_partition_path | grep "${dev_partition}" | awk '{print $1}'`
+#partition_num=`echo "$partition_info" | wc -l`
+
+## flush do_partition_path file
+#echo "" > $do_partition_path
+
+## delete all exist partition
+#if [ $partition_num -ne 0 ]
+#then
+#	for LINE in ${partition_info}
+#	do
+#		length=${#LINE}
+#		index=`expr $length - 1`
+#		echo -e "d\n${LINE:$index}" >> $do_partition_path
+#		res=$?
+#		if [ $res -ne 0 ]; then
+#			exit $res;
+#		fi
+#	done
+#fi
+
+## new one primary partition with all avaliable space
+#echo -e "n\np\n1\n\n\nw" >> $do_partition_path
+#res=$?
+#if [ $res -ne 0 ]; then
+#	exit $res;
+#fi
+
+## umount SD card and ignore error
+umount $mount_dir
+
+## do partition
+#fdisk $dev_path < $do_partition_path
+#res=$?
+#if [ $res -ne 0 ]; then
+#	exit $res;
+#fi
+
+## wait for partition update
+#sleep 2
+
+partition_path=$dev_path
+## mkfs
+mkfs.fat -v -F 32 -s 64 $partition_path
+res=$?
+if [ $res -ne 0 ]; then
+	exit $res;
+fi
+
+## mount SD card
+mount $partition_path $mount_dir
+res=$?
+if [ $res -ne 0 ]; then
+	exit $res;
+fi
+
+exit 0

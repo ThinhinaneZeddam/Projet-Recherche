@@ -1,0 +1,41 @@
+
+config stream 'main'
+	option name 'VideoEncoder_1'
+
+config stream 'minor'
+	option name 'VideoEncoder_2'
+
+config stream 'mjpeg'
+	option name 'VideoEncoder_3'
+
+config info 'main_conf'
+	option res_num '2'
+	option res_1_w '1920'
+	option res_1_h '1080'
+	option res_2_w '1280'
+	option res_2_h '720'
+	option res_3_w '640'
+	option res_3_h '360'
+	option min_br '256'
+	option max_br '2048'
+	option min_fr '1'
+	option max_fr '15'
+
+config info 'minor_conf'
+	option res_num '1'
+	option res_1_w '640'
+	option res_1_h '360'
+	option min_br '64'
+	option max_br '512'
+	option min_fr '1'
+	option max_fr '15'
+
+config info 'mjpeg_conf'
+	option res_num '1'
+	option res_1_w '640'
+	option res_1_h '368'
+	option min_br '256'
+	option max_br '2560'
+	option min_fr '1'
+	option max_fr '15'
+

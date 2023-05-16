@@ -1,0 +1,6 @@
+export INTERFACE="wan"
+export ACTION="$1"
+
+for i in /etc/hotplug.d/iface/*; do
+		[ -x $i ] && $i 2>&1
+done

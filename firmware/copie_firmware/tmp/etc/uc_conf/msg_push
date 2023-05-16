@@ -1,0 +1,5 @@
+
+config on_off 'chn1_msg_push_info'
+	option notification_enabled 'on'
+	option rich_notification_enabled 'off'
+

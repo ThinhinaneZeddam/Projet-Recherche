@@ -1,0 +1,15 @@
+system.sys=system
+system.sys.hostname=C200
+system.basic=setting
+system.ntp=timing
+|system.ntp.def_server=time.nist.gov
+|system.ntp.def_server=128.138.140.44
+|system.ntp.def_server=192.36.144.22
+|system.ntp.def_server=time-a.nist.gov
+|system.ntp.def_server=time-b.nist.gov
+|system.ntp.def_server=time.windows.com
+|system.ntp.def_server=time-nw.nist.gov
+|system.ntp.def_server=au.pool.ntp.org
+|system.ntp.def_server=nz.pool.ntp.org
+system.debug=debug
+system.dst=dst

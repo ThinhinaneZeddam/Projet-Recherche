@@ -1,0 +1,2 @@
+DRIVER=jz-dma
+MODALIAS=platform:jz-dma

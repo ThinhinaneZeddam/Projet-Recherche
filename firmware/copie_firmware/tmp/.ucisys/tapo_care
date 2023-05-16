@@ -1,0 +1,7 @@
+tapo_care.tapo_care_state=info
+tapo_care.tapo_care_state.version=1.0.0
+tapo_care.service_list=app_component_list
+|tapo_care.service_list.component={"name": "msgPush", "version": 2}
+|tapo_care.service_list.component={"name": "blockZone", "version": 1}
+|tapo_care.service_list.component={"name": "personDetection", "version": 1}
+|tapo_care.service_list.component={"name": "babyCryDetection", "version": 1}

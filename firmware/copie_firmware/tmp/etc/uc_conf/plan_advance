@@ -1,0 +1,5 @@
+
+config advance 'plan_advance'
+	option record_time '120'
+	option delay_record '60'
+

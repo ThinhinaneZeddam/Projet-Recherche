@@ -1,0 +1,55 @@
+
+config font_info 'font'
+	option display 'ntnb'
+	option size 'auto'
+	option color_type 'auto'
+	option color 'white'
+
+config date_info 'date'
+	option enabled 'on'
+	option x_coor '0'
+	option y_coor '0'
+
+config date_info 'week'
+	option enabled 'off'
+	option x_coor '6000'
+	option y_coor '500'
+
+config date_info 'logo'
+	option enabled 'on'
+	option x_coor '0'
+	option y_coor '9150'
+
+config label_info 'label_info_1'
+	option enabled 'off'
+	option text 'TP IPC'
+	option x_coor '0'
+	option y_coor '700'
+
+config label_info 'label_info_2'
+	option enabled 'off'
+	option text '自定义字符1'
+	option x_coor '1000'
+	option y_coor '4000'
+
+config label_info 'label_info_3'
+	option enabled 'off'
+	option text '自定义字符2'
+	option x_coor '1000'
+	option y_coor '6000'
+
+config zoom 'zoom'
+	option display '2'
+	option x_coor '4000'
+	option y_coor '9000'
+
+config azimuth 'azimuth'
+	option display '2'
+	option x_coor '1000'
+	option y_coor '9000'
+
+config preset 'preset'
+	option display '2'
+	option x_coor '6000'
+	option y_coor '9000'
+

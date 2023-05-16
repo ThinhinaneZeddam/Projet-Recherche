@@ -1,0 +1,21 @@
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:8800            0.0.0.0:*               LISTEN      1163/cet
+tcp        0      0 127.0.0.1:929           0.0.0.0:*               LISTEN      1072/p2pd
+tcp        0      0 0.0.0.0:2020            0.0.0.0:*               LISTEN      1134/nvid
+tcp        0      0 0.0.0.0:554             0.0.0.0:*               LISTEN      1163/cet
+tcp        0      0 127.0.0.1:23            0.0.0.0:*               LISTEN      985/telnetd
+tcp        0      0 127.0.0.1:921           0.0.0.0:*               LISTEN      2281/relayd
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1037/uhttpd
+udp        0      0 192.168.0.10:46353      114.114.114.114:53      ESTABLISHED 878/cloud-brd
+udp        0      0 0.0.0.0:41502           0.0.0.0:*                           1156/ntpd
+udp        0    704 192.168.0.10:47135      114.114.114.114:53      ESTABLISHED 981/cloud-service
+udp        0      0 0.0.0.0:36639           0.0.0.0:*                           1156/ntpd
+udp        0      0 0.0.0.0:20002           0.0.0.0:*                           334/tp_manage
+udp        0      0 192.168.0.10:34860      8.8.8.8:53              ESTABLISHED 2281/relayd
+udp        0      0 0.0.0.0:53              0.0.0.0:*                           1767/dnsd
+udp        0      0 192.168.0.10:47928      8.8.8.8:53              ESTABLISHED 2281/relayd
+udp        0      0 0.0.0.0:67              0.0.0.0:*                           778/udhcpd
+udp        0      0 0.0.0.0:3702            0.0.0.0:*                           1134/nvid
+udp        0    704 192.168.0.10:48540      114.114.114.114:53      ESTABLISHED 2281/relayd
+udp        0    704 192.168.0.10:53206      114.114.114.114:53      ESTABLISHED 2281/relayd
+udp        0    704 192.168.0.10:35567      8.8.8.8:53              ESTABLISHED 1156/ntpd

@@ -1,0 +1,8 @@
+/bin/cloud-brd
+/etc/init.d/cloud_sdk
+/etc/cloud-sdk/cloud_service.cfg
+/usr/bin/check_ping_stat
+/etc/cloud-sdk/cloud_config.cfg
+/usr/bin/cloudMode.sh
+/etc/config/cloud_sdk
+/etc/cloud-sdk/2048_newroot.cer

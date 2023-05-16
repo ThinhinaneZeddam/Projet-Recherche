@@ -1,0 +1,45 @@
+
+config storage 'harddisk'
+
+config partition 'video'
+	option min_event_size '1M'
+	option event_overlay_factor '3'
+	option event_cache_wr_intv '120'
+	option event_min_duration '1'
+
+config partition 'picture'
+	option data_file_size '1M'
+	option min_event_size '80K'
+	option event_overlay_factor '1'
+	option event_cache_wr_intv '120'
+	option event_min_duration '1'
+
+config partition 'crossline'
+	option ratio '0'
+	option data_file_size '256M'
+	option min_event_size '512K'
+	option event_overlay_factor '1'
+	option event_cache_wr_intv '900'
+	option event_min_duration '900'
+
+config partition 'msg_push'
+	option ratio '0'
+	option data_file_size '1M'
+	option min_event_size '1M'
+	option event_overlay_factor '1'
+	option event_cache_wr_intv '120'
+	option event_min_duration '1'
+
+config partition 'passenger_flow'
+	option ratio '0'
+	option data_file_size '2664960'
+	option min_event_size '8B'
+	option event_overlay_factor '1'
+	option event_cache_wr_intv '900'
+	option event_min_duration '900'
+
+config manage 'harddisk_1'
+	option type 'sdcard'
+	option path '/dev/mmcblk0'
+	option mnt '/tmp/mnt/harddisk_1'
+

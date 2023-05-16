@@ -1,0 +1,100 @@
+#!/bin/sh
+[ -z "$1" ] && echo "Error: should be run by udhcpc" && exit 1
+
+. /lib/functions.sh
+. /usr/lib/libmsglog.sh
+
+case "$1" in
+	deconfig)
+		if [ "$2" == "createIP" ]; then
+			local static_ipaddr=`uci get protocol.static.ipaddr`
+			local static_netmask=`uci get protocol.static.netmask`
+			local static_gateway=`uci get protocol.static.gateway`
+			local pri_dns=`uci get protocol.static.pri_dns`
+			local snd_dns=`uci get protocol.static.snd_dns`
+			local static_dns=""
+
+			if [ -n "$snd_dns" ]; then
+				static_dns="$pri_dns $snd_dns"
+			else
+				static_dns="$pri_dns"
+			fi
+			
+			[ -z "$static_ipaddr" ] && exit 0
+			[ -z "$static_netmask" ] && exit 0
+			[ -z "$static_gateway" ] && exit 0
+			[ -z "$static_dns" ] && exit 0
+
+			uci set network.wan.ipaddr="$static_ipaddr"
+			uci set network.wan.netmask="$static_netmask"
+			uci set network.wan.gateway="$static_gateway"
+			uci set network.wan.dns="$static_dns"
+			uci commit network
+
+			ubus call network reload
+		fi
+	;;
+	renew|bound)
+		config_changed=0
+
+		local curr_ip=`uci get network.wan.ipaddr`
+		local curr_netmask=`uci get network.wan.netmask`
+		local curr_gateway=`uci get network.wan.gateway`
+		local curr_dns=`uci get network.wan.dns`
+		local curr_append_dns=`uci get system.sys.append_dns`
+		local proto=`uci get network.wan.proto`
+		proto=${proto:-dhcp}
+
+		if [ -n "$ip" ] && [ "$ip" != "$curr_ip" ]; then
+			msglog $LOG_PRIO_NOTICE "DHCPC" "DHCP Client obtained ip $ip"
+			uci set network.wan.ipaddr="$ip"
+			uci set dhcpc.udhcpc.ip_requested=1
+
+			[ "$proto" = "static" ] && uci set protocol.static.ipaddr="$ip"
+
+			config_changed=1
+		fi
+
+		if [ -n "$subnet" ] && [ "$subnet" != "$curr_netmask" ]; then
+			msglog $LOG_PRIO_NOTICE "DHCPC" "DHCP Client obtained mask $subnet"
+			uci set network.wan.netmask="$subnet"
+			[ "$proto" = "static" ] && uci set protocol.static.netmask="$subnet"
+			config_changed=1
+		fi
+
+		for i in $router; do
+			if [ "$i" != "$curr_gateway" ]; then
+				msglog $LOG_PRIO_NOTICE "DHCPC" "add route $router"
+				uci set network.wan.gateway="$i"
+				[ "$proto" = "static" ] && uci set protocol.static.gateway="$i"
+				config_changed=1
+				break
+			fi
+		done
+
+		if [ -n "$dns" ]; then
+			#dns=`echo -n $dns|awk '{if(NF>2){print $1,$2}else{print $0}}'`
+			if [ "$proto" = "static" ] && [ "$dns" != "$curr_append_dns" ];then
+				uci set system.sys.append_dns="$dns"
+				config_changed=1
+			elif [ "$proto" = "dhcp" ] && [ "$dns" != "$curr_dns" ];then
+				uci set network.wan.dns="$dns"
+				config_changed=1
+			fi
+		fi
+
+		uci set dhcpc.udhcpc.ip_requested=1
+		uci commit dhcpc
+		if [ $config_changed -eq 1 ]; then
+			if [ "$proto" = "static" ];then
+				uci commit network
+				uci commit protocol
+			fi
+
+			ubus call network dhcp_done_notify
+			ubus call network reload
+		fi
+	;;
+esac
+
+exit 0

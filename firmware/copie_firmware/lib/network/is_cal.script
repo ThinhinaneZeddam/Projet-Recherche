@@ -1,0 +1,107 @@
+#!/bin/sh
+
+VERIFY_ADDR=0x100  VERIFY_LEN=2
+MAC_ADDR=0xD7      MAC_LEN=6
+DEVID_ADDR=0xEA    DEVID_LEN=20
+REGION_ADDR=0xFE   REGION_LEN=2
+
+# read_e2prom addr len [seperator], return: 10B23CE0F7A8...
+read_e2prom()
+{
+	iwpriv wlan0 efuse_get rmap,$1,$2 2>/dev/null | cut -d: -f2 | sed -e "s/^0x//g;s/[[:space:]]\+$//g;s/[[:space:]]\+0x/$3/g"
+}
+
+# write_e2prom addr data, return: NULL
+write_e2prom()
+{
+	iwpriv wlan0 efuse_set wmap,$1,$2 >/dev/null
+}
+
+
+# hextochar 545053..., return: TPO...
+hextochar()
+{
+	i=0
+	while [ $i -lt ${#1} ]
+	do
+		printf "\x${1:$i:2}"
+		i=$((i+2))
+	done
+}
+
+# restart_progs prog1 prog2 ...
+restart_progs()
+{
+	for prog in $@
+	do
+		ps | grep -v grep | grep -q $prog && {
+			if [ -e /etc/init.d/$prog ]; then
+				/etc/init.d/$prog restart
+			else
+				for script in `grep -r $prog /etc/init.d | awk -F: '{print $1}' | sort -u`
+				do
+					/etc/init.d/$script restart
+				done
+			fi
+		}
+	done
+}
+
+# getInfo type, return data
+getInfo()
+{
+	ubus call tpServer getInfo "{\"infoMask\":$((1<<$1))}" | awk -v v=$2 '$1~v{gsub(/"/,"");print $2}'
+}
+
+# setInfo type data
+setInfo()
+{
+	ubus call tpServer setInfo "{\"type\":$1, \"data\":\"$2\"}"
+}
+
+c=0
+while [ -z "$(read_e2prom 0x00 1)" ]
+do
+	sleep 1
+	c=$((c+1))
+	[ $c -gt 3 ] && break
+done
+
+verify_val=`read_e2prom $VERIFY_ADDR $VERIFY_LEN`
+verify_val=`hextochar $verify_val`
+
+if [ "$verify_val" = "TP" ]; then
+	mac_val=`read_e2prom $MAC_ADDR $MAC_LEN -`
+	devid_val=`read_e2prom $DEVID_ADDR $DEVID_LEN`
+	region_val=`read_e2prom $REGION_ADDR $REGION_LEN`
+	region_val=`hextochar $region_val`
+
+	mac_old=`getInfo 0 mac`
+	devid_old=`getInfo 2 dev_id`
+	region_old=`getInfo 15 region`
+	
+	echo "$region_old" > /tmp/.region_info_for_feq
+
+	if [ "$mac_val" != "$mac_old" -o "$devid_val" != "$devid_old" -o "$region_val" != "$region_old" ]; then
+		echo "wireless is cal , set new MAC    : $mac_val" >/dev/console
+		echo "                          DEV_ID : $devid_val" >/dev/console
+		echo "                          REGION : $region_val" >/dev/console
+		setInfo 1 $mac_val
+		setInfo 3 $devid_val
+		setInfo 14 $region_val
+		if [ "$region_val" != "$region_old" ]; then
+			oem_id=`awk -F: -v r=$region_val '$1==r{print $2}' /etc/oem_id.bin`
+			if [ -z "$oem_id" ]; then
+				echo "!!!! ERROR !!!! OEM_ID is empty REGION_VAL=$region_val"
+			else
+				echo "factorywrite oemId $oem_id"
+				factorywrite oemId $oem_id
+			fi
+		fi
+		echo > /var/run/wifi_rtl_cal_rewrited
+	fi
+else
+	touch /var/state/not_cal
+	#ubus call ledd send_event '{ "event" : "wireless-untested" }'
+	echo "wireless is not cal" >/dev/console
+fi

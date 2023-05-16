@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+#Qintian Guo <guoqintian@tp-link.net>
+
+START=61
+RESUME=61
+
+RELAYD_BIN="/usr/bin/relayd"
+
+start(){
+	$RELAYD_BIN &
+}
+
+terminate(){
+	service_stop $RELAYD_BIN
+}
+
+resume(){
+	start
+}

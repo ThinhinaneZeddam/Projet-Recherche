@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+
+START=95
+
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+
+WTD_BIN="/bin/wtd"
+
+start()
+{
+	SERVICE_PID_FILE=/var/run/wtd.pid
+	#service_start $WTD_BIN
+	$WTD_BIN 2>&1 1>/dev/console &
+}
+
+stop()
+{
+	SERVICE_PID_FILE=/var/run/wtd.pid
+	service_stop $WTD_BIN
+}
+

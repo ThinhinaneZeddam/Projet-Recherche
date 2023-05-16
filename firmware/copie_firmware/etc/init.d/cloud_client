@@ -1,0 +1,165 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2010 Jo-Philipp Wich
+
+START=44
+
+#SERVICE_DAEMONIZE=1
+#SERVICE_WRITE_PID=1
+
+#cloud-client and cloud-server information
+CLOUD_CLIENT_BIN="/bin/cloud-client"
+CLOUD_CLIENT_EXENAME="cloud-client"
+
+#cloud client config file name
+CLOUD_STATUS="cloud_status"
+CLOUD_CONFIG="cloud_config"
+PLUGIN_CONFIG="plugin_config"
+PLUGIN_STATUS="plugin_status"
+
+#init action status
+cloud_init_status()
+{
+	#cloud client option name
+	local optOwner="owner"
+	local optActionStatus="action_status"
+	local optErrorCode="err_code"
+
+	uci_set "$CLOUD_STATUS" "$1" "$optOwner" 0
+	uci_set "$CLOUD_STATUS" "$1" "$optActionStatus" 0
+	uci_set "$CLOUD_STATUS" "$1" "$optErrorCode" 0
+}
+
+#init plugin_status
+init_plugin_status()
+{
+	local plugin_id="$1"
+	uci delete "$PLUGIN_STATUS.$plugin_id"
+}
+
+#init plugin_config
+init_plugin_config()
+{
+	local plugin_id="$1"
+	uci_set "$PLUGIN_CONFIG" "$plugin_id" can_update '0'
+	uci_set "$PLUGIN_CONFIG" "$plugin_id" opera_type '0'
+}
+
+#renew brand_mac info
+renew_brand_mac()
+{
+	local factory_mac="/rom/www/web-static/dynaform/macFactory.js"
+	local cloud_mac="/www/web-static/dynaform/macFactory.js"
+	[ -e "$factory_mac" ] || return 0
+
+	local renew_time
+	config_get renew_time brand_mac renew_time
+	if [ -z "$renew_time" ]; then
+		echo "current firmware do not support brand_mac online."
+		return 0
+	fi
+
+	local md5_value
+	local uci_value
+	if [ "$renew_time" == "0" ]; then
+		md5_value=$(md5sum "$factory_mac" | awk '{print $1;}')
+		uci_set "$CLOUD_CONFIG" brand_mac check_value "$md5_value"
+	else
+		md5_value=$(md5sum "$cloud_mac" | awk '{print $1;}')
+		config_get uci_value brand_mac check_value
+		if [ "$uci_value" != "$md5_value" ]; then
+			cp "$factory_mac" "$cloud_mac"  2>/dev/null
+			md5_value=$(md5sum "$factory_mac" | awk '{print $1;}')
+			uci_set "$CLOUD_CONFIG" brand_mac check_value "$md5_value"
+			uci_set "$CLOUD_CONFIG" brand_mac renew_time "0"
+		fi
+	fi
+}
+
+#check alias
+alias_check()
+{
+	local alias
+	config_get alias info alias
+	if [ -z "$alias" ]; then
+		local fac_alias="$(uci_get device_info.info.device_name 2>/dev/null)"
+		uci_set "$CLOUD_CONFIG" info alias "$fac_alias"
+	fi
+}
+
+#init config information
+init_config()
+{
+	config_load "$CLOUD_STATUS"
+	config_foreach cloud_init_status router_request
+
+	uci_set "$CLOUD_STATUS" client_info connect_status 0
+	uci_set "$CLOUD_STATUS" client_info fw_download_progress 0
+	uci_set "$CLOUD_STATUS" client_info fw_download_status 0
+	uci_set "$CLOUD_STATUS" client_info fw_verify_status 0
+	uci_set "$CLOUD_STATUS" client_info disconnect_reason 0
+	uci_set "$CLOUD_STATUS" client_info reconnect_time 0
+	uci commit "$CLOUD_STATUS"
+
+	config_load "$CLOUD_CONFIG"
+	#uci_set "$CLOUD_CONFIG" device_legality illegal 0
+	#uci_set "$CLOUD_CONFIG" device_legality illegal_type 0
+
+	uci_set "$CLOUD_CONFIG" upgrade_status state 0
+	# reset firmware notify option
+	[ -e /tmp/.update_firmware ] && {
+		uci_set "$CLOUD_CONFIG" new_firmware fw_new_notify 0
+		uci_set "$CLOUD_CONFIG" new_firmware fw_update_type 1
+		uci_set "$CLOUD_CONFIG" new_firmware not_show 0
+
+		# reset upgrade information
+		uci_set "$CLOUD_CONFIG" upgrade_info type ''
+		uci_set "$CLOUD_CONFIG" upgrade_info version ''
+		uci_set "$CLOUD_CONFIG" upgrade_info release_date ''
+		uci_set "$CLOUD_CONFIG" upgrade_info download_url ''
+		uci_set "$CLOUD_CONFIG" upgrade_info release_log ''
+		uci_set "$CLOUD_CONFIG" upgrade_info release_log_url ''
+		uci_set "$CLOUD_CONFIG" upgrade_info location ''
+
+		# mark last upgrade action as success
+		uci_set "$CLOUD_CONFIG" upgrade_status lastUpgradingSuccess 1
+	}
+
+	alias_check
+	renew_brand_mac
+	uci commit "$CLOUD_CONFIG"
+
+	#config_load "$PLUGIN_STATUS"
+	#config_foreach init_plugin_status plugin_update
+	#config_foreach init_plugin_status plugin_none
+	#uci commit "$PLUGIN_STATUS"
+
+	#config_load "$PLUGIN_CONFIG"
+	#[ -e /tmp/.update_firmware ] && {
+		#uci_set "$PLUGIN_CONFIG" plugin can_update 0
+		#uci_set "$PLUGIN_CONFIG" plugin not_installed 0
+		#uci_set "$PLUGIN_CONFIG" plugin good_num 0
+		#uci_set "$PLUGIN_CONFIG" plugin excellent_num 0
+		#uci_set "$PLUGIN_CONFIG" plugin sync_status 0
+	#}
+	#config_foreach init_plugin_config plugin_info
+	#uci commit "$PLUGIN_CONFIG"
+}
+
+#start cloud-client program
+start()
+{
+	init_config
+	#SERVICE_PID_FILE=/var/run/cloud-client.pid
+	#service_start $CLOUD_CLIENT_BIN -h $CLOUD_SERVER_HOST_NAME -p $CLOUD_SERVER_LISTEN_PORT
+	$CLOUD_CLIENT_BIN 2>&1 1>/dev/console & 
+
+	# Check if daemon is running, if not then re-execute.
+	#(sleep 1 && service_check $CLOUD_CLIENT_BIN || service_start $CLOUD_CLIENT_BIN) &
+}
+
+#stop cloud-client program
+stop()
+{
+	#SERVICE_PID_FILE=/var/run/cloud-client.pid
+	killall  $CLOUD_CLIENT_EXENAME
+}

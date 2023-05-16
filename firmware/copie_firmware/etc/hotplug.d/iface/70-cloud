@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[ $INTERFACE == "wan" ] || [ $INTERFACE == "internet" ] || exit 0
+
+CLOUD_CLIENT_OBJECT="cloudclient"
+
+local ubus_object=$(ubus list | grep cloudclient)
+[ $ubus_object == $CLOUD_CLIENT_OBJECT ] || exit 0
+
+case "$ACTION" in
+	ifup)
+		ubus call cloudclient construct_ssl_path '{"service_type":1, "source": "wan"}'
+	;;
+	ifdown)
+		ubus call cloudclient construct_ssl_path '{"service_type":2, "source": "wan"}'
+	;;
+esac

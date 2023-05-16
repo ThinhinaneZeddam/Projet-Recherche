@@ -1,0 +1,2 @@
+DRIVER=jz-tcu
+MODALIAS=platform:jz-tcu

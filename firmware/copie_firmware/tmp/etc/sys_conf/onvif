@@ -1,0 +1,39 @@
+
+config profile 'profile_1'
+	option name 'mainStream'
+	option token 'profile_1'
+	option fixed '1'
+	option vsconf 'vsconf'
+	option veconf 'main'
+	option asconf 'asconf'
+	option aeconf 'microphone'
+
+config profile 'profile_2'
+	option name 'minorStream'
+	option token 'profile_2'
+	option fixed '1'
+	option vsconf 'vsconf'
+	option veconf 'minor'
+	option asconf 'asconf'
+	option aeconf 'microphone'
+
+config vsconf 'vsconf'
+	option name 'VideoSourceConfig'
+	option token 'vsconf'
+	option sToken 'raw_vs1'
+	option uCount '2'
+	option bX '0'
+	option bY '0'
+	option bW '2304'
+	option bH '1296'
+
+config asconf 'asconf'
+	option name 'AudioSourceConfig'
+	option token 'asconf'
+	option sToken 'raw_as1'
+	option uCount '2'
+
+config discovery_mode 'dis_mode'
+
+config scopes 'custom_scopes'
+

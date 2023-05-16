@@ -1,0 +1,69 @@
+#!/bin/sh
+RUN_ONCE_FILE=/var/run/wifi_info_collecting
+if [ -e $RUN_ONCE_FILE ]; then
+	exit 0
+fi
+
+touch $RUN_ONCE_FILE
+
+driver_name=rtl8192eu
+TMP_FILE=/tmp/.iwconfig_result
+ifname='wlan0'
+
+iwconfig $ifname > $TMP_FILE
+
+rssi=`sed -ne 's/.*Signal level=\([-0-9]*\).*/\1/gp' $TMP_FILE`
+noise=`sed -ne 's/.*Noise level=\([-0-9]*\).*/\1/gp' $TMP_FILE`
+grep -q "Signal level=.*dBm" $TMP_FILE || {
+	rssi=$((rssi-100))
+	noise=$((noise-100))
+}
+max_rate=`sed -ne 's|.*Bit Rate:\([-0-9.]* [GMk]b/s\).*|\1|gp' $TMP_FILE`
+
+rm -f $TMP_FILE
+
+if [ ! -e /proc/net/$driver_name ]; then
+	for driver in $(ls /sys/bus/usb/drivers)
+	do
+		module=$(basename `readlink /sys/bus/usb/drivers/$driver/module` 2>/dev/null)
+		if [ -n "$module" -a "${module#usb}" = "$module" ]; then
+			driver_name=$driver
+			break
+		fi
+	done
+fi
+
+dev_dir=/proc/net/$driver_name/$ifname
+
+channel=`sed -ne 's/.*cur_channel=\([0-9]*\).*/\1/gp' $dev_dir/ap_info`
+
+bssid_same_chn=`awk -v _c=$channel '$3==_c{print $0}' $dev_dir/survey_info | wc -l`
+bssid_all=`grep -v ^index $dev_dir/survey_info | wc -l`
+
+tx_rate=`awk -F= '$1=="Tx_Data_Rate"{printf $2","} $1=="BW"{print $0}' $dev_dir/tx_info_msg`
+rx_rate=`sed -ne 's/rx_rate = \([^[:space:]]*\).*/\1/gp' $dev_dir/trx_info_debug`
+reconn_count=`cat /tmp/wireless_reconnect_cnt`
+reconn_count=${reconn_count:-0}
+
+show()
+{
+	cat <<EOF
+
+config wireless 'info'
+	option rssi '$rssi'
+	option noise '$noise'
+	option max_rate '$max_rate'
+	option tx_rate '$tx_rate'
+	option rx_rate '$rx_rate'
+	option channel '$channel'
+	option bssids '$bssid_same_chn'
+	option reconn_count '$reconn_count'
+
+EOF
+}
+
+mkdir -p /tmp/telemetry
+show > /tmp/.wirless-info
+mv /tmp/.wirless-info /tmp/telemetry/wireless
+
+rm $RUN_ONCE_FILE

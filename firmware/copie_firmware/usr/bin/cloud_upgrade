@@ -1,0 +1,87 @@
+#!/bin/sh
+
+led_off()
+{
+	echo none > /sys/class/leds/led-$1/trigger
+	echo 0 > /sys/class/leds/led-$1/brightness
+}
+
+led_flash()
+{
+	delay_on=$2
+	delay_off=$((delay_on*4))
+	echo timer > /sys/class/leds/led-$1/trigger
+	echo $delay_on > /sys/class/leds/led-$1/delay_on
+	echo $delay_off > /sys/class/leds/led-$1/delay_off
+}
+
+led_wait_for_update_firmware()
+{
+	led_off red
+	led_flash green 200
+}
+
+[ $# -lt 2 ] && echo "Please input: url file [auto_flash] [show_progress]" >/dev/console && exit 0
+
+auto_flash=$3
+show_progress=$4
+
+[ -e "$2.clouddownload.pid" ] && {
+	# curl head is running, simply kill cloud_download shell script
+	# curl head will exit when timeout 
+	clouddownloadpid=`cat "$2.clouddownload.pid"`
+	kill -9 $clouddownloadpid > /dev/null 2>&1
+	rm -f "$2.clouddownload.pid"
+}
+
+[ -e "$2.cloud.pid" ] && {
+	# kill curl get if curl is running 
+	curlpid=`cat "$2.cloud.pid"`
+	kill -9 $curlpid > /dev/null 2>&1
+	rm -f "$2.cloud.pid"
+}
+
+# use {filename}.clouddownload.pid to record curl head pid.
+echo $$ > "$2.clouddownload.pid"
+
+rm -f "$2.info"
+
+curl -s --head -g "$1" > "$2.cloud.head"
+
+re=`cat "$2.cloud.head"|grep -w HTTP|awk '{print $2}'`
+[ "$re" != "200" ] && {
+	echo "Wrong head: "$re >/dev/console
+	rm -f "$2.cloud.head" "$2.clouddownload.pid"
+	echo "" > "$2.info"
+	exit
+}
+
+cat "$2.cloud.head"|grep -w Length|awk '{print $2}' > "$2.info"
+rm -f "$2.cloud.head"
+
+led_wait_for_update_firmware
+
+[ "$auto_flash" = "1" ] && flash_prep="makeRoomForUpgrade.sh kill"
+[ "$auto_flash" = "1" ] && flash="slpupgrade $2"
+
+echo 3 > /proc/sys/vm/drop_caches
+
+rm -f "$2"
+rm -f "$2.clouddownload.pid"
+
+$flash_prep > /dev/console
+
+if [ "$show_progress" = "1" ];then
+	curl -C - -# -L -e ';auto' -o "$2" -g "$1";
+	if [ "$flash" != "" ]; then
+		$flash > /dev/console
+		reboot
+    fi
+else
+	curl -Z "$2.cloud.pid" --connect-timeout 20 -m 300 -C - -# -L -e ';auto' -o "$2" -g "$1" > /dev/null 2>&1
+	if [ "$flash" != "" ]; then
+		$flash > /dev/console
+		reboot
+    fi
+fi
+

@@ -1,0 +1,8 @@
+#!/bin/sh /etc/rc.common
+
+START=77
+RESUME=77
+
+start() {
+    /bin/nvid 2>&1 1>/dev/console &
+}

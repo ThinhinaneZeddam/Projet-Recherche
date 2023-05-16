@@ -1,0 +1,5 @@
+
+config config 'plan_config'
+	option enabled '0'
+	option resume_time '5'
+

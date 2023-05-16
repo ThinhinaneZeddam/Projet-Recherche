@@ -1,0 +1,7 @@
+
+config basic 'basic'
+
+config cloud 'cloud'
+
+config strategy 'strategy'
+

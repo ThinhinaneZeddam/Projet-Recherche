@@ -1,0 +1,6 @@
+
+config on_off 'reboot'
+	option enabled 'off'
+	option day '7'
+	option time '(03:00)'
+

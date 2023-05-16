@@ -1,0 +1,13 @@
+Package: cloud-service
+Version: 1
+Depends: libc, libuci, libopenssl, libubus, libjson, libblobmsg-json, libaes, libdecrypter, libmsglog, libsecurity
+Provides: 
+Source: tp_package/u_packages/cloud-service
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 108376
+Description:  cloud_service  daemon

@@ -1,0 +1,8 @@
+
+config on_off 'reboot'
+	option enabled 'off'
+	option day '0'
+	option time '03:00:00'
+	option random_range '30'
+	option last_reboot_time '0'
+

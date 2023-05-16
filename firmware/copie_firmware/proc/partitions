@@ -1,0 +1,15 @@
+major minor  #blocks  name
+
+ 254        0      16384 zram0
+  31        0        182 mtdblock0
+  31        1         10 mtdblock1
+  31        2         64 mtdblock2
+  31        3        128 mtdblock3
+  31        4        128 mtdblock4
+  31        5       1272 mtdblock5
+  31        6       2567 mtdblock6
+  31        7      12031 mtdblock7
+  31        8          0 mtdblock8
+  31        9      15872 mtdblock9
+ 179        0   31166976 mmcblk0
+ 179        1   31162880 mmcblk0p1

@@ -1,0 +1,32 @@
+
+config stream 'main'
+	option stream_type 'general'
+	option resolution '1280*720'
+	option bitrate_type 'vbr'
+	option frame_rate '65551'
+	option quality '3'
+	option bitrate '1024'
+	option encode_type 'H264'
+
+config stream 'minor'
+	option resolution '640*360'
+	option bitrate_type 'vbr'
+	option frame_rate '65551'
+	option quality '3'
+	option bitrate '256'
+	option encode_type 'H264'
+
+config stream 'mjpeg'
+	option resolution '640*360'
+	option bitrate_type 'vbr'
+	option frame_rate '65541'
+	option quality '3'
+	option bitrate '2560'
+	option encode_type 'MJPEG'
+
+config info 'main_conf'
+
+config info 'minor_conf'
+
+config info 'mjpeg_conf'
+

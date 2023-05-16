@@ -1,0 +1,5 @@
+MAJOR=31
+MINOR=7
+DEVNAME=mtdblock7
+DEVTYPE=disk
+NPARTS=0

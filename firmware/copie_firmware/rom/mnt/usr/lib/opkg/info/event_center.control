@@ -1,0 +1,13 @@
+Package: event_center
+Version: 1
+Depends: libc, uci, ubus, public
+Provides: 
+Source: tp_package/u_packages/event_center
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 45272
+Description:  event_center package....

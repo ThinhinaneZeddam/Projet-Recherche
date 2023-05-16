@@ -1,0 +1,18 @@
+
+config switch_type 'switch'
+	option night_vision_mode 'inf_night_vision'
+	option wtl_intensity_level '5'
+
+config para 'common'
+	option inf_delay '10'
+
+config para 'shedday'
+	option light_freq_mode 'auto'
+
+config para 'shednight'
+	option light_freq_mode 'auto'
+
+config para 'autoday'
+
+config para 'autonight'
+

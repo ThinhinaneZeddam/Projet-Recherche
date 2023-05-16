@@ -1,0 +1,26 @@
+#!/bin/sh /etc/rc.common
+
+START=45
+RESUME=45
+
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+
+MSG_PUSH_BIN="/bin/cloud-service"
+MSG_PUSH_EXENMAE="cloud-service"
+start(){
+	$MSG_PUSH_BIN 2>&1 1>/dev/console &
+}
+
+stop(){
+	#service_stop $MSG_PUSH_BIN
+	killall  $MSG_PUSH_EXENMAE
+}
+
+terminate(){
+	stop
+}
+
+resume(){
+	start
+}

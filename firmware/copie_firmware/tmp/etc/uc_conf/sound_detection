@@ -1,0 +1,14 @@
+
+config on_off 'bcd'
+	option enabled 'off'
+	option sensitivity 'medium'
+	option digital_sensitivity '50'
+
+config notif_list 'bcd_notif_list'
+	option app_enabled 'off'
+	option client_enabled 'off'
+	option record_enabled 'on'
+	option msg_push_enabled 'on'
+	option light_alarm_enabled 'off'
+	option sound_alarm_enabled 'off'
+

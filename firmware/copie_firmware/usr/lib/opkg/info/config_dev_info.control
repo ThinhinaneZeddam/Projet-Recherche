@@ -1,0 +1,13 @@
+Package: config_dev_info
+Version: 1.0-1
+Depends: libc
+Provides: 
+Source: tp_package/sys_packages/config_dev_info
+Section: base
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 4810
+Description:  Write device name and hardware version to DUT during booting. 

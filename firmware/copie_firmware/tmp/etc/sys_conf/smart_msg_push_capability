@@ -1,0 +1,10 @@
+
+config capability 'capability'
+	list support 'md'
+	list support 'od'
+	list support 'id'
+	list support 'cd'
+	list support 'login_error'
+	list support 'hd_lack'
+	list support 'hd_error'
+

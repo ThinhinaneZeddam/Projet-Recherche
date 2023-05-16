@@ -1,0 +1,6 @@
+
+config led 'config'
+
+config led 'model'
+	option startup 'on'
+

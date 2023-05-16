@@ -1,0 +1,37 @@
+#!/bin/sh
+# Copyright (C) 2006 OpenWrt.org
+
+run_scripts() {
+	for i in /etc/rc.d/$1*; do
+		[ -x $i ] && $i $2 2>&1
+	done
+}
+
+system_config() {
+	config_get_bool foreground $1 foreground 0
+}
+
+core_dump_debug() {
+	if [ $(uci get system.debug.coredump_enabled) -eq 1 ]; then
+		telnetd
+		ulimit -c unlimited
+		REL_VERSION=$(uci get device_info.info.sw_version | awk '{print $3$4}')
+		sysctl -w kernel.core_pattern="|/sbin/core_helper %e %t $REL_VERSION"
+	fi
+}
+
+LOGGER="cat"
+[ -x /usr/bin/logger ] && LOGGER="logger -s -p 6 -t sysinit"
+
+. /lib/functions.sh
+
+core_dump_debug
+
+config_load system
+config_foreach system_config system
+
+if [ "$1" = "S" -a "$foreground" != "1" ]; then
+	run_scripts "$1" "$2" &
+else
+	run_scripts "$1" "$2"
+fi

@@ -1,0 +1,13 @@
+Package: wlan-manager
+Version: 1.0-1
+Depends: libc, librt, libpthread, libubox, libuci, libubus, libblobmsg-json, libnl-tiny, libsyslog, rtl-wpa-supplicant, libiniparser, libopenssl, libsyslog, libdecrypter, libsecurity
+Provides: 
+Source: tp_package/u_packages/wlan-manager
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 150547
+Description:  This package

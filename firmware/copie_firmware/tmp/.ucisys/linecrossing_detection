@@ -1,0 +1,3 @@
+linecrossing_detection.detection=on_off
+linecrossing_detection.notify_list=notify_list
+linecrossing_detection.arming_schedule=plan

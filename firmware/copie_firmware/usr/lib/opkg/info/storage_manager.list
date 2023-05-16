@@ -1,0 +1,10 @@
+/usr/sbin/test_nas
+/etc/hotplug.d/block/10-mmc
+/usr/sbin/mount_nas
+/usr/lib/libstorage_manager.so
+/usr/sbin/mount_disk
+/etc/config/harddisk_manage
+/bin/mmc_test
+/bin/storage_manager
+/etc/init.d/storage_manager
+/usr/sbin/fdisk_sd_card

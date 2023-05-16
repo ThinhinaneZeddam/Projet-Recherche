@@ -1,0 +1,49 @@
+
+config router_request 'check_fw_ver'
+
+config router_request 'download_fw'
+
+config router_request 'get_account_stat'
+
+config router_request 'reset_account_pwd'
+
+config router_request 'modify_account_pwd'
+
+config router_request 'get_reg_verify_code'
+
+config router_request 'get_reset_pwd_verify_code'
+
+config router_request 'check_reg_verify_code'
+
+config router_request 'check_reset_pwd_verify_code'
+
+config router_request 'notify_event'
+
+config router_request 'bind'
+
+config router_request 'login'
+
+config router_request 'resend_email'
+
+config router_request 'unbind'
+
+config router_request 'register'
+
+config router_request 'get_plugins'
+
+config router_request 'get_can_update_plugins'
+
+config router_request 'get_not_installed_plugins'
+
+config router_request 'check_plugin_update'
+
+config router_request 'get_plugin_info'
+
+config router_request 'download_plugin'
+
+config router_request 'synchronize_plugin'
+
+config router_request 'plugin_service'
+
+config cloud_client 'client_info'
+

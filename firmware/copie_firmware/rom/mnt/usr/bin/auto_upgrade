@@ -1,0 +1,114 @@
+#!/bin/sh
+
+lock /var/run/upgrade.lock
+
+lock_free()
+{
+	lock -u /var/run/upgrade.lock
+}
+
+check_whether_camera_is_connected()
+{
+	connection_num=`ubus call CET cet_get_client_count | grep "current client count"`
+	connection_num=${connection_num/\"current client count\":/}
+	if [ $connection_num != '0,' ]; then
+		echo  "vod(relay local) or stream(relay local) is living" >/dev/console
+		return 1
+	fi
+
+	if [ -d /tmp/connection_status ]; then
+        for f in `ls /tmp/connection_status`
+        do
+            if [ "$(cat /tmp/connection_status/$f 2>/dev/nul)" = "1" ]; then
+                echo "/tmp/connection_status/$f live" > /dev/console
+                return 1
+            fi
+        done
+	fi
+
+	return 0
+}
+
+upgrade_without_check=0
+if [ "$1" = "-f" -o "$1" = "--force" ]; then
+	upgrade_without_check=1
+fi
+
+if [ -e "/etc/config/no_upgrade" ]; then
+	echo  "find no_upgrade in /etc/config/, exit" >/dev/console
+	lock_free
+	exit 0
+fi
+
+count=0
+ret=-1
+while [ $ret != 0 -a $count -lt 3 ]
+do
+	[ `get_new_fwinfo` = 1 ] && ret=0
+	count=$((count+1))
+	[ $ret != 0 ] && sleep 5
+done
+if [ $ret != 0 ]; then
+	echo "get new firmware list error" >/dev/console
+	lock_free
+	exit 1
+fi
+
+downloadUrl=$(uci get cloud_config.upgrade_info.download_url 2>/dev/null)
+if [ -z "$downloadUrl" ]; then
+	echo "cloud no new firmware to upgrade" >/dev/console
+	lock_free
+	exit 0
+elif [ -z "echo $downloadUrl | grep bin" ]; then
+	echo "firmware url illegal" >/dev/console
+	lock_free
+	exit 1
+fi
+
+config_auto_up=$(uci get auto_upgrade.common.enabled 2>/dev/null)
+fwType=$(uci get cloud_config.upgrade_info.type 2>/dev/null)
+if [ "$config_auto_up" = "off" -a "$fwType" != 4 ]; then
+	echo "new FW available, but config_auto_up is set to 0, and the new FW is not FORCE_UPGRADE" > /dev/console
+	lock_free
+	exit 1
+fi
+
+#config_onboarding_status=$(uci get system.firmware.onboarding_status 2>/dev/null)
+# if [ "$config_onboarding_status" = 0 ]; then
+# 	echo "Onboarding Status == False, delay upgrade by 10 minutes" >/dev/console
+# 	sleep 600
+# fi
+
+if [ "$upgrade_without_check" = 0 ]; then
+	check_conn_count=0
+	check_whether_camera_is_connected && camera_is_connected=0 || camera_is_connected=1
+	while [ $check_conn_count -lt 1 -a $camera_is_connected = 1 ]
+	do
+		echo "Camera stream is connected, check 10 minutes later" >/dev/console
+		sleep 600
+		check_whether_camera_is_connected && camera_is_connected=0 || camera_is_connected=1
+		check_conn_count=$((check_conn_count+1))
+	done
+	if [ $camera_is_connected = 1 ];	then
+		echo "Camera stream is connected all the time, donnot upgrade" >/dev/console
+		lock_free
+		exit 1
+	fi
+fi
+
+filepath="/tmp/luka_up.bin"
+
+echo "start to download $downloadUrl to $filepath" >/dev/console
+
+[ `makeRoomForUpgrade.sh kill` ] && echo "mem clear" 
+
+cloud_upgrade $downloadUrl $filepath 0
+echo "download done , do upgrade" >/dev/console
+
+uci set timing_reboot.reboot.last_reboot_time=$(date +%s); uci commit timing_reboot
+slpupgrade $filepath || { echo "========firmware download ERROR" >/dev/console;lock_free;reboot; }
+
+echo "upgrade successfully" >/dev/console
+
+lock_free
+reboot

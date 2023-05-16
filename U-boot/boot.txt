@@ -1,0 +1,346 @@
+the id code = 204017
+unsupport ID is if the id not be 0x00,the flash is ok for burner
+the manufacturer 20
+SF: Detected SK25Q128
+
+--->probe spend 12 ms
+isvp_t31# sf read 0x80700000 0x80200 0x175000
+SF: 1527808 bytes @ 0x80200 Read: OK
+--->read spend 492 ms
+isvp_t31# bootm 0x80700000
+## Booting kernel from Legacy Image at 80700000 ...
+   Image Name:   Linux-3.10.14__isvp_swan_1.0__
+   Image Type:   MIPS Linux Kernel Image (lzma compressed)
+   Data Size:    1297173 Bytes = 1.2 MiB
+   Load Address: 80010000
+   Entry Point:  8031b470
+   Verifying Checksum ... OK
+   Uncompressing Kernel Image ... OK
+
+Starting kernel ...
+
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 3.10.14__isvp_swan_1.0__ (root@smartlifeci1) (gcc version 4.7.2 (Ingenic r2.3.3 2016.12) ) #2 PREEMPT Fri Sep 9 12:04:19 CST 2022
+[    0.000000] bootconsole [early0] enabled
+[    0.000000] CPU0 RESET ERROR PC:30184D1C
+[    0.000000] CPU0 revision is: 00d00100 (Ingenic Xburst)
+[    0.000000] FPU revision is: 00b70000
+[    0.000000] CCLK:1404MHz L2CLK:702Mhz H0CLK:250MHz H2CLK:250Mhz PCLK:125Mhz
+[    0.000000] Determined physical RAM map:
+[    0.000000]  memory: 003b0000 @ 00010000 (usable)
+[    0.000000]  memory: 00030000 @ 003c0000 (usable after init)
+[    0.000000] User-defined physical RAM map:
+[    0.000000]  memory: 02d00000 @ 00000000 (usable)
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x00000000-0x02cfffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x00000000-0x02cfffff]
+[    0.000000] Primary instruction cache 32kB, 8-way, VIPT, linesize 32 bytes.
+[    0.000000] Primary data cache 32kB, 8-way, VIPT, no aliases, linesize 32 bytes
+[    0.000000] pls check processor_id[0x00d00100],sc_jz not support!
+[    0.000000] MIPS secondary cache 128kB, 8-way, linesize 32 bytes.
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping off.  Total pages: 11430
+[    0.000000] Kernel command line: console=ttyS1,115200n8 mem=45M@0x0 rmem=19M@0x2d00000 root=/dev/mtdblock6 rootfstype=squashfs spdev=/dev/mtdblock7 noinitrd init=/etc/preinit os_size=1297237
+[    0.000000] PID hash table entries: 256 (order: -2, 1024 bytes)
+[    0.000000] Dentry cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Inode-cache hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.000000] Memory: 41060k/46080k available (3149k kernel code, 5020k reserved, 623k data, 192k init, 0k highmem)
+[    0.000000] SLUB: HWalign=32, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] NR_IRQS:358
+[    0.000000] clockevents_config_and_register success.
+[    0.000016] Calibrating delay loop... 1397.55 BogoMIPS (lpj=6987776)
+[    0.037792] pid_max: default: 32768 minimum: 301
+[    0.042653] Mount-cache hash table entries: 512
+[    0.047596] Initializing cgroup subsys debug
+[    0.051853] Initializing cgroup subsys freezer
+[    0.057344] devtmpfs: initialized
+[    0.061490] regulator-dummy: no parameters
+[    0.065736] NET: Registered protocol family 16
+[    0.072370] bio: create slab <bio-0> at 0
+[    0.077850] jz-dma jz-dma: JZ SoC DMA initialized
+[    0.082744] usbcore: registered new interface driver usbfs
+[    0.088338] usbcore: registered new interface driver hub
+[    0.093742] usbcore: registered new device driver usb
+[    0.098928]  (null): set:311  hold:312 dev=125000000 h=625 l=625
+[    0.105950] Switching to clocksource jz_clocksource
+[    0.111007] cfg80211: Calling CRDA to update world regulatory domain
+[    0.117982] jz-dwc2 jz-dwc2: cgu clk gate get error
+[    0.122893] DWC IN OTG MODE
+[    0.126298] dwc2 dwc2: Keep PHY ON
+[    0.129662] dwc2 dwc2: Using Buffer DMA mode
+[    0.134010] dwc2 dwc2: Core Release: 3.00a
+[    0.138171] dwc2 dwc2: DesignWare USB2.0 High-Speed Host Controller
+[    0.144520] dwc2 dwc2: new USB bus registered, assigned bus number 1
+[    0.151397] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    0.158206] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.165564] usb usb1: Manufacturer: Linux 3.10.14__isvp_swan_1.0__ dwc2-hcd
+[    0.172606] usb usb1: SerialNumber: dwc2
+[    0.176871] hub 1-0:1.0: USB hub found
+[    0.180601] hub 1-0:1.0: 1 port detected
+[    0.184761] dwc2 dwc2: DWC2 Host Initialized
+[    0.189167] NET: Registered protocol family 2
+[    0.193962] TCP established hash table entries: 512 (order: 0, 4096 bytes)
+[    0.200934] TCP bind hash table entries: 512 (order: -1, 2048 bytes)
+[    0.207314] TCP: Hash tables configured (established 512 bind 512)
+[    0.213634] TCP: reno registered
+[    0.216847] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.222790] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.229306] NET: Registered protocol family 1
+[    0.233964] freq_udelay_jiffys[0].max_num = 10
+[    0.238401] dwc2 dwc2: ID PIN CHANGED!
+[    0.242266] cpufreq  udelay  loops_per_jiffy
+[    0.246601] 12000     59724   59724
+[    0.249867] 24000     119449  119449
+[    0.253322] 60000     298622  298622
+[    0.256754] 120000    597245  597245
+[    0.260286] 200000    995409  995409
+[    0.263825] 300000    1493114         1493114
+[    0.267526] 600000    2986229         2986229
+[    0.271240] 792000    3941822         3941822
+[    0.274942] 1008000   5016864         5016864
+[    0.278738] 1200000   5972458         5972458
+[    0.286208] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.292273] msgmni has been set to 80
+[    0.296882] io scheduler noop registered
+[    0.300806] io scheduler cfq registered (default)
+[    0.307403] jz-uart.1: ttyS1 at MMIO 0x10031000 (irq = 58) is a uart1
+[    0.315006] console [ttyS1] enabled, bootconsole disabled
+[    0.315006] console [ttyS1] enabled, bootconsole disabled
+[    0.326710] zram: Created 2 device(s) ...
+[    0.331067] logger: created 256K log 'log_main'
+[    0.336194] jz SADC driver registeres over!
+[    0.341710] jz TCU driver register completed
+[    0.346409] the id code = 204017, the flash name is GD25LQ128C
+[    0.352658] #####unsupport ID is 204017 if the id not be 0x00,the flash can be ok,but the quad mode may be not support!!!!!
+[    0.563618] JZ SFC Controller for SFC channel 0 driver register
+[    0.569739] SLP flash nor read
+[    0.573000] hdrA:1298432,B:1823232,C:2633216
+[    0.577415] Searching for RedBoot partition table
+[    0.582310] 10 RedBoot partitions found on MTD device jz_sfc
+[    0.588166] Creating 10 MTD partitions on "jz_sfc":
+[    0.593221] 0x000000000000-0x00000002d800 : "factory_boot"
+[    0.598890] mtd: partition "factory_boot" doesn't end on an erase block -- force read-only
+[    0.607917] 0x00000002d800-0x000000030000 : "factory_info"
+[    0.613627] mtd: partition "factory_info" doesn't start on an erase block boundary -- force read-only
+[    0.623597] 0x000000030000-0x000000040000 : "art"
+[    0.628901] 0x000000040000-0x000000060000 : "config"
+[    0.634532] 0x000000060000-0x000000080000 : "normal_boot"
+[    0.640592] 0x000000080000-0x0000001bd200 : "kernel"
+[    0.645802] mtd: partition "kernel" doesn't end on an erase block -- force read-only
+[    0.654266] 0x0000001bd200-0x000000440000 : "rootfs"
+[    0.659402] mtd: partition "rootfs" doesn't start on an erase block boundary -- force read-only
+[    0.668874] 0x000000440000-0x000000fffe00 : "rootfs_data"
+[    0.674494] mtd: partition "rootfs_data" doesn't end on an erase block -- force read-only
+[    0.683417] 0x000000fffe00-0x000001000000 : "verify"
+[    0.688551] mtd: partition "verify" doesn't start on an erase block boundary -- force read-only
+[    0.698018] 0x000000080000-0x000001000000 : "firmware"
+[    0.703403] usb 1-1: new high-speed USB device number 2 using dwc2
+[    0.710321] SPI NOR MTD LOAD OK
+[    0.713709] tun: Universal TUN/TAP device driver, 1.6
+[    0.718927] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    0.725509] usbcore: registered new interface driver asix
+[    0.731163] usbcore: registered new interface driver ax88179_178a
+[    0.737483] usbcore: registered new interface driver cdc_ether
+[    0.743573] usbcore: registered new interface driver net1080
+[    0.749443] usbcore: registered new interface driver cdc_subset
+[    0.755611] usbcore: registered new interface driver zaurus
+[    0.761453] usbcore: registered new interface driver cdc_ncm
+[    0.767641] jzmmc_v1.2 jzmmc_v1.2.0: vmmc regulator missing
+[    0.810941] jzmmc_v1.2 jzmmc_v1.2.0: register success!
+[    0.816459] usbcore: registered new interface driver usbhid
+[    0.823296] usbhid: USB HID core driver
+[    0.827387] Registered character driver slp_flash_chrdev
+[    0.832900] SLP flash cdev init!  jz_sfc
+[    0.836947] TCP: cubic registered
+[    0.840555] NET: Registered protocol family 17
+[    0.845725] /home/jenkins/tapo/c200v3_develop/slp-sp-target-src/ingenict31/linux-3.10.14/drivers/rtc/hctosys.c: unable to open rtc device (rtc0)
+[    0.863589] VFS: Mounted root (squashfs filesystem) readonly on device 31:6.
+[    0.874220] devtmpfs: mounted
+[    0.877629] Freeing unused kernel memory: 192K (803c0000 - 803f0000)
+[    0.921490] usb 1-1: New USB device found, idVendor=0bda, idProduct=f179
+[    0.933033] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    0.950897] usb 1-1: SerialNumber: 1C61B4010F77
+- preinit -
+mounting rwroot
+- init -
+
+Please press Enter to activate this console. [    2.109189] zram0: detected capacity change from 0 to 16777216
+Setting up swapspace version 1, size = 16773120 bytes
+UUID=fd93c8b5-3b43-47c3-8b17-b[    2.120581] Adding 16380k swap on /dev/zram0.  Priority:-1 extents:1 across:16380k SS
+9fa6961fd9c
+Fri Sep  9 05:04:07 DST 2022
+ispfile is not ready, wait...
+ispfile is not ready, wait...
+ispfile is not ready, wait...
+reset config is not ready, use default!!!
+reset_gpio = 62
+===insmod /lib/modules/3.10.14/k_hi_reset.ko===
+[    7.568665] Success to init gpio reset
+ispfile is not ready, wait...
+ispfile is not ready, wait...
+ispfile is not ready, wait...
+led config is not ready, use default!!!
+led_green_gpio = 42
+led_red_gpio = 43
+led_green_active_low = 0
+led_red_active_low = 0
+===insmod /lib/modules/3.10.14/gpio_leds.ko===
+Command failed: Unknown error
+Starting wlan-manager: wlan-manager started.
+find usb device ok
+wlan-manager: driver is not ready, wait...
+[   11.303329] start write config partition...partition_offset is 0x40000,addrStart is 0x40000
+[   11.690621] ..done
+[   12.116746] usb 1-1: USB disconnect, device number 2
+wlan-manager: driver is not ready, wait...
+[Debug] [setLedEvent:429] setLedEvent = 3
+[Debug] [main:577] gLastLedEvent = 1, gCurrLedEvent = 3
+---WLAN---release ip
+[Debug] [setLedEvent:429] setLedEvent = 3
+[Debug] [main:577] gLastLedEvent = 3, gCurrLedEvent = 3
+[Debug] [main:617] The event is the same, don't do everything
+[   13.187316] wlan-manager: insmod 8188fu.ko...
+wlan-manager: driver is not ready, wait...
+[   13.490933] usb 1-1: new high-speed USB device number 3 using dwc2
+[   13.529539] usbcore: registered new interface driver rtl8188fu
+[   13.721404] usb 1-1: New USB device found, idVendor=0bda, idProduct=f179
+[   13.728334] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[   13.735873] usb 1-1: SerialNumber: 1C61B4010F77
+wlan-manager: driver is not ready, wait...
+[   14.610035] wlan-manager: start sta...
+[   14.614479] wlan-manager: ifconfig wlan0 up.
+[   15.147304] device wlan0 entered promiscuous mode
+[   15.152454] br-wan: port 1(wlan0) entered forwarding state
+[   15.158150] br-wan: port 1(wlan0) entered forwarding state
+[Debug] [setLedEvent:429] setLedEvent = 3
+[Debug] [main:577] gLastLedEvent = 3, gCurrLedEvent = 3
+[Debug] [main:617] The event is the same, don't do everything
+[   16.622400] br-wan: port 1(wlan0) entered disabled state
+[   16.731646] wlan-manager: start sta...
+[   16.735847] wlan-manager: ifconfig wlan0 up.
+[2022-09-09 05:04:26][ERROR][cloud-service] read_value_from_uci_option(352): error: failed to load package.
+
+[2022-09-09 05:04:26][ERROR][cloud-service] init_server_info(109): READ SVR FRO CONFIG ERROR
+
+[2022-09-09 05:04:26][MAJOR][cloudiot]iot_base.c:182(run_once)-- cloud-iot start, pid: [850]
+
+generate key: 3600days 2048bits
+[2022-09-09 05:04:27][ERROR][cloud-service] read_value_from_uci_option(366): error: failed to get cloud_config:bind:bindCode.
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(644): dev_type:    SMART.IPCAMERA
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(645): dev_model:    C200
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(646): dev_alias:   Tapo_Camera_0F77
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(649): dev_mac:     1C61B4010F77
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(651): zoneid:      Africa/Casablanca
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(652): dev_name:    C200
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(653): hw_ver:      3.0
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(654): fw_ver:      1.3.0 Build 220909 Rel.43466n(4555)
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(656): oem_id:      5CFA4B8CF3F7D826581082F1C0CFAAE6
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(659): device_bind_status: 1
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(660): msg_push_switch: 1
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(662): bindCode:
+
+[2022-09-09 05:04:27][INFO][cloud-service] init_config_info(663): deviceSecret:
+
+[2022-09-09 05:04:27][ERROR][cloudiot]ubus.c:101(get_validate_token)-- mqtt not establish, get validate deviceToken failed.
+
+sh: write error: Invalid argument
+/etc/rc.common: line 97: /config/detect_i2c_install_sensor.sh: not found
+sed: /tmp/sensor_state: No such file or directory
+[2022-09-09 05:04:36][ERROR][cloudiot]http_client.c:129(http_client_timeout_handler)-- http connect timeout, req type: 0.
+
+ifconfig: eth0: error fetching interface information: Device not found
+/etc/rc.common: line 25: msglog1: not found
+         [storage] create_and_init_shm(134). creating initial shm...
+         [storage] create_and_init_shm(137). shm creating succeeded, id: 32769, len:16960
+         [storage] create_and_init_shm(148). shm mapped @0x77aa8000.
+         [storage] create_and_init_sem(175). creating initial sem...
+umount: can't umount /tmp/mnt/harddisk_1: No such file or directory
+         [storage] formatted_exec(70). system function error :No such file or directory
+
+         [storage] do_umount(215). No such file or directory
+         [telemetry] telemetry_load_config(178): uci_get_value access_key error
+         [telemetry] telemetry_load_config(186): uci_get_value access_secret error
+[reload_timing_reboot_cfg]-271: random value: 1615s
+
+         [telemetry] telemetry_load_config(194): uci_get_value startegyId error
+[2022-09-09 05:04:37][ERROR][relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-02b414a0932aa4264.dcipc.i.tplinknbu.com).
+[2022-09-09 05:04:37] nvid.c:main:150 - nvid started
+[2022-09-09 05:04:37] nvid.c:main:172 - signal_handler succeed
+[2022-09-09 05:04:37] nvid.c:main:193 - begin start onvif
+[2022-09-09 05:04:37] nvid.c:main:200 - start onvif succeed
+[2022-09-09 05:04:37] nvid.c:main:214 - begin uloop run
+Invalid sdcard device /dev/mmcblk0, please check configuration.
+         [storage] formatted_exec(70). system function error :No such file or directory
+
+         [storage] uci_load_single_disk(532). mounting disk 1 failed
+ubus4dbg_startTask
+ubus4dbg_taskloop ubus_add_object ok
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+ingenic wtd timeout is set to 60 sec
+[sys_uci_get_val]-161: uci_lookup_ptr error: No Complete
+
+[sys_uci_get_val]-161: uci_lookup_ptr error: No Complete
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[2022-09-09 05:04:43][ERROR][relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-02b414a0932aa4264.dcipc.i.tplinknbu.com).
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[2022-09-09 05:04:49][ERROR][relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-02b414a0932aa4264.dcipc.i.tplinknbu.com).
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[2022-09-09 05:04:55][ERROR][relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-02b414a0932aa4264.dcipc.i.tplinknbu.com).
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[2022-09-09 05:05:01][ERROR][relayd]cookie.c:576(cookies_init_conn_req) : failed when resolving hostname(euw1-relay-i-02b414a0932aa4264.dcipc.i.tplinknbu.com).
+[2022-09-09 05:05:02][ERROR][cloudiot]ubus.c:101(get_validate_token)-- mqtt not establish, get validate deviceToken failed.
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[2022-09-09 05:05:02][ERROR][cloudiot]http_client.c:129(http_client_timeout_handler)-- http connect timeout, req type: 0.
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+         [storage] update_disk_status_for_cet(308). ubus_lookup_id update_disk_status failed
+
+[cet_wtd_func]-1129: cet is missing, reboot now.

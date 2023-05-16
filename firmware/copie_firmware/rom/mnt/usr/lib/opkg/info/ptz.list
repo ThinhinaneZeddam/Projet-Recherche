@@ -1,0 +1,4 @@
+/lib/modules/3.10.14/motor_driver.ko
+/lib/libptz.so
+/usr/sbin/test_line_life.sh
+/usr/sbin/insmod_motor_driver.sh

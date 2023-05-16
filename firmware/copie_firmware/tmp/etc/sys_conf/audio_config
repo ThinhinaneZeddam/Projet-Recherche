@@ -1,0 +1,7 @@
+
+config audio_config 'speaker'
+
+config audio_config 'microphone'
+
+config audio_config 'record_audio'
+

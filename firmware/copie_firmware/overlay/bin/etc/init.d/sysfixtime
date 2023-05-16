@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2013-2014 OpenWrt.org
+
+START=06
+
+boot() {
+	local curtime="$(date +%s)"
+	local maxtime="$(date -r /etc/openwrt_release +%s)"
+	[ $curtime -lt $maxtime ] && date -s @$maxtime
+}
+

@@ -1,0 +1,4 @@
+/etc/init.d/relayd
+/usr/bin/relayd
+/etc/config/relayd_config
+/etc/root.cer

@@ -1,0 +1,7 @@
+
+config on_off 'detection'
+
+config notify_list 'notify_list'
+
+config plan 'arming_schedule'
+

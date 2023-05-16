@@ -1,0 +1,4 @@
+/etc/init.d/telemetry
+/bin/telemetry
+/etc/config/telemetry
+/bin/create_telemetry_files

@@ -1,0 +1,13 @@
+Package: libdecrypter
+Version: 1-1.0
+Depends: libc, libopenssl, libsyslog
+Provides: 
+Source: tp_package/lib/libdecrypter
+Section: libs
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: wanggengbin
+Architecture: ingenic
+Installed-Size: 41298
+Description:  1024 bits RSA Decrypter. Built in with private key. Depend on Openssl.

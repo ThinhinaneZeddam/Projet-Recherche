@@ -1,0 +1,4 @@
+/etc/config/wtd
+/bin/wtd
+/bin/disable_hw_wtd
+/etc/init.d/wtd

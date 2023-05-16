@@ -1,0 +1,14 @@
+
+config basic 'basic'
+	option enabled 'off'
+
+config cloud 'cloud'
+	option cloudUrl 'n-da.tplinkcloud.com'
+	option accessKey ''
+	option accessSecret ''
+
+config strategy 'strategy'
+	option strategyID ''
+	option collect_interval '15'
+	option post_interval '180'
+

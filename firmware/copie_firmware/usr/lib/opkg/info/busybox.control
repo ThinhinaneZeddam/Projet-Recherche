@@ -1,0 +1,14 @@
+Package: busybox
+Version: 1.19.4-6
+Depends: libc, libiconv-full
+Provides: 
+Source: tp_package/u_packages/busybox
+Section: base
+Status: unknown ok not-installed
+Essential: yes
+Priority: optional
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Architecture: ingenic
+Installed-Size: 486741
+Description:  The Swiss Army Knife of embedded Linux.
+ It slices, it dices, it makes Julian Fries.

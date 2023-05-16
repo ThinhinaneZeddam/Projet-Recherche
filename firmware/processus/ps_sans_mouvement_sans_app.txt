@@ -1,0 +1,64 @@
+
+root@C200:/# ps -w
+  PID USER       VSZ STAT COMMAND
+    1 root      1880 S    init
+    2 root         0 SW   [kthreadd]
+    3 root         0 SW   [ksoftirqd/0]
+    5 root         0 SW<  [kworker/0:0H]
+    6 root         0 SW   [kworker/u2:0]
+    7 root         0 SW   [rcu_preempt]
+    8 root         0 SW   [rcu_bh]
+    9 root         0 SW   [rcu_sched]
+   10 root         0 SW   [watchdog/0]
+   11 root         0 SW<  [khelper]
+   12 root         0 SW   [kdevtmpfs]
+   13 root         0 SW<  [writeback]
+   14 root         0 SW<  [bioset]
+   15 root         0 SW<  [kblockd]
+   16 root         0 SW   [khubd]
+   18 root         0 SW<  [cfg80211]
+   19 root         0 SW   [kworker/0:2]
+   20 root         0 SW   [kswapd0]
+   21 root         0 SW   [fsnotify_mark]
+   22 root         0 SW<  [crypto]
+   36 root         0 SW   [kworker/u2:1]
+   37 root         0 SW<  [deferwq]
+   38 root         0 SW<  [kworker/0:1H]
+  240 root      1880 S    /bin/ash --login
+  271 root      1096 S    /sbin/hotplug2 --override --persistent --set-rules-file /etc/hotplug2.rules --set-coldplug-cmd /sbin/udev
+  309 root      1092 S    /sbin/ubusd
+  334 root     20480 S    tp_manage
+  390 root         0 DW   [reset_thread]
+  452 root      9760 S    /usr/bin/ledd
+  499 root     37400 S    /usr/sbin/wlan-manager
+  542 root      1884 S    udhcpc -p /var/run/udhcpc_C200_F44EA9.pid -s /lib/network/dhcp.script -f -t 0 -H C200_F44EA9 -i br-wan -R
+  687 root         0 SW   [RTW_CMD_THREAD]
+  724 root      1656 S    wpa_supplicant -B -Dwext -iwlan0 -P/tmp/supplicant_pid -C/var/run/wpa_supplicant -bbr-wan
+  864 root     53420 S    /usr/bin/dsd
+  878 root      4628 S    /bin/cloud-brd -c /var/etc/cloud_brd_conf
+  969 root     46200 S    /bin/cloud-client
+  981 root     61744 S    /bin/cloud-service
+  983 root      1868 S    /usr/sbin/telnetd -b 127.0.0.1 -l /bin/login.sh
+ 1037 root      4068 S    /usr/sbin/uhttpd -f -h /www -T 180 -A 0 -n 8 -R -r C200 -C /tmp/uhttpd.crt -K /tmp/uhttpd.key -s 443
+ 1056 root     44992 S    /usr/bin/rtspd
+ 1058 root     45560 S    /usr/bin/relayd
+ 1060 root     10588 S    /bin/storage_manager
+ 1069 root     60792 S    /usr/bin/p2pd
+ 1082 root         0 SW   [irq/37-isp-m0]
+ 1083 root         0 SW   [irq/38-isp-w02]
+ 1120 root      4496 S    /bin/telemetry
+ 1128 root     29644 S    /bin/nvid
+ 1130 root     26536 S    /bin/wtd
+ 1156 root      443m S    /bin/cet
+ 1160 root         0 DW   [isp_fw_process]
+ 4253 root      1884 S    /usr/sbin/ntpd -n -p time.nist.gov -p 128.138.140.44 -p 192.36.144.22 -p time-a.nist.gov -p time-b.nist.g
+ 5923 root         0 SW   [kworker/0:0]
+17911 root         0 SW   [kworker/0:1]
+18396 root      1872 R    ps -w
+
+
+
+
+
+
+

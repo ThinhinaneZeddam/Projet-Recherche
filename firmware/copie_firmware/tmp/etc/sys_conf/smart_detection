@@ -1,0 +1,7 @@
+
+config smart_detection 'capability'
+	option linecrossing_detection '1'
+	option intrusion_detection '1'
+	option people_detection '1'
+	option smart_data '1'
+

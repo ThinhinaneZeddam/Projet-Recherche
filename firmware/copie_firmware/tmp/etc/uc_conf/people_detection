@@ -1,0 +1,33 @@
+
+config on_off 'detection'
+	option enabled 'off'
+
+config notify_list 'notify_list'
+	option record_enabled 'on'
+	option msg_push_enabled 'on'
+	option light_alarm_enabled 'on'
+	option sound_alarm_enabled 'on'
+
+config plan 'arming_schedule'
+	option monday '["0000-2400"]'
+	option tuesday '["0000-2400"]'
+	option wednesday '["0000-2400"]'
+	option thursday '["0000-2400"]'
+	option friday '["0000-2400"]'
+	option saturday '["0000-2400"]'
+	option sunday '["0000-2400"]'
+
+config region_info 'region_info_1'
+	option id '1'
+	option pt1_x '0'
+	option pt1_y '0'
+	option pt2_x '10000'
+	option pt2_y '0'
+	option pt3_x '10000'
+	option pt3_y '10000'
+	option pt4_x '0'
+	option pt4_y '10000'
+	option sensitivity '50'
+	option threshold '0'
+	option percentage '1'
+

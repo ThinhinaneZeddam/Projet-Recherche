@@ -1,0 +1,8 @@
+
+config info 'sd_info'
+	option total_space '29.7GB'
+
+config info 'record_info'
+
+config telemetry 'record_status'
+

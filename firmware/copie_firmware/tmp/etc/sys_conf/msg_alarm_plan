@@ -1,0 +1,7 @@
+
+config plan 'chn1_msg_alarm_plan'
+
+config plan 'arming_schedule_sound'
+
+config plan 'arming_schedule_light'
+

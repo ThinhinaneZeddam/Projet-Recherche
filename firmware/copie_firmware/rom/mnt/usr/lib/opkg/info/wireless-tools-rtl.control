@@ -1,0 +1,14 @@
+Package: wireless-tools-rtl
+Version: 30-1
+Depends: libc
+Provides: 
+Source: tp_package/sys_packages/wireless-tools/wireless-tools-rtl
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 68999
+Description:  This package contains a collection of tools for configuring wireless
+ adapters implementing the "Linux Wireless Extensions".

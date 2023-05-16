@@ -1,0 +1,87 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2010 Jo-Philipp Wich
+
+START=43
+
+#SERVICE_DAEMONIZE=1
+#SERVICE_WRITE_PID=1
+
+CLOUD_BRD_BIN="/bin/cloud-brd"
+CLOUD_BRD_EXENAME="cloud-brd"
+CLOUD_BRD_CONF="/var/etc/cloud_brd_conf"
+
+init_sdk_config()
+{
+	config_load "cloud_sdk"
+	local sefDomain sefPort cloudSvrDefPort defaultSvr defaultPort defaultValidTime
+	local heartbeat_interval_ms request_timeout_ms max_message_number
+	local max_client_number reconnect_timewait_max_ms reconnect_cachedsvr_max_times
+	local reconnect_defaultsvr_max_times reconnect_random_time_min_ms
+	local reconnect_random_time_max_ms short_connect_recycle_interval_ms
+	local service_file cer_file
+
+	config_get sefDomain cloud sefDomain
+	config_get sefPort cloud sefPort
+	config_get cloudSvrDefPort cloud cloudSvrDefPort
+	config_get defaultSvr cloud defaultSvr
+	config_get defaultPort cloud defaultPort
+	config_get defaultValidTime cloud defaultValidTime
+	config_get heartbeat_interval_ms default heartbeat_interval_ms
+	config_get request_timeout_ms default request_timeout_ms
+	config_get max_message_number default max_message_number
+	config_get max_client_number default max_client_number
+	config_get reconnect_timewait_max_ms default reconnect_timewait_max_ms
+	config_get reconnect_cachedsvr_max_times default reconnect_cachedsvr_max_times
+	config_get reconnect_defaultsvr_max_times default reconnect_defaultsvr_max_times
+	config_get reconnect_random_time_min_ms default reconnect_random_time_min_ms
+	config_get reconnect_random_time_max_ms default reconnect_random_time_max_ms
+	config_get short_connect_recycle_interval_ms default short_connect_recycle_interval_ms
+	config_get service_file default service_file
+	config_get cer_file default cer_file
+
+	mkdir -p /var/etc
+
+	echo "{" >$CLOUD_BRD_CONF
+	echo "	\"cloud\":{" >>$CLOUD_BRD_CONF
+	echo "		\"sefDomain\":\"$sefDomain\"," >>$CLOUD_BRD_CONF
+	echo "		\"sefPort\":$sefPort," >>$CLOUD_BRD_CONF
+	echo "		\"cloudSvrDefPort\":$cloudSvrDefPort," >>$CLOUD_BRD_CONF
+	echo "		\"defaultSvr\":\"$defaultSvr\"," >>$CLOUD_BRD_CONF
+	echo "		\"defaultPort\":$defaultPort," >>$CLOUD_BRD_CONF
+	echo "		\"defaultValidTime\":$defaultValidTime" >>$CLOUD_BRD_CONF
+	echo "	}," >>$CLOUD_BRD_CONF
+	echo "	\"default\":{" >>$CLOUD_BRD_CONF
+	echo "		\"heartbeat_interval_ms\":$heartbeat_interval_ms," >>$CLOUD_BRD_CONF
+	echo "		\"request_timeout_ms\":$request_timeout_ms," >>$CLOUD_BRD_CONF
+	echo "		\"max_message_number\":$max_message_number," >>$CLOUD_BRD_CONF
+	echo "		\"max_client_number\":$max_client_number," >>$CLOUD_BRD_CONF
+	echo "		\"reconnect_timewait_max_ms\":$reconnect_timewait_max_ms," >>$CLOUD_BRD_CONF
+	echo "		\"reconnect_cachedsvr_max_times\":$reconnect_cachedsvr_max_times," >>$CLOUD_BRD_CONF
+	echo "		\"reconnect_defaultsvr_max_times\":$reconnect_defaultsvr_max_times," >>$CLOUD_BRD_CONF
+	echo "		\"reconnect_random_time_min_ms\":$reconnect_random_time_min_ms," >>$CLOUD_BRD_CONF
+	echo "		\"reconnect_random_time_max_ms\":$reconnect_random_time_max_ms," >>$CLOUD_BRD_CONF
+	echo "		\"short_connect_recycle_interval_ms\":$short_connect_recycle_interval_ms," >>$CLOUD_BRD_CONF
+	echo "		\"service_file\":\"$service_file\"," >>$CLOUD_BRD_CONF
+	echo "		\"cer_file\":\"$cer_file\"" >>$CLOUD_BRD_CONF
+	echo "	}" >>$CLOUD_BRD_CONF
+	echo "}" >>$CLOUD_BRD_CONF
+}
+
+#start cloud-brd program
+start()
+{
+	init_sdk_config
+	#SERVICE_PID_FILE=/var/run/cloud-brd.pid
+	#service_start $CLOUD_BRD_BIN -c $CLOUD_BRD_CONF
+	$CLOUD_BRD_BIN -c $CLOUD_BRD_CONF 2>&1 1>/dev/console & 
+
+	# Check if daemon is running, if not then re-execute.
+	#(sleep 1 && service_check $CLOUD_BRD_BIN || $CLOUD_BRD_BIN -c $CLOUD_BRD_CONF &)
+}
+
+#stop cloud-client program
+stop() 
+{
+	#SERVICE_PID_FILE=/var/run/cloud-brd.pid
+	killall $CLOUD_BRD_EXENAME
+}

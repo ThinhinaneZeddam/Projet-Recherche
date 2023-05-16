@@ -1,0 +1,19 @@
+
+config on_off 'detection'
+	option enabled 'off'
+
+config notify_list 'notify_list'
+	option record_enabled 'on'
+	option msg_push_enabled 'on'
+	option light_alarm_enabled 'off'
+	option sound_alarm_enabled 'off'
+
+config plan 'arming_schedule'
+	option monday '["0000-2400"]'
+	option tuesday '["0000-2400"]'
+	option wednesday '["0000-2400"]'
+	option thursday '["0000-2400"]'
+	option friday '["0000-2400"]'
+	option saturday '["0000-2400"]'
+	option sunday '["0000-2400"]'
+

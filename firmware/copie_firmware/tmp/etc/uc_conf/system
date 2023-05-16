@@ -1,0 +1,37 @@
+
+config system 'sys'
+	option is_factory '1'
+	option diagnose_mode 'off'
+	option dev_alias 'Tapo_Camera'
+	option makeroom_status '0'
+	option append_dns '0.0.0.0'
+	option network_type 'none'
+	option alias 'C200 3.0'
+
+config setting 'basic'
+	option timezone 'UTC-00:00'
+	option timing_mode 'ntp'
+	option zone_id 'Europe/London'
+
+config timing 'ntp'
+	option server '0.0.0.0'
+	option ntp_port '999'
+	option timing_interval '1440'
+
+config debug 'debug'
+	option coredump_enabled '0'
+
+config dst 'dst'
+	option enabled '1'
+	option synced '0'
+	option has_rule '0'
+	option dst_start_1 '---'
+	option dst_end_1 '---'
+	option dst_savings_1 '---'
+	option dst_start_2 '---'
+	option dst_end_2 '---'
+	option dst_savings_2 '---'
+	option dst_local_start '---'
+	option dst_local_end '---'
+	option dst_offset '---'
+

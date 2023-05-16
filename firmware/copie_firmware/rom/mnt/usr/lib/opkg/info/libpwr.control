@@ -1,0 +1,13 @@
+Package: libpwr
+Version: 1
+Depends: libc, libpthread, librt
+Provides: 
+Source: tp_package/u_packages/pwr
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 6852
+Description:  lib pwr package....

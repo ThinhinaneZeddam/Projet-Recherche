@@ -1,0 +1,13 @@
+Package: smart_detection
+Version: 1
+Depends: libc, libmi, librt, libuci, libjson, libubus, libubox, libm, libSmart, public, libpthread, libmsglog, libsyslog, t31_api, ptz
+Provides: 
+Source: tp_package/u_packages/smart_detection
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 162287
+Description:  smart_detection package....

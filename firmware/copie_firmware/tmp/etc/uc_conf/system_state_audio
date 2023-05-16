@@ -1,0 +1,4 @@
+
+config info 'info'
+	option language 'other'
+

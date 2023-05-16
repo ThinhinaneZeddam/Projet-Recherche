@@ -1,0 +1,102 @@
+#!/bin/sh
+. /usr/share/libubox/jshn.sh
+
+VALUE_TO_CHECK=
+
+TYPE="$1"
+
+if [ "$TYPE" == "setButtonTestMode" ]; then
+	if [ ! -f /tmp/gpio_test_mode ]; then
+		touch /tmp/gpio_test_mode
+	fi
+	return 0
+elif [ "$TYPE" == "checkButton" ]; then
+	if [ -f /tmp/reset_button_pressed ]; then
+		echo "check successfully"
+	fi
+	return 0
+elif [ "$TYPE" == "clearButtonStatus" ]; then
+		rm /tmp/reset_button_pressed
+	return 0
+fi
+
+PARAM="$2"
+
+if [ "$TYPE" == "devName" ]; then
+	ubus call tpServer setInfo "{\"type\":7, \"data\":\"$PARAM\"}"
+	local DEVNAMESTR=$(ubus call tpServer getInfo "{\"infoMask\":128}")
+	json_init
+	json_load "$DEVNAMESTR"
+	json_get_var VALUE_TO_CHECK dev_name
+elif [ "$TYPE" == "hwVersion" ]; then
+	ubus call tpServer setInfo "{\"type\":8, \"data\":\"$PARAM\"}"
+	local HWVERSTR=$(ubus call tpServer getInfo "{\"infoMask\":256}")
+	json_init
+	json_load "$HWVERSTR"
+	json_get_var VALUE_TO_CHECK hw_ver
+elif [ "$TYPE" == "oemId" ]; then
+	ubus call tpServer setInfo "{\"type\":13, \"data\":\"$PARAM\"}"
+	local OEMIDSTR=$(ubus call tpServer getInfo "{\"infoMask\":16384}")
+	json_init
+	json_load "$OEMIDSTR"
+	json_get_var VALUE_TO_CHECK oem_id
+elif [ "$TYPE" == "region" ]; then
+	ubus call tpServer setInfo "{\"type\":14, \"data\":\"$PARAM\"}"
+	local REGIONSTR=$(ubus call tpServer getInfo "{\"infoMask\":32768}")
+	json_init
+	json_load "$REGIONSTR"
+	json_get_var VALUE_TO_CHECK region
+elif [ "$TYPE" == "mac" ]; then
+	ubus call tpServer setInfo "{\"type\":1, \"data\":\"$PARAM\"}"
+	local MACSTR=$(ubus call tpServer getInfo "{\"infoMask\":1}")
+	json_init
+	json_load "$MACSTR"
+	json_get_var VALUE_TO_CHECK mac
+elif [ "$TYPE" == "devId" ]; then
+	ubus call tpServer setInfo "{\"type\":3, \"data\":\"$PARAM\"}"
+	local DEVIDSTR=$(ubus call tpServer getInfo "{\"infoMask\":4}")
+	json_init
+	json_load "$DEVIDSTR"
+	json_get_var VALUE_TO_CHECK dev_id
+elif [ "$TYPE" == "factoryMode" ]; then
+	uci set tp_manage.factory_mode.enabled=$PARAM
+	uci commit tp_manage
+	VALUE_TO_CHECK=$(uci get tp_manage.factory_mode.enabled)
+elif [ "$TYPE" == "hwDesc" ];then
+	ubus call tpServer setInfo "{\"type\":6, \"data\":\"$PARAM\"}"
+	local HWDESCSTR=$(ubus call tpServer getInfo "{\"infoMask\":16}")
+	json_init
+	json_load "$HWDESCSTR"
+	json_get_var VALUE_TO_CHECK hw_id_des
+elif [ "$TYPE" == "DHAPIN" ];then
+	ubus call tpServer setInfo "{\"type\":15, \"data\":\"$PARAM\"}"
+	local FFSPINSTR=$(ubus call tpServer getInfo "{\"infoMask\":65536}")
+	json_init
+	json_load "$FFSPINSTR"
+	json_get_var VALUE_TO_CHECK ffs_pin
+elif [ "$TYPE" == "DHAPubKey" ];then
+	PARAM=$(echo -n "$PARAM"|tr '\n' '%'|sed -e 's/%/\\n/g')
+	ubus call tpServer setInfo "{\"type\":16, \"data\":\"$PARAM\"}"
+	VALUE_TO_CHECK=$(ubus call tpServer getInfo '{"infoMask":131072}'|awk -F: '$1~"ffs_dss_public_key"{print $2}'|sed -e 's/^[^"]*\"//g;s/"$//g;s|\\/|/|g')
+elif [ "$TYPE" == "DHAPriKey" ];then
+	PARAM=$(echo -n "$PARAM"|tr '\n' '%'|sed -e 's/%/\\n/g')
+	ubus call tpServer setInfo "{\"type\":17, \"data\":\"$PARAM\"}"
+	VALUE_TO_CHECK=$(ubus call tpServer getInfo '{"infoMask":262144}'|awk -F: '$1~i"ffs_dev_private_key"{print $2}'|sed -e 's/^[^"]*\"//g;s/"$//g;s|\\/|/|g')
+elif [ "$TYPE" == "DHACertChain" ];then
+	PARAM=$(echo -n "$PARAM"|tr '\n' '%'|sed -e 's/%/\\n/g')
+	ubus call tpServer setInfo "{\"type\":18, \"data\":\"$PARAM\"}"
+	VALUE_TO_CHECK=$(ubus call tpServer getInfo '{"infoMask":524288}'|awk -F: '$1~i"ffs_dev_cert"{print $2}'|sed -e 's/^[^"]*\"//g;s/"$//g;s|\\/|/|g')
+else
+	echo "invalid param"
+	return 0
+fi
+
+if [ "$VALUE_TO_CHECK" == "$PARAM" ]; then
+	echo "check successfully"
+else
+	echo "write failed"
+fi
+
+
+ 
+

@@ -1,0 +1,152 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2007-2012 OpenWrt.org
+
+SERVICE_USE_PID=1
+CONFIGFILE="/tmp/udhcpd.conf"
+PIDFILE="/var/run/udhcpd.pid"
+LEASEFILE="/tmp/dhcp.leases"
+
+ENABLE=1
+ROUTE_SET=0
+DNS_SET=0
+
+xappend() {
+	local value="$1"
+
+	echo "${value}" >> $CONFIGFILE
+}
+
+dhcp_calc() {
+	local ip="$1"
+	local res=0
+
+	while [ -n "$ip" ]; do
+		part="${ip%%.*}"
+		res="$(($res * 256))"
+		res="$(($res + $part))"
+		[ "${ip%.*}" != "$ip" ] && ip="${ip#*.}" || ip=
+	done
+	echo "$res"
+}
+
+append_parm() {
+	local section="$1"
+	local option="$2"
+	local name="$3"
+	local _value
+
+	config_get _value "$section" "$option"
+
+	[ -n "$_value" ] ||  _value="$4"
+
+	xappend "$name $_value"
+}
+
+dhcp_add() {
+	local cfg="$1"
+	local interface=""
+	local lease_file=""
+	local pid_file=""
+	local enable=1
+	local start=0
+	local end=0
+	local lease=0
+	local is_change=0
+	local dhcp_cfg_file="dhcpd"
+	local padding="0"
+
+
+	config_get interface "$cfg" interface
+	config_get lease_file "$cfg" lease_file
+	config_get pid_file "$cfg" pid_file
+	config_get start "$cfg" pool_start
+	config_get end "$cfg" pool_end
+	config_get lease "$cfg" lease_time
+	config_get enable "$cfg" enable
+	[ "$enable" == "0" ] && ENABLE=0
+
+	xappend "lease_file $lease_file"
+	xappend "pidfile    $pid_file"
+	xappend "interface  $interface"
+	xappend "start      $start"
+	xappend "end        $end"
+	xappend "opt lease  $lease"
+	xappend "auto_time  $lease"
+
+	dhcp_option_add "$cfg"
+}
+
+dhcp_option_add() {
+	local cfg="$1"
+	local netmask=""
+	local padding="0"
+	local gateway=""
+	local pri_dns=""
+	local snd_dns=""
+
+	config_get gateway "$cfg" gateway
+	config_get netmask "$cfg" subnet
+	xappend "opt router $gateway" && ROUTE_SET=1
+	xappend "opt subnet $netmask"
+	config_get pri_dns "$cfg" pri_dns
+	config_get snd_dns "$cfg" snd_dns
+
+	if [ -z $pri_dns ] || [ "$pri_dns" == "0.0.0.0" ]; then
+		return
+	elif [ -z $snd_dns ] || [ "$snd_dns" == "0.0.0.0" ]; then
+		xappend "opt dns    $pri_dns" && DNS_SET=1
+	else
+		xappend "opt dns    $pri_dns $snd_dns" && DNS_SET=1
+	fi
+}
+
+dhcp_host_add() {
+	local cfg="$1"
+	local mac=""
+	local ip=""
+
+	config_get ip "$cfg" ip
+	config_get mac "$cfg" mac
+	if [ -z "$mac" ] || [ -z "$ip" ]; then
+			return 0
+	fi
+
+	xappend "static_lease $mac $ip"
+}
+
+set_path() {
+	local cfg="$1"
+	local leasefilepath=$LEASEFILE
+	local pidfilepath=$PIDFILE
+
+	append_parm $cfg lease_file "lease_file" $leasefilepath
+	append_parm $cfg pid_file "pidfile" $pidfilepath
+}
+
+set_interface() {
+	net_interface=`ubus call network.interface.lan status|grep \"device\"|cut -d \" -f4`
+	xappend "interface  $net_interface"
+}
+
+
+start() {
+	config_load dhcpd
+
+	echo "# auto-generated config file from /etc/config/dhcpd&&ip_mac_bind" > $CONFIGFILE
+	config_foreach dhcp_add dhcpd
+
+	[ $ENABLE -eq 1 ] && service_start /usr/sbin/udhcpd $CONFIGFILE
+}
+
+stop() {
+	service_stop /usr/sbin/udhcpd
+}
+
+reload() {
+	stop
+	start
+}
+
+restart() {
+	reload
+}

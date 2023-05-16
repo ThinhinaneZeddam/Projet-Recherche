@@ -1,0 +1,18 @@
+
+config interface 'loopback'
+
+config interface 'wan'
+	option ifname 'br-wan'
+	option type 'bridge'
+	option wan_type 'dhcp'
+	option speed_duplex 'auto'
+	option proto 'dhcp'
+	option mtu '1480'
+	option auto '1'
+	option netmask '255.255.255.0'
+	option ipaddr '192.168.0.10'
+	option gateway '192.168.0.1'
+	option dns '114.114.114.114 8.8.8.8'
+	option macaddr '9C:A2:F4:F4:4E:A9'
+	option fac_macaddr '9C:A2:F4:F4:4E:A9'
+

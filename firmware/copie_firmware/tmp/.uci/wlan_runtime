@@ -1,0 +1,3 @@
+-wlan_runtime.ap0.sta_list
+wlan_runtime.ap0.status=booting
+wlan_runtime.ap0.status=on

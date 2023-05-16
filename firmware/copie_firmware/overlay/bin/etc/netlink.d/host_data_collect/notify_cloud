@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ubus call cloudclient data_collect '{"data_type":"host_conn"}'

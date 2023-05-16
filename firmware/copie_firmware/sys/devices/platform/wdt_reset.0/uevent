@@ -1,0 +1,2 @@
+DRIVER=wdt_reset
+MODALIAS=platform:wdt_reset

@@ -1,0 +1,13 @@
+Package: kmod-k_netlink_ipc
+Version: 3.10.14+2.0
+Depends: kernel (=3.10.14-1-a74cf375559f80d758a3e54a15723d6b)
+Provides: 
+Source: tp_package/k_packages/k_netlink_ipc
+Section: ko util
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 6605
+Description:  netlink ipc as kernel module.

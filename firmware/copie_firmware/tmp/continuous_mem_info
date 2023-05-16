@@ -1,0 +1,145 @@
+
+================ continuous dump info ============
+
+info->addr = 0x75db5000
+info->size = 4685568
+info->used = 1
+
+info->addr = 0x7622cf00
+info->size = 524288
+info->used = 1
+
+info->addr = 0x762acf00
+info->size = 152064
+info->used = 1
+
+info->addr = 0x762d2100
+info->size = 2048
+info->used = 1
+
+info->addr = 0x762d2900
+info->size = 25600
+info->used = 1
+
+info->addr = 0x762d8d00
+info->size = 5376
+info->used = 1
+
+info->addr = 0x762da200
+info->size = 5376
+info->used = 1
+
+info->addr = 0x762db700
+info->size = 5376
+info->used = 1
+
+info->addr = 0x762dcc00
+info->size = 9984
+info->used = 1
+
+info->addr = 0x762df300
+info->size = 1599232
+info->used = 1
+
+info->addr = 0x76465a00
+info->size = 1599232
+info->used = 1
+
+info->addr = 0x765ec100
+info->size = 29696
+info->used = 1
+
+info->addr = 0x765f3500
+info->size = 453632
+info->used = 1
+
+info->addr = 0x76662100
+info->size = 453632
+info->used = 1
+
+info->addr = 0x766d0d00
+info->size = 1382400
+info->used = 1
+
+info->addr = 0x76822500
+info->size = 2048
+info->used = 1
+
+info->addr = 0x76822d00
+info->size = 25600
+info->used = 1
+
+info->addr = 0x76829100
+info->size = 5376
+info->used = 1
+
+info->addr = 0x7682a600
+info->size = 5376
+info->used = 1
+
+info->addr = 0x7682bb00
+info->size = 5376
+info->used = 1
+
+info->addr = 0x7682d000
+info->size = 9984
+info->used = 1
+
+info->addr = 0x7682f700
+info->size = 402944
+info->used = 1
+
+info->addr = 0x76891d00
+info->size = 402944
+info->used = 1
+
+info->addr = 0x768f4300
+info->size = 26880
+info->used = 1
+
+info->addr = 0x768fac00
+info->size = 132352
+info->used = 1
+
+info->addr = 0x7691b100
+info->size = 132352
+info->used = 1
+
+info->addr = 0x7693b600
+info->size = 353280
+info->used = 1
+
+info->addr = 0x76991a00
+info->size = 2048
+info->used = 1
+
+info->addr = 0x76992200
+info->size = 25600
+info->used = 1
+
+info->addr = 0x76998600
+info->size = 9984
+info->used = 1
+
+info->addr = 0x7699ad00
+info->size = 26880
+info->used = 1
+
+info->addr = 0x769a1600
+info->size = 143616
+info->used = 1
+
+info->addr = 0x769c4700
+info->size = 143616
+info->used = 1
+
+info->addr = 0x769e7800
+info->size = 7133184
+info->used = 0
+
+Mem Total Size: 19922944
+Mem Used  Size: 12789760
+Mem Free  Size: 7133184
+Mem Usage Rate: 64%
+
+=============== continuous dump info End ============

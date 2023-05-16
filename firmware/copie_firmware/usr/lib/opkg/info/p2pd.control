@@ -1,0 +1,13 @@
+Package: p2pd
+Version: 1
+Depends: libc, udt, libevent, libuClibc, libuci, libjson, libubus
+Provides: 
+Source: tp_package/u_packages/traversal_utils
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 111744
+Description:  traversal utils for NAT. peer-to-peer module.

@@ -1,0 +1,5 @@
+MAJOR=31
+MINOR=9
+DEVNAME=mtdblock9
+DEVTYPE=disk
+NPARTS=0

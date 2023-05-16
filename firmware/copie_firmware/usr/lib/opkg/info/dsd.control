@@ -1,0 +1,13 @@
+Package: dsd
+Version: 1.0.0-1
+Depends: libc, libjson, libuci, libblobmsg-json, libubox, libubus, libpthread, public, libdecrypter, libsyslog, libopenssl
+Provides: 
+Source: tp_package/sys_packages/dsd
+Section: Libs
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 367444
+Description:  data and service deamon programmed by C language

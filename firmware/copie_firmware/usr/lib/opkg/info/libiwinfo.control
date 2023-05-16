@@ -1,0 +1,14 @@
+Package: libiwinfo
+Version: 36
+Depends: libc
+Provides: 
+Source: tp_package/sys_packages/iwinfo
+Section: libs
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: Jo-Philipp Wich <xm@subsignal.org>
+Architecture: ingenic
+Installed-Size: 28283
+Description:  Wireless information library with consistent interface for proprietary Broadcom,
+ madwifi, nl80211 and wext driver interfaces.

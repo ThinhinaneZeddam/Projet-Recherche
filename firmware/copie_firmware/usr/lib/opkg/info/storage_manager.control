@@ -1,0 +1,13 @@
+Package: storage_manager
+Version: 1
+Depends: libc, libpthread, ubus, libubus, libuci, ubusd, jshn, libjson, libblobmsg-json, librt, public, libmediautil
+Provides: 
+Source: tp_package/sys_packages/storage_manager
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 418747
+Description:  Manage storage devices based on filesystem

@@ -1,0 +1,18 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2008-2010 OpenWrt.org
+
+START=40
+
+start() {
+{
+		[ -e /etc/config/auto_upgrade ] && hour=$(uci get auto_upgrade.common.time | tr -cd "[0-9]" | sed -r 's/0*([0-9])/\1/' ) || hour=300
+		[ -e /etc/config/auto_upgrade ] && random_range=$(uci get auto_upgrade.common.random_range) || random_range=120
+		hour=$((${hour}/100))
+		random=$(dd if=/dev/urandom bs=2 count=1 2>/dev/null | hexdump -e '"%u"' )
+		rmin=$((${random}%${random_range}))
+		hour=$((${hour}+${rmin}/60))
+		rmin=$((${rmin}%60))
+		echo "$rmin $hour * * * auto_upgrade " > /etc/crontabs/root
+}&
+}
+

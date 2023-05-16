@@ -1,0 +1,124 @@
+
+config router_request 'check_fw_ver'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'download_fw'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_account_stat'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'reset_account_pwd'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'modify_account_pwd'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_reg_verify_code'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_reset_pwd_verify_code'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'check_reg_verify_code'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'check_reset_pwd_verify_code'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'notify_event'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'bind'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'login'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'resend_email'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'unbind'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'register'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_plugins'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_can_update_plugins'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_not_installed_plugins'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'check_plugin_update'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'get_plugin_info'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'download_plugin'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'synchronize_plugin'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config router_request 'plugin_service'
+	option owner '0'
+	option action_status '0'
+	option err_code '0'
+
+config cloud_client 'client_info'
+	option connect_status '0'
+	option reconnect_time '0'
+	option disconnect_reason '0'
+	option fw_download_progress '0'
+	option fw_download_status '0'
+	option fw_verify_status '0'
+

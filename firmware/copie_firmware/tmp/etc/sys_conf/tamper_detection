@@ -1,0 +1,11 @@
+
+config on_off 'tamper_det'
+
+config region_info 'region'
+	option height '10000'
+	option width '10000'
+	option x_coor '0'
+	option y_coor '0'
+
+config notif_list 'tamper_notif_list'
+

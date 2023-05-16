@@ -1,0 +1,6 @@
+/etc/init.d/tp_manage
+/etc/netlink.d/lan_status_notify/cleanTMP.sh
+/bin/tp_manage
+/etc/tp_manage/priv-key.pem
+/etc/config/tp_manage
+/etc/tp_manage/server-cert.pem

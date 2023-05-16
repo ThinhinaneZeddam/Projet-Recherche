@@ -1,0 +1,11 @@
+
+config plan 'chn1_channel'
+	option enabled 'off'
+	option monday '["0000-2400:2"]'
+	option tuesday '["0000-2400:2"]'
+	option wednesday '["0000-2400:2"]'
+	option thursday '["0000-2400:2"]'
+	option friday '["0000-2400:2"]'
+	option saturday '["0000-2400:2"]'
+	option sunday '["0000-2400:2"]'
+

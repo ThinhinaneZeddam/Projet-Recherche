@@ -1,0 +1,5 @@
+
+config on_off 'roi_enable'
+	option main_enabled 'off'
+	option minor_enabled 'off'
+

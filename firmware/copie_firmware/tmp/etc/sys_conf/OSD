@@ -1,0 +1,21 @@
+
+config font_info 'font'
+
+config date_info 'date'
+
+config date_info 'week'
+
+config date_info 'logo'
+
+config label_info 'label_info_1'
+
+config label_info 'label_info_2'
+
+config label_info 'label_info_3'
+
+config zoom 'zoom'
+
+config azimuth 'azimuth'
+
+config preset 'preset'
+

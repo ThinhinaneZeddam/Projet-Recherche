@@ -1,0 +1,473 @@
+#!/bin/sh
+#
+# Copyright (C) 2016, TP-LINK TECHNOLOGIES CO., LTD.
+# Author: Ren Jian <renjian@tp-link.net>
+# Date:   2016-01-11
+#
+
+. /lib/functions.sh
+. /usr/share/libubox/jshn.sh
+
+MODULE_NAME="$1" && shift
+MODULE_BASE=/lib/modules/$(uname -r |awk -F '_' '{print $1}')
+HELP="Usage: $0 MODULE_NAME {start | stop | restart} <driver | softap | hostap | cascadeap | sta | monitor>"
+
+BRIDGE="br-wan"
+INTERFACE="wlan"
+INIT_MAC="A8:57:4E:FD:93:5E"
+COUNTRY=0
+AP_ADDR="192.168.191.1"
+FIXED_RATE="0x17"
+
+
+init_macaddr() {
+	INIT_MAC=$(uci get network.wan.macaddr)
+}
+
+init_country() {
+	local regionstr=$(ubus call tpServer getInfo "{\"infoMask\":32768}")
+	local countrystr
+        json_init
+        json_load "$regionstr"
+        json_get_var countrystr region
+	if [ "$countrystr" = "EU" ]; then
+		COUNTRY=0
+	elif [ "$countrystr" = "US" ]; then
+		COUNTRY=1
+	elif [ "$countrystr" = "JP" ]; then
+		COUNTRY=2
+	fi
+
+}
+
+update_ssid() {
+	local macaddr="$INIT_MAC"
+
+	local manufactuer_name=`uci get device_info.info.manufacturer_name`
+	if [ "$manufactuer_name" = "Mercury" ]; then
+		tmp_ssid="MERCURY_IPC_"${macaddr:12:2}${macaddr:15:2}
+		tmp_ssid="$(echo ${tmp_ssid} | tr [a-z] [A-Z])"
+	else
+		tmp_mac=${macaddr:12:2}${macaddr:15:2}
+		tmp_mac="$(echo ${tmp_mac} | tr [a-z] [A-Z])"
+		tmp_ssid="Tapo_Cam_"${tmp_mac}
+	fi
+
+	config_load wlan
+	config_get uci_ssid ap0 ssid
+
+	if [ "$uci_ssid" != "$tmp_ssid" ]; then
+		uci_set wlan ap0 ssid "$tmp_ssid"
+		uci_commit wlan
+	fi
+}
+
+interface_rate_ctl() {
+	if [ "${MODULE_NAME}" = "8192eu" ]; then
+		echo "wlan-manager: 8192eu rate ctl, interface=$1, rate=$2" >> /dev/kmsg
+		echo "$2" > /proc/net/rtl${MODULE_NAME}/$1/rate_ctl
+	fi
+}
+
+wait_for_driver_to_be_ready() {
+	ifconfig ${INTERFACE}0 > /dev/null 2>&1
+	rc=$?
+
+	while [ $rc -ne 0 ]; do
+		ls /sys/bus/usb/devices | grep -q 1-1 && {
+			vidpid=$(cat /sys/bus/usb/devices/1-1/idVendor 2>/dev/null)$(cat /sys/bus/usb/devices/1-1/idProduct 2>/dev/null)
+			[ "$vidpid" != "0bda8152" -a "$vidpid" != "23570601" ] && echo "wlan-manager: driver is not ready, wait..." >> /dev/kmsg
+		}
+		sleep 1s
+		ifconfig ${INTERFACE}0 > /dev/null 2>&1
+		rc=$?
+	done
+}
+
+insmod_driver() {
+	loaded="`lsmod | grep ${MODULE_NAME}`"
+
+	if [ -z "$loaded" ]; then
+		init_macaddr
+		init_country
+		update_ssid
+		set -e
+		insmod $MODULE_BASE/${MODULE_NAME}.ko rtw_initmac="$INIT_MAC" rtw_country=${COUNTRY}
+		set +e
+
+		wait_for_driver_to_be_ready
+	fi
+}
+
+rmmod_driver() {
+	loaded="`lsmod | grep ${MODULE_NAME}`"
+
+	if [ -n "$loaded" ]; then
+		rmmod ${MODULE_NAME}
+	fi
+}
+
+# enable_interface <interface> [<ipaddr>]
+enable_interface() {
+	while [ true ]; do
+		if [ $# == 1 ]; then
+			echo "wlan-manager: ifconfig $1 up." >> /dev/kmsg
+			ifconfig "$1" up
+		elif [ $# == 2 ]; then
+			echo "wlan-manager: ifconfig $1 $2 up." >> /dev/kmsg
+			ifconfig "$1" "$2" up
+		fi
+
+		if [ $? -ne 0 ]; then
+			sleep 1s
+		else
+			break
+		fi
+	done
+}
+
+# disable_interface <interface>
+disable_interface() {
+	echo "wlan-manager: ifconfig $1 down." >> /dev/kmsg
+	ifconfig "$1" down
+}
+
+start_dhcp_server() {
+	echo "wlan-manager: start dhcp server..." >> /dev/kmsg
+	/etc/init.d/udhcpd start
+}
+
+stop_dhcp_server() {
+	echo "wlan-manager: stop dhcp server..." >> /dev/kmsg
+	/etc/init.d/udhcpd stop
+}
+
+start_firewall() {
+	echo "wlan-manager: restart firewall..." >> /dev/kmsg
+	/etc/init.d/firewall restart
+}
+
+stop_firewall() {
+	echo "wlan-manager: stop firewall..." >> /dev/kmsg
+	/etc/init.d/firewall stop
+}
+
+start_onboarding() {
+	launched="`pgrep onboarding`"
+
+	if [ -z "$launched" ]; then
+		echo "wlan-manager: start onboarding..." >> /dev/kmsg
+		/usr/bin/onboarding > /dev/console 2>&1 &
+	else
+		dnsd_launched="`pgrep dnsd`"
+		if [ -z "$dnsd_launched" ]; then
+			[ "`cat /sys/class/net/eth0/carrier`" = "1" ] || (dnsd > /dev/console 2>&1 &)
+		fi
+	fi
+}
+
+stop_onboarding() {
+	launched="`pgrep onboarding`"
+
+	if [ -n "$launched" ]; then
+		killall onboarding
+	fi
+}
+
+#no need to stop ffs, when ffs finished, the ffs process would exit itself
+start_ffs() {
+	launched="`pgrep ffs`"
+	factory_mode="`uci get tp_manage.factory_mode.enabled`"
+
+	if [ "1" == "$factory_mode" -o -e "/etc/config/_debug_no_ffs" ]; then
+		return 0
+	fi
+
+	if [ -z "$launched" ]; then
+		tar -zxvf /etc/ffs/data.tar.gz -C /tmp/ > /dev/console
+		echo "wlan-manager: start ffs" >> /dev/kmsg
+		/usr/bin/ffs > /dev/console 2>&1 &
+	fi
+}
+
+process_driver() {
+	local action="$1"
+	local factory_mode
+
+	config_load tp_manage
+	config_get factory_mode factory_mode enabled
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: insmod ${MODULE_NAME}.ko..." >> /dev/kmsg
+		insmod_driver
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: rmmod ${MODULE_NAME}.ko..." >> /dev/kmsg
+		rmmod_driver
+	elif [ "$action" = "restart" ]; then
+		process_driver stop
+		process_driver start
+	fi
+}
+
+process_softap() {
+	local action="$1"
+	local factory_mode
+
+	config_load tp_manage
+	config_get factory_mode factory_mode enabled
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: start softap..." >> /dev/kmsg
+
+		enable_interface ${INTERFACE}1 "$AP_ADDR"
+		start_dhcp_server
+		if [ "$factory_mode" = "0" ]; then
+			start_onboarding
+			start_firewall
+		else
+			interface_rate_ctl ${INTERFACE}1 $FIXED_RATE
+		fi
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: stop softap..." >> /dev/kmsg
+		stop_dhcp_server
+
+		if [ "$factory_mode" = "0" ]; then
+			stop_onboarding
+			stop_firewall
+		fi
+
+		disable_interface ${INTERFACE}1
+	elif [ "$action" = "restart" ]; then
+		process_softap stop
+		process_softap start
+	fi
+}
+
+process_hostap() {
+	local action="$1"
+	local conn_onboot
+	local factory_mode
+	local ap_security
+
+	config_load wlan
+	config_load tp_manage
+	config_get conn_onboot sta0 connect_onboot
+	config_get factory_mode factory_mode enabled
+	config_get ap_security ap0 security
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: start hostap..." >> /dev/kmsg
+		enable_interface ${INTERFACE}1 "$AP_ADDR"
+		start_dhcp_server
+
+		if [ "$ap_security" != "none" ]; then
+			stop_onboarding
+		fi
+
+		if [ "$factory_mode" = "1" ]; then
+			interface_rate_ctl ${INTERFACE}1 $FIXED_RATE
+		elif [ "$conn_onboot" != "on" -a "$ap_security" = "none" ]; then
+			start_onboarding
+			start_ffs
+		fi
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: stop hostap..." >> /dev/kmsg
+
+		stop_dhcp_server
+		stop_onboarding
+
+		disable_interface ${INTERFACE}1
+	elif [ "$action" = "restart" ]; then
+		process_hostap stop
+		process_hostap start
+	fi
+}
+
+process_cascadeap() {
+	local action="$1"
+	local type
+	local ipaddr
+
+	config_load network
+	config_get type wan type
+	config_get ipaddr wan ipaddr
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: start cascadeap..." >> /dev/kmsg
+		enable_interface ${INTERFACE}1 "$AP_ADDR"
+
+		if [ "$type" != "bridge" ]; then
+			brctl addbr "$BRIDGE"
+			enable_interface "$BRIDGE" "$ipaddr"
+		fi
+
+		brctl addif "$BRIDGE" ${INTERFACE}0
+		brctl addif "$BRIDGE" ${INTERFACE}1
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: stop cascadeap..." >> /dev/kmsg
+
+		brctl delif "$BRIDGE" ${INTERFACE}0
+		brctl delif "$BRIDGE" ${INTERFACE}1
+
+		if [ "$type" != "bridge" ]; then
+			brctl delbr "$BRIDGE"
+			disable_interface "$BRIDGE"
+		fi
+
+		disable_interface ${INTERFACE}1
+	elif [ "$action" = "restart" ]; then
+		process_cascadeap stop
+		process_cascadeap start
+	fi
+}
+
+set_power_table() {
+	if [ -f /etc/sstar/SSW101B_TXPWR.txt ]; then 
+		init_country
+
+		local i=1
+		local times=11
+		while [ $i -le $times ]
+		do
+			setGain=$(cat /etc/sstar/SSW101B_TXPWR.txt |sed -n "${i}p"|awk -v t="$(($COUNTRY+1))" '{print $t}')
+			echo "i=$(($i-1)), setGain=$setGain country=$(($COUNTRY+1))" >> /dev/kmsg
+			iwpriv wlan0 fwcmd set_spec_rate_txpower_mode,$(($i-1)),$setGain
+			i=$(($i+1))
+		done
+	fi
+
+	#if [ 0 ]; then # $COUNTRY = "0"
+	#	echo "----- IS EU country -----" >> /dev/kmsg
+	#	if [ ifconfig wlan1 ]; then
+	#		iwpriv wlan0 fwcmd set_adaptive,0
+	#		echo " wlan1 is up stop CCA" >> /dev/kmsg
+	#	else
+	#		iwpriv wlan0 fwcmd set_adaptive,1
+	#		echo " wlan1 is down start CCA " >> /dev/kmsg
+	#	fi
+	#fi
+}
+
+process_sta() {
+	local action="$1"
+	local type
+
+	config_load network
+	config_get type wan type
+	type=${type:-bridge}
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: start sta..." >> /dev/kmsg
+		enable_interface ${INTERFACE}0
+
+		if [ "$type" = "bridge" ]; then
+			brctl addif "$BRIDGE" ${INTERFACE}0
+		fi
+
+		if [ "${MODULE_NAME}" = "ssw101b_wifi_usb" ]; then
+			set_power_table
+		elif [ "${MODULE_NAME}" = "atbm6032i_wifi_usb" ]; then
+			set_power_table
+		fi
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: stop sta..." >> /dev/kmsg
+
+		if [ "$type" = "bridge" ]; then
+			brctl delif "$BRIDGE" ${INTERFACE}0
+		fi
+
+		disable_interface ${INTERFACE}0
+	elif [ "$action" = "restart" ]; then
+		process_sta stop
+		process_sta start
+	fi
+}
+
+process_monitor() {
+	local action="$1"
+	local type
+	local factory_mode
+
+	config_load tp_manage
+	config_load network
+	config_get type wan type
+	config_get factory_mode factory_mode enabled
+
+	if [ "$action" = "start" ]; then
+		echo "wlan-manager: start monitor..." >> /dev/kmsg
+		enable_interface ${INTERFACE}0
+
+		if [ "$type" = "bridge" ]; then
+			brctl addif "$BRIDGE" ${INTERFACE}0
+		fi
+
+		if [ "$factory_mode" = "0" ]; then
+			start_onboarding
+		fi
+	elif [ "$action" = "stop" ]; then
+		echo "wlan-manager: stop monitor..." >> /dev/kmsg
+
+		if [ "$factory_mode" = "0" ]; then
+			stop_onboarding
+		fi
+
+		if [ "$type" = "bridge" ]; then
+			brctl delif "$BRIDGE" ${INTERFACE}0
+		fi
+
+		disable_interface ${INTERFACE}0
+	elif [ "$action" = "restart" ]; then
+		process_monitor stop
+		process_monitor start
+	fi
+}
+
+# do_ctrl_wlan_module <action> <mode>
+do_ctrl_wlan_module() {
+	local action="$1"
+	local mode="$2"
+
+	if [ "$action" != "start" -a "$action" != "stop" -a "$action" != "restart" ]; then
+		echo "wlan-manager: invalid action: $action" >> /dev/kmsg
+		return 1
+	fi
+
+	if [ "$mode" != "driver" ] && [ "$action" = "start" -o "$action" = "restart" ]; then
+		insmod_driver
+	fi
+
+	case "$mode" in
+		"driver")
+			process_driver "$action"
+			;;
+		"softap")
+			process_softap "$action"
+			;;
+		"hostap")
+			process_hostap "$action"
+			;;
+		"cascadeap")
+			process_cascadeap "$action"
+			;;
+		"sta")
+			process_sta "$action"
+			;;
+		"monitor")
+			process_monitor "$action"
+			;;
+		*)
+			echo "wlan-manager: invalid mode: $mode" >> /dev/kmsg
+			return 1
+			;;
+	esac
+
+	return 0
+}
+
+do_ctrl_wlan_module $@
+if [ $? -ne 0 ]; then
+	echo $HELP >&2
+	exit 1
+fi
+
+exit 0

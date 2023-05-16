@@ -1,0 +1,13 @@
+Package: onvif
+Version: 1
+Depends: libc, libpthread, libuci, libjson, libblobmsg-json, libubox, public, libubus, libsyslog, libpwr
+Provides: 
+Source: tp_package/u_packages/onvif
+Section: utils
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 1181
+Description:  onvif package....

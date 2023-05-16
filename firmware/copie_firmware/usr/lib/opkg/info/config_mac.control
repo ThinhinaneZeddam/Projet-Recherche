@@ -1,0 +1,13 @@
+Package: config_mac
+Version: 1.0-1
+Depends: libc
+Provides: 
+Source: tp_package/sys_packages/config_mac
+Section: base
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 2735
+Description:  Write mac addrs to interfaces during booting. 

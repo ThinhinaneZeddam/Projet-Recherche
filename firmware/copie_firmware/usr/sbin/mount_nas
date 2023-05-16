@@ -1,0 +1,96 @@
+#!/bin/sh
+
+usage() {
+        local basename=$1
+        echo "usage: $basename <type> [<args>]"
+        echo
+        echo "Supported commands are:"
+        echo "  cifs       for Windows sharing and samba of Linux."
+        echo "             e.g. $basename cifs 192.168.1.100 share /mnt/cifs username password"
+        echo "  nfs        for Sun RPC based NFS protocol."
+        echo "             e.g. $basename nfs 192.168.1.100 /home/admin/share/nfs /mnt/nfs"
+        echo
+}
+
+mount_cifs() {
+	local input_addr=$1;shift;
+	local input_path=$1;shift;
+	local mnt_dir=$1;shift;
+	local username=$1;shift;
+	local passwd=$1;shift;
+
+	local fixed_opt="nounix,noserverino,dir_mode=777,file_mode=777,port=445"
+
+	if [ -z "$username" ]; then
+		echo "Username cannot be empty."
+		exit -1
+	fi
+
+	if [ ! -d $mnt_dir ]; then
+		mkdir -p $mnt_dir
+	fi
+
+	# Expected mount cmd:
+	#   mount -t cifs //192.168.1.100/share /mnt/cifs01 -o username=usr,
+	#            password=passwd,path=\\\\192.168.1.100\\share...
+
+	# User input is supposed to start with IP or domain name, but
+	# different user might follow different format style with slash(Unix) or backslash(Windows)
+
+	# url: 192.168.1.100 input_path: share/cifs -> //192.168.1.100/share/cifs
+	local url="//"$input_addr$input_path
+
+	# Format remote url with slash
+	#   url: //192.168.1.100/share\cifs -> //192.168.1.100/share/cifs
+	url=$(echo $url | sed 's/\\/\//g')
+
+	# Convert a copy of backslash for Windows compatibility
+	#   url: //192.168.1.100/share -> \\\\192.168.1.100\\share
+	# @path is for mount option 'path'; terminal need double-backslash for converting but shell does not
+	local path=$(echo $url | sed 's/\//\\/g')
+
+	#local mount_cmd="mount -t cifs "$url" "$mnt_dir" -o username="$username",password="$passwd",path="$path","$fixed_opt
+	#echo "$mount_cmd"
+	if [ -n "$passwd" ]; then
+		mount -t cifs $url $mnt_dir -o username=$username,password=$passwd,path=$path,$fixed_opt
+	else
+		mount -t cifs $url $mnt_dir -o username=$username,path=$path,$fixed_opt
+	fi
+}
+
+mount_nfs() {
+	local fixed_opt="nolock,soft,timeo=10,retrans=3,actimeo=5"
+	local ip=$1;shift;
+	local path=$1;shift;
+	local mnt_dir=$1;shift;
+
+	if [ -z "$path" ]; then
+		echo "NFS path cannot be empty."
+		exit -1
+	fi
+
+	if [ ! -d $mnt_dir ]; then
+		mkdir -p $mnt_dir
+	fi
+
+	#local mount_cmd="mount -t nfs "$ip":"$path" "$mnt_dir" -o "$fixed_opt
+	#echo "$mount_cmd"
+	mount -t nfs $ip:$path $mnt_dir -o $fixed_opt
+}
+
+basename=$0
+type=$1
+shift
+
+case $type in
+	cifs)
+		mount_cifs $@
+		exit $?
+	;;
+	nfs)
+		mount_nfs $@
+		exit $?
+	;;
+esac
+
+usage $basename

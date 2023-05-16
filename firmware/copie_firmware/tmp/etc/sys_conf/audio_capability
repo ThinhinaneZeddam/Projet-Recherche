@@ -1,0 +1,23 @@
+
+config capability 'device_speaker'
+	list sampling_rate '8'
+	option channels '1'
+	list decode_type 'G711'
+	option volume '1'
+	option mute '0'
+
+config capability 'device_microphone'
+	list sampling_rate '8'
+	option channels '1'
+	list encode_type 'G711alaw'
+	option volume '1'
+	option mute '1'
+	option aec '1'
+	option noise_cancelling '1'
+	option echo_cancelling '0'
+	option half_duplex '1'
+
+config capability 'app_speaker'
+
+config capability 'app_microphone'
+

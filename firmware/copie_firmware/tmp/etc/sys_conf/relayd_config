@@ -1,0 +1,4 @@
+
+config relay_server 'server'
+	option is_tums_talk '0'
+

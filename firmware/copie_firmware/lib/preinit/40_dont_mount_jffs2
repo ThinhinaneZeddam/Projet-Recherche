@@ -1,0 +1,25 @@
+#!/bin/sh
+# Copyright (C) 2006-2010 OpenWrt.org
+# Copyright (C) 2010 Vertical Communications
+
+mount_rwroot() {
+    mkdir -p /tmp/overlay
+    mount rwroot /tmp/overlay -t tmpfs
+}
+
+jffs2_not_mounted() {
+    if [ "$pi_jffs2_mount_success" != "true" ]; then
+	return 0
+    else
+	return 1
+    fi
+}
+
+do_mount_jffs2() {
+    check_skip || {
+	mount_rwroot && pi_jffs2_mount_success=true
+    }
+}
+
+boot_hook_add preinit_mount_root do_mount_jffs2
+

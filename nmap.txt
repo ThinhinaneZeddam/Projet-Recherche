@@ -1,0 +1,275 @@
+MAC : 1C61B4010F77
+Version materiel : 3.0
+Version firmware : 1.1.22
+
+
+
+NMAP : 
+Starting Nmap 7.93 ( https://nmap.org ) at 2023-02-07 14:04 Europe de l’Ouest
+
+NSOCK ERROR [0.2830s] ssl_init_helper(): OpenSSL legacy provider failed to load.
+
+
+
+NSE: Loaded 155 scripts for scanning.
+
+NSE: Script Pre-scanning.
+
+Initiating NSE at 14:04
+
+Completed NSE at 14:04, 0.00s elapsed
+
+Initiating NSE at 14:04
+
+Completed NSE at 14:04, 0.00s elapsed
+
+Initiating NSE at 14:04
+
+Completed NSE at 14:04, 0.00s elapsed
+
+Initiating ARP Ping Scan at 14:04
+
+Scanning 192.168.137.206 [1 port]
+
+Completed ARP Ping Scan at 14:04, 0.04s elapsed (1 total hosts)
+
+Initiating Parallel DNS resolution of 1 host. at 14:04
+
+Completed Parallel DNS resolution of 1 host. at 14:04, 0.03s elapsed
+
+Initiating SYN Stealth Scan at 14:04
+
+Scanning 192.168.137.206 [1000 ports]
+
+Discovered open port 443/tcp on 192.168.137.206
+
+Discovered open port 554/tcp on 192.168.137.206
+
+Discovered open port 2020/tcp on 192.168.137.206
+
+Discovered open port 8800/tcp on 192.168.137.206
+
+Completed SYN Stealth Scan at 14:04, 1.05s elapsed (1000 total ports)
+
+Initiating Service scan at 14:04
+
+Scanning 4 services on 192.168.137.206
+
+Completed Service scan at 14:06, 124.03s elapsed (4 services on 1 host)
+
+Initiating OS detection (try #1) against 192.168.137.206
+
+NSE: Script scanning 192.168.137.206.
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 14.27s elapsed
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 1.15s elapsed
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 0.00s elapsed
+
+Nmap scan report for 192.168.137.206
+
+Host is up (0.011s latency).
+
+Not shown: 996 closed tcp ports (reset)
+
+PORT     STATE SERVICE         VERSION
+
+443/tcp  open  ssl/nagios-nsca Nagios NSCA
+
+|_http-title: Site doesn't have a title (text/plain).
+
+|_http-trane-info: Problem with XML parsing of /evox/about
+
+| http-methods: 
+
+|_  Supported Methods: GET HEAD POST
+
+|_http-favicon: Unknown favicon MD5: 3D3F0D5ABCEE1F9D7712C67D380F941D
+
+|_ssl-date: TLS randomness does not represent time
+
+| ssl-cert: Subject: commonName=TP-Link/countryName=CN
+
+| Issuer: commonName=TP-Link/countryName=CN
+
+| Public Key type: rsa
+
+| Public Key bits: 2048
+
+| Signature Algorithm: sha256WithRSAEncryption
+
+| Not valid before: 2022-09-09T04:04:22
+
+| Not valid after:  2032-07-18T04:04:22
+
+| MD5:   1a5a466a1101d5fd95bab673e658d8be
+
+|_SHA-1: dd7b68ecb0a7402621580760c720e77d67208186
+
+554/tcp  open  rtsp
+
+| fingerprint-strings: 
+
+|   FourOhFourRequest: 
+
+|     RTSP/1.0 400 Bad Request
+
+|     CSeq: 0
+
+|     Date: Tue, Feb 07 2023 13:04:42 GMT
+
+|   GenericLines: 
+
+|     RTSP/1.0 400 Bad Request
+
+|     CSeq: 0
+
+|     Date: Tue, Feb 07 2023 13:04:32 GMT
+
+|   GetRequest: 
+
+|     RTSP/1.0 400 Bad Request
+
+|     CSeq: 0
+
+|     Date: Tue, Feb 07 2023 13:04:22 GMT
+
+|   HTTPOptions: 
+
+|     RTSP/1.0 200 OK
+
+|     CSeq: 0
+
+|     Date: Tue, Feb 07 2023 13:04:37 GMT
+
+|     Public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, GET_PARAMETER, SET_PARAMETER
+
+|   RTSPRequest: 
+
+|     RTSP/1.0 200 OK
+
+|     CSeq: 0
+
+|     Date: Tue, Feb 07 2023 13:04:27 GMT
+
+|     Public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, GET_PARAMETER, SET_PARAMETER
+
+|   SIPOptions: 
+
+|     RTSP/1.0 200 OK
+
+|     CSeq: 42
+
+|     Date: Tue, Feb 07 2023 13:04:47 GMT
+
+|_    Public: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, GET_PARAMETER, SET_PARAMETER
+
+|_rtsp-methods: OPTIONS, DESCRIBE, SETUP, TEARDOWN, PLAY, GET_PARAMETER, SET_PARAMETER
+
+2020/tcp open  soap            gSOAP 2.8
+
+|_http-favicon: Unknown favicon MD5: 37A6F85C62BEC451CEA4DF5BE812F8C1
+
+|_http-title: Site doesn't have a title (text/html; charset=utf-8).
+
+| http-methods: 
+
+|_  Supported Methods: GET HEAD OPTIONS
+
+|_http-server-header: gSOAP/2.8
+
+8800/tcp open  sunwebadmin?
+
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+
+SF-Port554-TCP:V=7.93%I=7%D=2/7%Time=63E24C5C%P=i686-pc-windows-windows%r(
+
+SF:GetRequest,4A,"RTSP/1\.0\x20400\x20Bad\x20Request\r\nCSeq:\x200\r\nDate
+
+SF::\x20Tue,\x20Feb\x2007\x202023\x2013:04:22\x20GMT\r\n\r\n")%r(RTSPReque
+
+SF:st,91,"RTSP/1\.0\x20200\x20OK\r\nCSeq:\x200\r\nDate:\x20Tue,\x20Feb\x20
+
+SF:07\x202023\x2013:04:27\x20GMT\r\nPublic:\x20OPTIONS,\x20DESCRIBE,\x20SE
+
+SF:TUP,\x20TEARDOWN,\x20PLAY,\x20GET_PARAMETER,\x20SET_PARAMETER\r\n\r\n")
+
+SF:%r(GenericLines,4A,"RTSP/1\.0\x20400\x20Bad\x20Request\r\nCSeq:\x200\r\
+
+SF:nDate:\x20Tue,\x20Feb\x2007\x202023\x2013:04:32\x20GMT\r\n\r\n")%r(HTTP
+
+SF:Options,91,"RTSP/1\.0\x20200\x20OK\r\nCSeq:\x200\r\nDate:\x20Tue,\x20Fe
+
+SF:b\x2007\x202023\x2013:04:37\x20GMT\r\nPublic:\x20OPTIONS,\x20DESCRIBE,\
+
+SF:x20SETUP,\x20TEARDOWN,\x20PLAY,\x20GET_PARAMETER,\x20SET_PARAMETER\r\n\
+
+SF:r\n")%r(FourOhFourRequest,4A,"RTSP/1\.0\x20400\x20Bad\x20Request\r\nCSe
+
+SF:q:\x200\r\nDate:\x20Tue,\x20Feb\x2007\x202023\x2013:04:42\x20GMT\r\n\r\
+
+SF:n")%r(SIPOptions,92,"RTSP/1\.0\x20200\x20OK\r\nCSeq:\x2042\r\nDate:\x20
+
+SF:Tue,\x20Feb\x2007\x202023\x2013:04:47\x20GMT\r\nPublic:\x20OPTIONS,\x20
+
+SF:DESCRIBE,\x20SETUP,\x20TEARDOWN,\x20PLAY,\x20GET_PARAMETER,\x20SET_PARA
+
+SF:METER\r\n\r\n");
+
+MAC Address: 1C:61:B4:01:0F:77 (TP-Link Limited)
+
+Device type: general purpose
+
+Running: Linux 2.6.X|3.X
+
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+
+OS details: Linux 2.6.32 - 3.10
+
+Uptime guess: 0.019 days (since Tue Feb  7 13:38:45 2023)
+
+Network Distance: 1 hop
+
+TCP Sequence Prediction: Difficulty=247 (Good luck!)
+
+IP ID Sequence Generation: All zeros
+
+
+
+TRACEROUTE
+
+HOP RTT      ADDRESS
+
+1   11.23 ms 192.168.137.206
+
+
+
+NSE: Script Post-scanning.
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 0.00s elapsed
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 0.00s elapsed
+
+Initiating NSE at 14:06
+
+Completed NSE at 14:06, 0.00s elapsed
+
+Read data files from: C:\Program Files (x86)\Nmap
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+
+Nmap done: 1 IP address (1 host up) scanned in 142.96 seconds
+
+           Raw packets sent: 1023 (45.806KB) | Rcvd: 1019 (41.582KB)
+

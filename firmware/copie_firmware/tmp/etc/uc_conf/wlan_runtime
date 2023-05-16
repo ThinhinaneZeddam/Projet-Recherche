@@ -1,0 +1,5 @@
+
+config wlan_runtime 'ap0'
+	option status 'off'
+	list sta_list ''
+

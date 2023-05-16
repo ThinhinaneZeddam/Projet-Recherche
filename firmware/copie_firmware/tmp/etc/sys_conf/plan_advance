@@ -1,0 +1,4 @@
+
+config advance 'plan_advance'
+	option pre_record '3'
+

@@ -1,0 +1,14 @@
+protocol.wan=interface
+protocol.wan.type=bridge
+protocol.dhcp=proto
+protocol.dhcp.proto=dhcp
+protocol.dhcp.auto=1
+protocol.dhcp.wan_type=dhcp
+protocol.static=proto
+protocol.static.type=bridge
+protocol.static.proto=static
+protocol.static.auto=1
+protocol.static.wan_type=static
+protocol.static.fac_ipaddr=192.168.0.10
+protocol.pppoe=proto
+protocol.pppoe.keepalive=3,10

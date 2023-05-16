@@ -1,0 +1,2 @@
+DRIVER=jz-wdt
+MODALIAS=platform:jz-wdt

@@ -1,0 +1,5 @@
+smart_detection.capability=smart_detection
+smart_detection.capability.linecrossing_detection=1
+smart_detection.capability.intrusion_detection=1
+smart_detection.capability.people_detection=1
+smart_detection.capability.smart_data=1

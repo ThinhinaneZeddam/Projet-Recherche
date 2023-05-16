@@ -1,0 +1,31 @@
+
+config control 'chn1_record'
+
+config control 'chn2_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn3_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn4_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn5_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn6_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn7_record'
+	option mode 'auto'
+	option stream_type 'main'
+
+config control 'chn8_record'
+	option mode 'auto'
+	option stream_type 'main'
+

@@ -1,0 +1,16 @@
+#!/bin/sh /etc/rc.common
+
+# start prior TBD
+START=70
+STOP=98
+RESUME=90
+
+start() {
+	echo 4 > /proc/sys/vm/drop_caches
+	/bin/storage_manager > /dev/console 2>&1 &
+}
+
+stop() {
+	service_stop /bin/storage_manager
+}
+

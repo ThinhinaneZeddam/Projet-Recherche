@@ -1,0 +1,5 @@
+
+config on_off 'video_message'
+	option enabled 'off'
+	option duration '15'
+

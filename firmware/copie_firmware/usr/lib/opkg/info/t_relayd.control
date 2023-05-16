@@ -1,0 +1,13 @@
+Package: t_relayd
+Version: 1
+Depends: libc, libevent, libuClibc, libuci, libjson, libopenssl
+Provides: 
+Source: tp_package/u_packages/traversal_utils
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: OpenWrt Developers Team <openwrt-devel@openwrt.org>
+Architecture: ingenic
+Installed-Size: 158963
+Description:  traversal utils for NAT. relay module. Use "t_relay" instead of "relayd" since the word "relayd" has been used. 

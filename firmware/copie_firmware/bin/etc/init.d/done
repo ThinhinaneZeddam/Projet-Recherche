@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006 OpenWrt.org
+
+START=95
+boot() {
+	[ -d /tmp/root ] && {
+		lock /tmp/.switch2jffs
+		firstboot switch2jffs
+		lock -u /tmp/.switch2jffs
+	}
+
+	# process user commands
+	[ -f /etc/rc.local ] && {
+		sh /etc/rc.local
+	}
+
+	# kill p2pd first while OOM
+	pgrep -f "/usr/bin/p2pd" | while read PID;do echo 1000 > /proc/$PID/oom_score_adj;done
+}

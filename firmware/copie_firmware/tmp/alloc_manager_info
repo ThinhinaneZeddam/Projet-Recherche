@@ -1,0 +1,272 @@
+
+info->n_info = 0x7531a8
+info->owner = 
+info->vaddr = 0x00000000
+info->paddr = 0x00000000
+info->length = 0
+info->ref_cnt = 0
+info->mem_attr = 0
+
+info->n_info = 0x752488
+info->owner = ncubuf
+info->vaddr = 0x75db5000
+info->paddr = 0x02d00000
+info->length = 4685424
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x752218
+info->owner = osdDev
+info->vaddr = 0x7622cf00
+info->paddr = 0x03177f00
+info->length = 524288
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x813098
+info->owner = VBMPool1
+info->vaddr = 0x762acf00
+info->paddr = 0x031f7f00
+info->length = 152064
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x813188
+info->owner = unknown
+info->vaddr = 0x762d2100
+info->paddr = 0x0321d100
+info->length = 1876
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x828e58
+info->owner = ep1
+info->vaddr = 0x762d2900
+info->paddr = 0x0321d900
+info->length = 25600
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x828f48
+info->owner = ep3
+info->vaddr = 0x762d8d00
+info->paddr = 0x03223d00
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x829038
+info->owner = ep3
+info->vaddr = 0x762da200
+info->paddr = 0x03225200
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x829148
+info->owner = ep3
+info->vaddr = 0x762db700
+info->paddr = 0x03226700
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x829238
+info->owner = cmdlist
+info->vaddr = 0x762dcc00
+info->paddr = 0x03227c00
+info->length = 9760
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x829328
+info->owner = ref + rec + mv
+info->vaddr = 0x762df300
+info->paddr = 0x0322a300
+info->length = 1599232
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x829418
+info->owner = ref + rec + mv
+info->vaddr = 0x76465a00
+info->paddr = 0x033b0a00
+info->length = 1599232
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x82b588
+info->owner = interm
+info->vaddr = 0x765ec100
+info->paddr = 0x03537100
+info->length = 29632
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x82d6b0
+info->owner = stream
+info->vaddr = 0x765f3500
+info->paddr = 0x0353e500
+info->length = 453632
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x831498
+info->owner = stream
+info->vaddr = 0x76662100
+info->paddr = 0x035ad100
+info->length = 453632
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x841608
+info->owner = VBMPool0
+info->vaddr = 0x766d0d00
+info->paddr = 0x0361bd00
+info->length = 1382400
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8416f8
+info->owner = unknown
+info->vaddr = 0x76822500
+info->paddr = 0x0376d500
+info->length = 1876
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8573c8
+info->owner = ep1
+info->vaddr = 0x76822d00
+info->paddr = 0x0376dd00
+info->length = 25600
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8574b8
+info->owner = ep3
+info->vaddr = 0x76829100
+info->paddr = 0x03774100
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8575a8
+info->owner = ep3
+info->vaddr = 0x7682a600
+info->paddr = 0x03775600
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8576b8
+info->owner = ep3
+info->vaddr = 0x7682bb00
+info->paddr = 0x03776b00
+info->length = 5280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8577a8
+info->owner = cmdlist
+info->vaddr = 0x7682d000
+info->paddr = 0x03778000
+info->length = 9760
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x857898
+info->owner = ref + rec + mv
+info->vaddr = 0x7682f700
+info->paddr = 0x0377a700
+info->length = 402944
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x857988
+info->owner = ref + rec + mv
+info->vaddr = 0x76891d00
+info->paddr = 0x037dcd00
+info->length = 402944
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x859af8
+info->owner = interm
+info->vaddr = 0x768f4300
+info->paddr = 0x0383f300
+info->length = 26816
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x85bc20
+info->owner = stream
+info->vaddr = 0x768fac00
+info->paddr = 0x03845c00
+info->length = 132288
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x85fa08
+info->owner = stream
+info->vaddr = 0x7691b100
+info->paddr = 0x03866100
+info->length = 132288
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x86f990
+info->owner = VBMPool2
+info->vaddr = 0x7693b600
+info->paddr = 0x03886600
+info->length = 353280
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x86fa80
+info->owner = unknown
+info->vaddr = 0x76991a00
+info->paddr = 0x038dca00
+info->length = 1876
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x885648
+info->owner = ep1
+info->vaddr = 0x76992200
+info->paddr = 0x038dd200
+info->length = 25600
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x885738
+info->owner = cmdlist
+info->vaddr = 0x76998600
+info->paddr = 0x038e3600
+info->length = 9760
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8878a8
+info->owner = interm
+info->vaddr = 0x7699ad00
+info->paddr = 0x038e5d00
+info->length = 26816
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = 0x8899d0
+info->owner = stream
+info->vaddr = 0x769a1600
+info->paddr = 0x038ec600
+info->length = 143552
+info->ref_cnt = 1
+info->mem_attr = 0
+
+info->n_info = (nil)
+info->owner = stream
+info->vaddr = 0x769c4700
+info->paddr = 0x0390f700
+info->length = 143552
+info->ref_cnt = 1
+info->mem_attr = 0
